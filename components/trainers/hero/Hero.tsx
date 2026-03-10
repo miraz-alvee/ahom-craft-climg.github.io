@@ -5,7 +5,7 @@ import { FaArrowRightLong } from "react-icons/fa6";
 
 export default function TrainersHeroSection() {
   return (
-    <section 
+    <section
       style={{
         background:
           "linear-gradient(135deg, #F0FDF4 25%, #FFFFFF 60.36%, #F0FDFA 95.71%)",
@@ -85,8 +85,8 @@ export default function TrainersHeroSection() {
             letterSpacing: "-0.02em",
           }}
         >
-           Turn Your Expertise Into Income
-         
+          Turn Your Expertise Into Income
+
         </h1>
 
         {/* Subtext */}
@@ -120,9 +120,9 @@ export default function TrainersHeroSection() {
               boxShadow: "0 4px 20px rgba(37,99,235,0.28)",
               transition: "background 0.18s, transform 0.15s, box-shadow 0.18s",
             }}>
-            Post Your First Job Free 
-            <FaArrowRightLong size={20}/>
-           
+            Start Teaching Today
+            <FaArrowRightLong size={20} />
+
           </button>
         </div>
       </div>

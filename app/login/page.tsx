@@ -3,6 +3,7 @@ import loginImage1 from "@/public/images/login/login-image-06.png"
 import loginLogo from "@/public/images/login/logo.png"
 import Image from "next/image"
 import Link from "next/link"
+import { useRouter } from "next/navigation"
 import { useState } from "react"
 import { FaApple, FaLinkedin } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
@@ -19,8 +20,28 @@ const T = {
 }
 
 export default function SignInPage() {
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false)
     const [rememberMe, setRememberMe] = useState(false)
+
+    const router = useRouter()
+
+    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+        event.preventDefault(); // Prevent the default browser form submission
+
+        // Perform additional validation here if needed (e.g., password strength)
+        if (password.length < 6) {
+            alert('Password must be at least 6 characters long.');
+            return;
+        }
+
+        // Process sign-up logic (e.g., send data to an API)
+        console.log('Form submitted successfully:', { email, password });
+
+        // Navigate to the home page after successful sign-up
+        router.push('/'); // Redirects the user to the /home route
+    };
 
     return (
         <div
@@ -77,7 +98,7 @@ export default function SignInPage() {
                         }}
                     />
 
-                     {/* Logo top-left */}
+                    {/* Logo top-left */}
                     <div
                         style={{
                             position: "absolute",
@@ -178,210 +199,215 @@ export default function SignInPage() {
                     >
                         Sign in to your account
                     </h1>
-
-                    {/* Email Field */}
-                    <label
-                        style={{
-                            fontSize: 12,
-                            fontWeight: 600,
-                            color: T.navySoft,
-                            marginBottom: 6,
-                            display: "block",
-                        }}
-                    >
-                        Email Address
-                    </label>
-                    <div
-                        style={{
-                            position: "relative",
-                            marginBottom: 18,
-                        }}
-                    >
-                        <span
-                            style={{
-                                position: "absolute",
-                                left: 14,
-                                top: "50%",
-                                transform: "translateY(-50%)",
-                                color: T.muted,
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                                <rect x="2" y="4" width="20" height="16" rx="2" />
-                                <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
-                            </svg>
-                        </span>
-                        <input
-                            type="email"
-                            placeholder="you@example.com"
-                            style={{
-                                width: "100%",
-                                boxSizing: "border-box",
-                                padding: "11px 14px 11px 40px",
-                                border: "1.5px solid #E8EAF0",
-                                borderRadius: 8,
-                                fontSize: 14,
-                                color: T.navy,
-                                background: "#F8F9FB",
-                                outline: "none",
-                                transition: "border-color 0.2s",
-                            }}
-                            onFocus={(e) => (e.target.style.borderColor = T.gold)}
-                            onBlur={(e) => (e.target.style.borderColor = "#E8EAF0")}
-                        />
-                    </div>
-
-                    {/* Password Field */}
-                    <label
-                        style={{
-                            fontSize: 12,
-                            fontWeight: 600,
-                            color: T.navySoft,
-                            marginBottom: 6,
-                            display: "block",
-                        }}
-                    >
-                        Password
-                    </label>
-                    <div style={{ position: "relative", marginBottom: 14 }}>
-                        <span
-                            style={{
-                                position: "absolute",
-                                left: 14,
-                                top: "50%",
-                                transform: "translateY(-50%)",
-                                color: T.muted,
-                                display: "flex",
-                                alignItems: "center",
-                            }}
-                        >
-                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                                <rect x="3" y="11" width="18" height="11" rx="2" />
-                                <path d="M7 11V7a5 5 0 0 1 10 0v4" />
-                            </svg>
-                        </span>
-                        <input
-                            type={showPassword ? "text" : "password"}
-                            placeholder="Enter your password"
-                            style={{
-                                width: "100%",
-                                boxSizing: "border-box",
-                                padding: "11px 40px 11px 40px",
-                                border: "1.5px solid #E8EAF0",
-                                borderRadius: 8,
-                                fontSize: 14,
-                                color: T.navy,
-                                background: "#F8F9FB",
-                                outline: "none",
-                                transition: "border-color 0.2s",
-                            }}
-                            onFocus={(e) => (e.target.style.borderColor = T.gold)}
-                            onBlur={(e) => (e.target.style.borderColor = "#E8EAF0")}
-                        />
-                        <button
-                            type="button"
-                            onClick={() => setShowPassword(!showPassword)}
-                            style={{
-                                position: "absolute",
-                                right: 14,
-                                top: "50%",
-                                transform: "translateY(-50%)",
-                                background: "none",
-                                border: "none",
-                                cursor: "pointer",
-                                color: T.muted,
-                                display: "flex",
-                                alignItems: "center",
-                                padding: 0,
-                            }}
-                        >
-                            {showPassword ? (
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                                    <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
-                                    <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
-                                    <line x1="1" y1="1" x2="23" y2="23" />
-                                </svg>
-                            ) : (
-                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
-                                    <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
-                                    <circle cx="12" cy="12" r="3" />
-                                </svg>
-                            )}
-                        </button>
-                    </div>
-
-                    {/* Remember me + Forgot password */}
-                    <div
-                        style={{
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "space-between",
-                            marginBottom: 24,
-                        }}
-                    >
+                    <form onSubmit={handleSubmit}>
+                        {/* Email Field */}
                         <label
                             style={{
+                                fontSize: 12,
+                                fontWeight: 600,
+                                color: T.navySoft,
+                                marginBottom: 6,
+                                display: "block",
+                            }}
+                        >
+                            Email Address
+                        </label>
+                        <div
+                            style={{
+                                position: "relative",
+                                marginBottom: 18,
+                            }}
+                        >
+                            <span
+                                style={{
+                                    position: "absolute",
+                                    left: 14,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: T.muted,
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                                    <rect x="2" y="4" width="20" height="16" rx="2" />
+                                    <path d="m22 7-8.97 5.7a1.94 1.94 0 0 1-2.06 0L2 7" />
+                                </svg>
+                            </span>
+                            <input
+                                type="email"
+                                placeholder="you@example.com"
+                                value={email}
+                                onChange={(e) => setEmail(e.target.value)}
+                                required
+                                style={{
+                                    width: "100%",
+                                    boxSizing: "border-box",
+                                    padding: "11px 14px 11px 40px",
+                                    border: "1.5px solid #E8EAF0",
+                                    borderRadius: 8,
+                                    fontSize: 14,
+                                    color: T.navy,
+                                    background: "#F8F9FB",
+                                    outline: "none",
+                                    transition: "border-color 0.2s",
+                                }}
+                                onFocus={(e) => (e.target.style.borderColor = T.gold)}
+                                onBlur={(e) => (e.target.style.borderColor = "#E8EAF0")}
+                            />
+                        </div>
+
+                        {/* Password Field */}
+                        <label
+                            style={{
+                                fontSize: 12,
+                                fontWeight: 600,
+                                color: T.navySoft,
+                                marginBottom: 6,
+                                display: "block",
+                            }}
+                        >
+                            Password
+                        </label>
+                        <div style={{ position: "relative", marginBottom: 14 }}>
+                            <span
+                                style={{
+                                    position: "absolute",
+                                    left: 14,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: T.muted,
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                                    <rect x="3" y="11" width="18" height="11" rx="2" />
+                                    <path d="M7 11V7a5 5 0 0 1 10 0v4" />
+                                </svg>
+                            </span>
+                            <input
+                                type={showPassword ? "text" : "password"}
+                                placeholder="Enter your password"
+                                value={password}
+                                onChange={(e) => setPassword(e.target.value)}
+                                style={{
+                                    width: "100%",
+                                    boxSizing: "border-box",
+                                    padding: "11px 40px 11px 40px",
+                                    border: "1.5px solid #E8EAF0",
+                                    borderRadius: 8,
+                                    fontSize: 14,
+                                    color: T.navy,
+                                    background: "#F8F9FB",
+                                    outline: "none",
+                                    transition: "border-color 0.2s",
+                                }}
+                                onFocus={(e) => (e.target.style.borderColor = T.gold)}
+                                onBlur={(e) => (e.target.style.borderColor = "#E8EAF0")}
+                            />
+                            <button
+                                type="button"
+                                onClick={() => setShowPassword(!showPassword)}
+                                style={{
+                                    position: "absolute",
+                                    right: 14,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    background: "none",
+                                    border: "none",
+                                    cursor: "pointer",
+                                    color: T.muted,
+                                    display: "flex",
+                                    alignItems: "center",
+                                    padding: 0,
+                                }}
+                            >
+                                {showPassword ? (
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                                        <path d="M17.94 17.94A10.07 10.07 0 0 1 12 20c-7 0-11-8-11-8a18.45 18.45 0 0 1 5.06-5.94" />
+                                        <path d="M9.9 4.24A9.12 9.12 0 0 1 12 4c7 0 11 8 11 8a18.5 18.5 0 0 1-2.16 3.19" />
+                                        <line x1="1" y1="1" x2="23" y2="23" />
+                                    </svg>
+                                ) : (
+                                    <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                                        <path d="M1 12s4-8 11-8 11 8 11 8-4 8-11 8-11-8-11-8z" />
+                                        <circle cx="12" cy="12" r="3" />
+                                    </svg>
+                                )}
+                            </button>
+                        </div>
+
+                        {/* Remember me + Forgot password */}
+                        <div
+                            style={{
                                 display: "flex",
                                 alignItems: "center",
-                                gap: 8,
-                                fontSize: 13,
-                                color: T.muted,
-                                cursor: "pointer",
+                                justifyContent: "space-between",
+                                marginBottom: 24,
                             }}
                         >
-                            <input
-                                type="checkbox"
-                                checked={rememberMe}
-                                onChange={(e) => setRememberMe(e.target.checked)}
-                                style={{ accentColor: T.gold, width: 14, height: 14 }}
-                            />
-                            Remember me
-                        </label>
-                        <a
-                            href="#"
+                            <label
+                                style={{
+                                    display: "flex",
+                                    alignItems: "center",
+                                    gap: 8,
+                                    fontSize: 13,
+                                    color: T.muted,
+                                    cursor: "pointer",
+                                }}
+                            >
+                                <input
+                                    type="checkbox"
+                                    checked={rememberMe}
+                                    onChange={(e) => setRememberMe(e.target.checked)}
+                                    style={{ accentColor: T.gold, width: 14, height: 14 }}
+                                />
+                                Remember me
+                            </label>
+                            <a
+                                href="#"
+                                style={{
+                                    fontSize: 13,
+                                    color: T.gold,
+                                    fontWeight: 600,
+                                    textDecoration: "none",
+                                }}
+                            >
+                                Forgot password?
+                            </a>
+                        </div>
+
+                        {/* Login Button */}
+                        <button
                             style={{
-                                fontSize: 13,
-                                color: T.gold,
-                                fontWeight: 600,
-                                textDecoration: "none",
+                                width: "100%",
+                                padding: "13px",
+                                background: T.navy,
+                                color: "#fff",
+                                border: "none",
+                                borderRadius: 8,
+                                fontSize: 15,
+                                fontWeight: 700,
+                                cursor: "pointer",
+                                display: "flex",
+                                alignItems: "center",
+                                justifyContent: "center",
+                                gap: 8,
+                                letterSpacing: 0.3,
+                                transition: "background 0.2s, transform 0.1s",
                             }}
+                        // onMouseEnter={(e) => (e.currentTarget.style.background = "#2a2f3d")}
+                        // onMouseLeave={(e) => (e.currentTarget.style.background = T.navy)}
+                        // onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.98)")}
+                        // onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
                         >
-                            Forgot password?
-                        </a>
-                    </div>
-
-                    {/* Login Button */}
-                    <button
-                        style={{
-                            width: "100%",
-                            padding: "13px",
-                            background: T.navy,
-                            color: "#fff",
-                            border: "none",
-                            borderRadius: 8,
-                            fontSize: 15,
-                            fontWeight: 700,
-                            cursor: "pointer",
-                            display: "flex",
-                            alignItems: "center",
-                            justifyContent: "center",
-                            gap: 8,
-                            letterSpacing: 0.3,
-                            transition: "background 0.2s, transform 0.1s",
-                        }}
-                        onMouseEnter={(e) => (e.currentTarget.style.background = "#2a2f3d")}
-                        onMouseLeave={(e) => (e.currentTarget.style.background = T.navy)}
-                        onMouseDown={(e) => (e.currentTarget.style.transform = "scale(0.98)")}
-                        onMouseUp={(e) => (e.currentTarget.style.transform = "scale(1)")}
-                    >
-                        Log in
-                        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
-                            <path d="M5 12h14M12 5l7 7-7 7" />
-                        </svg>
-                    </button>
-
+                            Log in
+                            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5">
+                                <path d="M5 12h14M12 5l7 7-7 7" />
+                            </svg>
+                        </button>
+                    </form>
                     {/* Divider */}
                     <div
                         style={{
@@ -397,28 +423,18 @@ export default function SignInPage() {
                     </div>
 
                     {/* Social Buttons */}
-                    <div className="space-y-2.5 sm:space-y-3 md:space-y-4 lg:space-y-3">
-                        <div className="flex justify-between gap-3 sm:gap-4">
-                            <button className="w-full flex items-center justify-center px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 lg:py-2 xl:py-2.5 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition cursor-pointer">
-                                <FcGoogle className="w-5 h-5 sm:w-6 sm:h-6" />
-                            </button>
 
-                            <button className="w-full flex items-center justify-center px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 lg:py-2 xl:py-2.5 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition cursor-pointer">
-                                <FaApple className="w-5 h-5 sm:w-6 sm:h-6" />
-                            </button>
+                    {/* Social Buttons */}
+                    <button className="w-full flex items-center justify-center gap-3 px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 lg:py-2 xl:py-2 border border-gray-300 rounded-xl bg-white hover:bg-gray-50 transition cursor-pointer">
+                        <FcGoogle className="w-5 h-5 sm:w-7 sm:h-7" />
+                        <p className="text-[#C59132] text-base">Continue with Google</p>
+                    </button>
 
-                            <button className="w-full flex items-center justify-center px-3 sm:px-4 py-2 sm:py-2.5 md:py-3 lg:py-2 xl:py-2.5 border border-gray-300 rounded-lg bg-white hover:bg-gray-50 transition cursor-pointer">
-                                <FaLinkedin className="w-5 h-5 sm:w-6 sm:h-6 text-blue-600" />
-                            </button>
-                        </div>
-
-                        {/* Sign up link */}
-                        <p style={{ margin: "0 0 20px 0" }} className="text-center text-xs sm:text-sm md:text-sm lg:text-sm text-[#7A8099] ">
-                            Don&apos;t have an account?
-                            <Link href="/sign-up" className="text-[#A68A3E] hover:text-[#001F4D] font-bold underline">  Sign up</Link>
-                        </p>
-                    </div>
-
+                    {/* Sign up link */}
+                    <p style={{ margin: "20px 0 20px 0" }} className="text-center text-xs sm:text-sm md:text-sm lg:text-sm text-[#7A8099] ">
+                        Don&apos;t have an account?
+                        <Link href="/sign-up" className="text-[#A68A3E] hover:text-[#001F4D] font-bold underline">  Sign up</Link>
+                    </p>
                 </div>
             </div>
 

@@ -120,7 +120,7 @@ export default function TradeHeroSection() {
               boxShadow: "0 4px 20px rgba(37,99,235,0.28)",
               transition: "background 0.18s, transform 0.15s, box-shadow 0.18s",
             }}>
-            Post Your First Job Free 
+           Start Your Journey
             <FaArrowRightLong size={20}/>
            
           </button>
