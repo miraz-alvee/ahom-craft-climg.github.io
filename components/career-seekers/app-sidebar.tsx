@@ -3,10 +3,16 @@ import * as React from "react";
 import {
     ChevronDown,
     LayoutDashboard,
-    BarChart3,
     Calendar,
-
+    FormInputIcon,
+    MessageCircle,
+    BriefcaseBusiness,
+    GraduationCap,
+    FileText,
+    UserRoundPen,
+    Wrench
 } from "lucide-react";
+
 import { usePathname } from "next/navigation";
 import {
     Sidebar,
@@ -19,7 +25,9 @@ import {
     SidebarRail,
     SidebarFooter,
     useSidebar,
+    
 } from "@/components/ui/sidebar";
+
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -36,7 +44,7 @@ function NavItem({
     isActive,
     isCollapsed,
 }: {
-    item: { title: string; url: string; badge?: string; icon: React.ElementType };
+    item: { title: string; url: string; icon: React.ElementType };
     isActive: boolean;
     isCollapsed: boolean;
     hasBadge?: boolean;
@@ -51,7 +59,7 @@ function NavItem({
                         className={`flex items-center ${isCollapsed ? "justify-center px-0 py-2 w-full" : "justify-between px-4 py-3"
                             } rounded-lg text-sm transition-all duration-300 ease-in-out group ${isActive
                                 ? "bg-linear-to-r from-[#EFF6FF] to-[#EFF6FF]/30 backdrop-blur-xl text-white font-medium border border-gray-400/50 shadow-lg shadow-gray-400/20"
-                                : "text-gray-300 hover:bg-white/5 hover:backdrop-blur-sm hover:text-white hover:border hover:border-yellow-400/30 hover:shadow-md hover:shadow-yellow-400/10 border border-transparent"
+                                : "text-gray-300 hover:bg-white/5 hover:backdrop-blur-sm hover:text-white hover:border hover:border-gray-400/30 hover:shadow-md hover:shadow-gray-400/10 border border-transparent"
                             }`}
                     >
                         <div className={`flex items-center ${isCollapsed ? "gap-0" : "gap-3"}`}>
@@ -76,20 +84,47 @@ const data = {
         {
             title: "Dashboard",
             url: "/career-seeker",
-            badge: "Today",
             icon: LayoutDashboard,
         },
         {
             title: "Jobs",
             url: "/career-seeker/jobs",
-            badge: "Pulse",
-            icon: BarChart3,
+            icon: BriefcaseBusiness,
         },
         {
-            title: "Calendar",
-            url: "/job-seeker/calendar",
-            badge: "Schedule",
+            title: "Applied",
+            url: "/career-seeker/applied",
             icon: Calendar,
+        },
+        {
+            title: "Forum",
+            url: "/career-seeker/forum",
+            icon: FormInputIcon,
+        },
+        {
+            title: "Message",
+            url: "/career-seeker/message",
+            icon: MessageCircle,
+        },
+        {
+            title: "Courses",
+            url: "/career-seeker/courses",
+            icon: GraduationCap,
+        },
+        {
+            title: "Resume",
+            url: "/career-seeker/resume",
+            icon: FileText,
+        },
+        {
+            title: "Tools",
+            url: "/career-seeker/tools",
+            icon: Wrench,
+        },
+        {
+            title: "Profile",
+            url: "/career-seeker/profile",
+            icon: UserRoundPen,
         },
     ],
 };
@@ -145,9 +180,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             {!isCollapsed &&
                 <SidebarFooter className="p-4 bg-[#0f172a]">
                     <div className="relative bg-linear-to-br from-white/10 via-white/5 to-transparent backdrop-blur-xl rounded-2xl border border-white/20 shadow-2xl overflow-hidden group hover:border-yellow-400/40 transition-all duration-500 hover:shadow-yellow-400/10">
-                        {/* Gradient overlay for extra depth */}
-                        {/* <div className="absolute inset-0 bg-linear-to-br from-yellow-400/5 via-transparent to-blue-500/5 opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div> */}
-
+        
                         <div className="relative flex items-center justify-between p-4">
                             <div className="flex items-center gap-3">
                                 <div className="relative w-12 h-12 rounded-full overflow-hidden shrink-0 ring-2 ring-yellow-400/30 group-hover:ring-yellow-400/60 transition-all duration-300">
