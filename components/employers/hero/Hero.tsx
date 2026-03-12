@@ -1,6 +1,7 @@
 import Image from "next/image";
 import bgImage from "@/public/images/home/bg-image.png";
 import { FaArrowRightLong } from "react-icons/fa6";
+import Link from "next/link";
 
 export default function EmployersHeroSection() {
   return (
@@ -84,8 +85,8 @@ export default function EmployersHeroSection() {
             letterSpacing: "-0.02em",
           }}
         >
-            Hire Smarter&nbsp;, Faster
-         
+          Hire Smarter&nbsp;, Faster
+
         </h1>
 
         {/* Subtext */}
@@ -98,32 +99,34 @@ export default function EmployersHeroSection() {
             maxWidth: "620px",
           }}
         >
-          Access top talent, streamline your hiring process, and build your dream 
+          Access top talent, streamline your hiring process, and build your dream
           team with powerful recruitment tools.
         </p>
 
         {/* CTA Button */}
         <div className="anim-buttons font-inter text-sm transition-all duration-300 drop-shadow-lg hover:drop-shadow-2xl hover:scale-105 transform whitespace-nowrap">
-          <button
-            style={{
-              display: "inline-flex",
-              alignItems: "center",
-              gap: "20px",
-              background: "#2563EB",
-              color: "#fff",
-              border: "none",
-              borderRadius: "12px",
-              padding: "16px 28px",
-              fontWeight: 600,
-              cursor: "pointer",
-              letterSpacing: "0.01em",
-              boxShadow: "0 4px 20px rgba(37,99,235,0.28)",
-              transition: "background 0.18s, transform 0.15s, box-shadow 0.18s",
-            }}>
-            Post Your First Job Free 
-            <FaArrowRightLong size={20}/>
-           
-          </button>
+          <Link href="/sign-up">
+            <button
+              style={{
+                display: "inline-flex",
+                alignItems: "center",
+                gap: "20px",
+                background: "#2563EB",
+                color: "#fff",
+                border: "none",
+                borderRadius: "12px",
+                padding: "16px 28px",
+                fontWeight: 600,
+                cursor: "pointer",
+                letterSpacing: "0.01em",
+                boxShadow: "0 4px 20px rgba(37,99,235,0.28)",
+                transition: "background 0.18s, transform 0.15s, box-shadow 0.18s",
+              }}>
+              Post Your First Job Free
+              <FaArrowRightLong size={20} />
+
+            </button>
+          </Link>
         </div>
       </div>
 
@@ -144,6 +147,6 @@ export default function EmployersHeroSection() {
           section { padding: 0 8px !important; }
         }
       `}</style>
-    </section>
+    </section >
   );
 }

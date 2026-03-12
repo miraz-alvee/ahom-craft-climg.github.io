@@ -79,7 +79,7 @@ export default function SignUpPage() {
         console.log('Form submitted successfully:', { email, password });
 
         // Navigate to the home page after successful sign-up
-        router.push('/'); // Redirects the user to the /home route
+        router.push('/career-seeker'); // Redirects the user to the /home route
     };
 
     return (
