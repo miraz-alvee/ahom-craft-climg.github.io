@@ -65,8 +65,7 @@ export default function CoursePage() {
 
   return (
     <div className="min-h-screen bg-[#f4f6fb]">
-      <div className="px-10 py-6">
-
+      <div className="px-8 py-6">
         {/* Header */}
         <div className="mb-6">
           <h1 className="font-inter text-2xl font-bold">Courses & Learning</h1>

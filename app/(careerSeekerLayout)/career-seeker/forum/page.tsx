@@ -108,8 +108,8 @@ export default function JobForum() {
           <div style={{ marginBottom: 28 }}>
             <h1
               style={{
-                fontSize: 20,
-                fontWeight: 800,
+                fontSize: 24,
+                fontWeight: 700,
                 color: "#111827",
                 marginBottom: 4,
               }}
