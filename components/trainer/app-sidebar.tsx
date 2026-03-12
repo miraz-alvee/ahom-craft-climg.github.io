@@ -3,14 +3,12 @@ import * as React from "react";
 import {
     ChevronDown,
     LayoutDashboard,
-    Calendar,
-    FormInputIcon,
     MessageCircle,
-    BriefcaseBusiness,
+    MessagesSquare,
+    Wrench,
+    Plus,
     GraduationCap,
-    FileText,
-    UserRoundPen,
-    Wrench
+    UserRoundPen
 } from "lucide-react";
 
 import { usePathname } from "next/navigation";
@@ -89,22 +87,22 @@ const data = {
         {
             title: "Messages",
             url: "/trainer/message",
-            icon: BriefcaseBusiness,
+            icon: MessageCircle,
         },
         {
             title: "Forum",
             url: "/trainer/forum",
-            icon: Calendar,
+            icon: MessagesSquare,
         },
         {
             title: "Tools",
             url: "/trainer/tools",
-            icon: FormInputIcon,
+            icon: Wrench,
         },
         {
             title: "New Course",
             url: "/trainer/new-course",
-            icon: MessageCircle,
+            icon: Plus,
         },
         {
             title: "My Courses",
@@ -114,7 +112,7 @@ const data = {
         {
             title: "Profile",
             url: "/trainer/profile",
-            icon: FileText,
+            icon: UserRoundPen,
         }
     ],
 };
