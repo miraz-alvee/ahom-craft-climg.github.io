@@ -15,7 +15,8 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { CareerAppSidebar } from "@/components/career-seekers/app-sidebar";
+
+import { EmployerAppSidebar } from "@/components/employer-role-sidebar/app-sidebar";
 
 export default function JobSeekerLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -35,7 +36,7 @@ export default function JobSeekerLayout({ children }: { children: React.ReactNod
     };
     return (
         <SidebarProvider>
-            <CareerAppSidebar />
+            <EmployerAppSidebar />
             <SidebarInset>
                 <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
                     <SidebarTrigger className="-ml-1" />

@@ -49,7 +49,7 @@ const DEFAULT = {
 const STATUS_COLOR = { "Interview Scheduled": "#2563eb", "Under Review": "#d97706", "Offer Received": "#16a34a", "Rejected": "#dc2626" };
 
 /* ─── Tiny helpers ─────────────────────────────────────────── */
-function Inp({ val, onChange, style, wide }) {
+function Inp({ val, onChange, style, wide }:any) {
   return (
     <input value={val} onChange={e => onChange(e.target.value)}
       style={{ fontFamily: "inherit", fontSize: "inherit", color: "inherit", fontWeight: "inherit",
@@ -57,7 +57,7 @@ function Inp({ val, onChange, style, wide }) {
         padding: "2px 7px", width: wide ? "100%" : "auto", ...style }} />
   );
 }
-function Textarea({ val, onChange, rows = 3 }) {
+function Textarea({ val, onChange, rows = 3 }:any) {
   return (
     <textarea value={val} onChange={e => onChange(e.target.value)} rows={rows}
       style={{ fontFamily: "inherit", fontSize: 13.5, color: "#374151", lineHeight: 1.7,
@@ -65,7 +65,7 @@ function Textarea({ val, onChange, rows = 3 }) {
         padding: "8px 10px", outline: "none", resize: "vertical" }} />
   );
 }
-function Divider({ title }) {
+function Divider({ title }:any) {
   return (
     <div style={{ marginBottom: 14 }}>
       <div style={{ fontSize: 14, fontWeight: 800, color: "#111827", marginBottom: 5, letterSpacing: "0.01em" }}>{title}</div>
@@ -73,7 +73,7 @@ function Divider({ title }) {
     </div>
   );
 }
-function PanelSection({ title, children }) {
+function PanelSection({ title, children }:any) {
   return (
     <div style={{ marginBottom: 22 }}>
       <div style={{ fontSize: 11, fontWeight: 800, color: "#9ca3af", letterSpacing: "0.08em", textTransform: "uppercase", marginBottom: 10 }}>{title}</div>
@@ -81,7 +81,7 @@ function PanelSection({ title, children }) {
     </div>
   );
 }
-function PanelBtn({ label, icon, onClick, variant = "ghost" }) {
+function PanelBtn({ label, icon, onClick, variant = "ghost" }: { label: string; icon: string; onClick: () => void; variant?: "ghost" | "primary" | "danger" | "success" }) {
   const styles = {
     ghost: { bg: "#f3f4f6", color: "#374151", border: "1px solid #e5e7eb" },
     primary: { bg: "#4f63e7", color: "#fff", border: "none" },
@@ -108,18 +108,18 @@ export default function ResumePage() {
   const [newSkill, setNewSkill] = useState("");
   const [activePanel, setActivePanel] = useState("edit"); // edit | tips
 
-  const set = (f, v) => setData(d => ({ ...d, [f]: v }));
-  const updExp = (id, f, v) => setData(d => ({ ...d, experience: d.experience.map(e => e.id === id ? { ...e, [f]: v } : e) }));
-  const updBullet = (id, i, v) => setData(d => ({ ...d, experience: d.experience.map(e => e.id === id ? { ...e, bullets: e.bullets.map((b, j) => j === i ? v : b) } : e) }));
-  const addBullet = id => setData(d => ({ ...d, experience: d.experience.map(e => e.id === id ? { ...e, bullets: [...e.bullets, ""] } : e) }));
-  const delBullet = (id, i) => setData(d => ({ ...d, experience: d.experience.map(e => e.id === id ? { ...e, bullets: e.bullets.filter((_, j) => j !== i) } : e) }));
+  const set = ({f, v}:any) => setData(d => ({ ...d, [f]: v }));
+  const updExp = ({id, f, v}:any) => setData(d => ({ ...d, experience: d.experience.map(e => e.id === id ? { ...e, [f]: v } : e) }));
+  const updBullet = ({id, i, v}:any) => setData(d => ({ ...d, experience: d.experience.map(e => e.id === id ? { ...e, bullets: e.bullets.map((b, j) => j === i ? v : b) } : e) }));
+  const addBullet = (id: number) => setData(d => ({ ...d, experience: d.experience.map(e => e.id === id ? { ...e, bullets: [...e.bullets, ""] } : e) }));
+  const delBullet = (id: number, i: number) => setData(d => ({ ...d, experience: d.experience.map(e => e.id === id ? { ...e, bullets: e.bullets.filter((_, j) => j !== i) } : e) }));
   const addExp = () => setData(d => ({ ...d, experience: [...d.experience, { id: Date.now(), role: "New Role", company: "Company", location: "City", start: "Month Year", end: "Present", bullets: ["Achievement here"] }] }));
-  const delExp = id => setData(d => ({ ...d, experience: d.experience.filter(e => e.id !== id) }));
-  const updEdu = (id, f, v) => setData(d => ({ ...d, education: d.education.map(e => e.id === id ? { ...e, [f]: v } : e) }));
+  const delExp = (id:any) => setData(d => ({ ...d, experience: d.experience.filter(e => e.id !== id) }));
+  const updEdu = ({id, f, v}:any) => setData(d => ({ ...d, education: d.education.map(e => e.id === id ? { ...e, [f]: v } : e) }));
   const addEdu = () => setData(d => ({ ...d, education: [...d.education, { id: Date.now(), degree: "Degree", school: "University", start: "Year", end: "Year" }] }));
-  const delEdu = id => setData(d => ({ ...d, education: d.education.filter(e => e.id !== id) }));
+  const delEdu = (id:any) => setData(d => ({ ...d, education: d.education.filter(e => e.id !== id) }));
   const addSkill = () => { if (newSkill.trim()) { setData(d => ({ ...d, skills: [...d.skills, newSkill.trim()] })); setNewSkill(""); } };
-  const delSkill = i => setData(d => ({ ...d, skills: d.skills.filter((_, j) => j !== i) }));
+  const delSkill = (i:any) => setData(d => ({ ...d, skills: d.skills.filter((_, j) => j !== i) }));
   const resetData = () => { setData(DEFAULT); setEditing(false); };
 
   return (

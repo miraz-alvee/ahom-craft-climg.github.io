@@ -125,7 +125,7 @@ export default function JobBoard() {
     const recent = JOBS.slice(0, 4);
 
     return (
-        <div style={{ minHeight: "100vh", background: "#F9FAFB", fontFamily: "'DM Sans', 'Segoe UI', sans-serif" }}>
+        <div style={{ minHeight: "100vh", background: "#F9FAFB", fontFamily: "'Inter', sans-serif"}}>
 
             <div className="text-[#5c4e4e] bg-[#F9FAFB] px-8">
                 <input value={search} onChange={e => setSearch(e.target.value)} onKeyDown={e => e.key === "Enter" && setSearched(true)}

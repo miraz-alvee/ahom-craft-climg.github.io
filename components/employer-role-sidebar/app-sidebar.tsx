@@ -82,54 +82,54 @@ function NavItem({
 const data = {
     home: [
         {
-            title: "Dashboard",
-            url: "/career-seeker",
+            title: "Home",
+            url: "/employer",
             icon: LayoutDashboard,
         },
         {
             title: "Jobs",
-            url: "/career-seeker/jobs",
+            url: "/employer/jobs",
             icon: BriefcaseBusiness,
         },
-        {
+         {
             title: "Applied",
-            url: "/career-seeker/applied",
+            url: "/employer/applied",
             icon: Calendar,
         },
         {
             title: "Forum",
-            url: "/career-seeker/forum",
+            url: "/employer/forum",
             icon: FormInputIcon,
         },
         {
             title: "Message",
-            url: "/career-seeker/message",
+            url: "/employer/message",
             icon: MessageCircle,
         },
         {
             title: "Courses",
-            url: "/career-seeker/courses",
+            url: "/employer/courses",
             icon: GraduationCap,
         },
         {
             title: "Resume",
-            url: "/career-seeker/resume",
+            url: "/employer/resume",
             icon: FileText,
         },
         {
             title: "Tools",
-            url: "/career-seeker/tools",
+            url: "/employer/tools",
             icon: Wrench,
         },
         {
             title: "Profile",
-            url: "/career-seeker/profile",
+            url: "/employer/profile",
             icon: UserRoundPen,
         },
-    ],
+    ]
 };
 
-export function CareerAppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function EmployerAppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     const pathname = usePathname();
     const { state } = useSidebar();
     const isCollapsed = state === "collapsed";
