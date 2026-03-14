@@ -2,13 +2,13 @@
 import * as React from "react";
 import {
     ChevronDown,
-    LayoutDashboard,
-    MessageCircle,
-    MessagesSquare,
+    House,
+    MessageSquare,
+    UsersRound,
     Wrench,
-    Plus,
+    SquarePlus,
     GraduationCap,
-    UserRoundPen
+    User
 } from "lucide-react";
 
 import { usePathname } from "next/navigation";
@@ -30,7 +30,6 @@ import Link from "next/link";
 import Image from "next/image";
 import {
     Tooltip,
-    TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 
@@ -80,19 +79,19 @@ function NavItem({
 const data = {
     home: [
         {
-            title: "Dashboard",
+            title: "Home",
             url: "/trainer",
-            icon: LayoutDashboard,
+            icon: House,
         },
         {
             title: "Messages",
             url: "/trainer/message",
-            icon: MessageCircle,
+            icon: MessageSquare,
         },
         {
             title: "Forum",
             url: "/trainer/forum",
-            icon: MessagesSquare,
+            icon: UsersRound,
         },
         {
             title: "Tools",
@@ -102,7 +101,7 @@ const data = {
         {
             title: "New Course",
             url: "/trainer/new-course",
-            icon: Plus,
+            icon: SquarePlus,
         },
         {
             title: "My Courses",
@@ -112,7 +111,7 @@ const data = {
         {
             title: "Profile",
             url: "/trainer/profile",
-            icon: UserRoundPen,
+            icon: User,
         }
     ],
 };
