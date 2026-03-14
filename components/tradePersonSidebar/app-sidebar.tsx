@@ -88,7 +88,7 @@ const data = {
         },
         {
             title: "Messages",
-            url: "/trade-person/messages",
+            url: "/trade-person/message",
             icon: MessageSquare,
         },
         {
@@ -103,7 +103,7 @@ const data = {
         },
         {
             title: "Jobs",
-            url: "/trade-person/jobs",
+            url: "/trade-person/#",
             icon: BriefcaseBusiness,
         },
         {
@@ -113,17 +113,17 @@ const data = {
         },
         {
             title: "My Courses",
-            url: "/trade-person/my-courses",
+            url: "/trade-person/#",
             icon: GraduationCap,
         },
         {
             title: "Resume",
-            url: "/trade-person/resume",
+            url: "/trade-person/#",
             icon: FileText,
         },
         {
             title: "Profile",
-            url: "/trade-person/profile",
+            url: "/trade-person/#",
             icon: User,
         }
     ],
