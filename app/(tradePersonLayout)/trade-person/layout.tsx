@@ -15,14 +15,14 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { AppSidebar } from "@/components/trainerSidebar/app-sidebar";
+import { AppSidebar } from "@/components/tradePersonSidebar/app-sidebar";
 
-export default function TrainerLayout({ children }: { children: React.ReactNode }) {
+export default function tradePersonLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
 
     // Format the pathname to a readable title
     const getPageTitle = () => {
-        if (pathname === "/trainer") return "Dashboard";
+        if (pathname === "/trade-person") return "Dashboard";
 
         const segments = pathname.split("/").filter(Boolean);
         const lastSegment = segments[segments.length - 1];

@@ -2,13 +2,15 @@
 import * as React from "react";
 import {
     ChevronDown,
-    LayoutDashboard,
-    MessageCircle,
-    MessagesSquare,
+    House,
+    MessageSquare,
+    UsersRound,
     Wrench,
-    Plus,
+    BriefcaseBusiness,
+    SquarePlus,
     GraduationCap,
-    UserRoundPen
+    FileText,
+    User
 } from "lucide-react";
 
 import { usePathname } from "next/navigation";
@@ -80,39 +82,49 @@ function NavItem({
 const data = {
     home: [
         {
-            title: "Dashboard",
-            url: "/trainer",
-            icon: LayoutDashboard,
+            title: "Home",
+            url: "/trade-person",
+            icon: House,
         },
         {
             title: "Messages",
-            url: "/trainer/message",
-            icon: MessageCircle,
+            url: "/trade-person/messages",
+            icon: MessageSquare,
         },
         {
             title: "Forum",
-            url: "/trainer/forum",
-            icon: MessagesSquare,
+            url: "/trade-person/forum",
+            icon: UsersRound,
         },
         {
             title: "Tools",
-            url: "/trainer/tools",
+            url: "/trade-person/tools",
             icon: Wrench,
         },
         {
+            title: "Jobs",
+            url: "/trade-person/jobs",
+            icon: BriefcaseBusiness,
+        },
+        {
             title: "New Course",
-            url: "/trainer/new-course",
-            icon: Plus,
+            url: "/trade-person/new-course",
+            icon: SquarePlus,
         },
         {
             title: "My Courses",
-            url: "/trainer/my-courses",
+            url: "/trade-person/my-courses",
             icon: GraduationCap,
         },
         {
+            title: "Resume",
+            url: "/trade-person/resume",
+            icon: FileText,
+        },
+        {
             title: "Profile",
-            url: "/trainer/profile",
-            icon: UserRoundPen,
+            url: "/trade-person/profile",
+            icon: User,
         }
     ],
 };
