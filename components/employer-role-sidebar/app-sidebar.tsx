@@ -91,11 +91,11 @@ const data = {
             url: "/employer/jobs",
             icon: BriefcaseBusiness,
         },
-         {
-            title: "Applied",
-            url: "/employer/applied",
-            icon: Calendar,
-        },
+        //  {
+        //     title: "Applied",
+        //     url: "/employer/applied",
+        //     icon: Calendar,
+        // },
         {
             title: "Forum",
             url: "/employer/forum",
@@ -106,11 +106,11 @@ const data = {
             url: "/employer/message",
             icon: MessageCircle,
         },
-        {
-            title: "Courses",
-            url: "/employer/courses",
-            icon: GraduationCap,
-        },
+        // {
+        //     title: "Courses",
+        //     url: "/employer/courses",
+        //     icon: GraduationCap,
+        // },
         {
             title: "Resume",
             url: "/employer/resume",

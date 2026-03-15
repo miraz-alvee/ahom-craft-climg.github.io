@@ -13,7 +13,7 @@ const initialCourses = [
 export default function MyCourses() {
   const [courses, setCourses] = useState(initialCourses);
 
-  const handleDelete = (id) => {
+  const handleDelete = (id: number) => {
     setCourses(courses.filter((c) => c.id !== id));
   };
 
