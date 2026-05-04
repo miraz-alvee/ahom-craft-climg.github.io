@@ -209,7 +209,7 @@ export default function SignUpPage() {
                             display: "flex",
                             alignItems: "center",
                             gap: 8,
-                            marginBottom: 20,
+                            marginBottom: 12,
                         }}
                     >
                         <div
@@ -240,7 +240,7 @@ export default function SignUpPage() {
                             fontSize: 28,
                             fontWeight: 700,
                             lineHeight: 1.15,
-                            margin: "0 0 6px 0",
+                            margin: "0 0 4px 0",
                             color: T.navy,
                         }}
                     >
