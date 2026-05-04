@@ -8,7 +8,7 @@ export default function CareerHeroSection() {
     <section
       style={{
         background:
-          "linear-gradient(135deg, #EFF6FF 25%, #FFFFFF 60.36%, #ECFEFF 95.71%)",
+        "linear-gradient(135deg, #EFF6FF 25%, #FFFFFF 60.36%, #ECFEFF 95.71%)",
         minHeight: "560px",
         display: "flex",
         alignItems: "center",

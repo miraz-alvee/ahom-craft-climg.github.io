@@ -6,7 +6,8 @@ import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
 
-import CraftClimbLogo from "@/public/images/login/logo.png"
+// import CraftClimbLogo from "@/public/images/login/logo.png"
+import CraftClimbLogo1 from "@/public/images/login/nav-logo.png"
 
 export default function Navbar() {
     const pathname = usePathname();
@@ -36,14 +37,15 @@ export default function Navbar() {
     };
 
     return (
-        <nav className="bg-[#FFFFFF] sticky top-0 z-50">
-            <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-46">
+        <nav className="bg-[#ffffff] sticky top-0 z-50 py-1 md:py-0">
+            <div className="w-full px-4 sm:px-6 lg:px-8 xl:px-12 2xl:px-46 mb-2">
                 <div className="flex items-center justify-between h-16 sm:h-18 lg:h-20">
                     {/* Logo */}
+
                     <Link href="/" className="flex items-center space-x-2 group shrink-0">
-                        <div className="w-28 h-10 sm:w-32 sm:h-12 md:w-36 md:h-12 lg:w-40 lg:h-16 relative transition-transform duration-300 group-hover:scale-105 bg-none mix-blend-multiply">
+                        <div className="w-50 md:w-60 h-20 relative transition-transform duration-300 group-hover:scale-105 bg-none mix-blend-multiply">
                             <Image
-                                src={CraftClimbLogo}
+                                src={CraftClimbLogo1}
                                 alt="CraftClimb Logo"
                                 fill
                                 className="object-contain"
@@ -53,7 +55,7 @@ export default function Navbar() {
                     </Link>
 
                     {/* Desktop Navigation Links - Hidden on mobile/tablet */}
-                    <div className="hidden lg:flex items-center space-x-14 xl:space-x-16 2xl:space-x-18">
+                    <div className="font-inter hidden lg:flex items-center space-x-14 xl:space-x-16 2xl:space-x-18">
                         {navLinks.map((link) => (
                             <Link
                                 key={link.name}
@@ -116,16 +118,16 @@ export default function Navbar() {
                 className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
                     }`}
             >
-                <div className="px-4 pt-2 pb-4 space-y-3 bg-[#f1f2f4] border-t border-gray-300 shadow-lg">
+                <div className="px-4 pt-2 pb-4 space-y-4 bg-[#f1f2f4] border-t border-gray-300 shadow-lg">
                     {/* Mobile Navigation Links */}
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
                             onClick={closeMobileMenu}
-                            className={`block px-4 py-3 rounded-lg text-base font-medium transition-all duration-200 ${isActive(link.href)
-                                ? "bg-[#e0cb82] text-[#492727]"
-                                : "text-[#707784] hover:bg-gray-200 hover:text-[#474b52]"
+                            className={`block rounded-lg text-lg font-bold transition-all duration-200 ${isActive(link.href)
+                                ? "text-[#492727]"
+                                : "text-[#707784] hover:text-[#474b52]"
                                 }`}
                         >
                             {link.name}
@@ -133,18 +135,18 @@ export default function Navbar() {
                     ))}
 
                     {/* Mobile Auth Buttons */}
-                    <div className="pt-4 space-y-3 border-t border-gray-300">
+                    <div className="pt-2 mb:pt-4 border-t border-gray-300">
                         <Link
                             href="/login"
                             onClick={closeMobileMenu}
-                            className="block w-full text-center px-4 py-3 rounded-lg text-base font-medium text-[#707784] hover:bg-gray-200 hover:text-[#474b52] transition-all duration-200"
+                            className="block w-full text-center text-lg font-bold px-4 py-3 rounded-lg text-[#707784] hover:bg-gray-200 hover:text-[#474b52] transition-all duration-200"
                         >
                             Sign In
                         </Link>
                         <Link
                             href="/sign-up"
                             onClick={closeMobileMenu}
-                            className="block w-full text-center bg-linear-to-r from-[#e0cb82] to-[#ac9044] hover:from-[#d4a547] hover:to-[#c59132] text-[#492727] px-4 py-3 rounded-full text-base font-medium transition-all duration-300 shadow-lg"
+                            className="block w-full text-center text-base font-bold bg-linear-to-r from-[#e0cb82] to-[#ac9044] hover:from-[#d4a547] hover:to-[#c59132] text-[#492727] px-2 md:px-4 py-1 md:py-3 rounded-full transition-all duration-300 shadow-lg"
                         >
                             Get Started — Free
                         </Link>

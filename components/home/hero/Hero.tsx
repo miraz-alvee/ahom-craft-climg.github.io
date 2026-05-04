@@ -1,4 +1,4 @@
-
+import heroImage from "@/public/images/home/hero-section.png"
 
 const stats = [
   { value: '50K+', label: 'Job Seekers' },
@@ -52,7 +52,7 @@ export default function HeroSection() {
               letterSpacing: '0px',
               margin: 0,}}>
 
-            Climb Your Career
+            Climb Your Craft
           </h1>
 
           {/* Subtext */}
