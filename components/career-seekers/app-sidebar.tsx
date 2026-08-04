@@ -37,6 +37,8 @@ import {
 } from "@/components/ui/tooltip";
 
 import JobSeekerMainLogo from "@/public/images/login/logo.png";
+import { selectUser } from "@/redux/features/auth/authSlice";
+import { useAppSelector } from "@/redux/hooks";
 
 // Reusable nav item with tooltip support in collapsed state
 function NavItem({
@@ -129,13 +131,14 @@ const data = {
     ],
 };
 
-export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+export function CareerAppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
+    const user = useAppSelector(selectUser);
     const pathname = usePathname();
     const { state } = useSidebar();
     const isCollapsed = state === "collapsed";
 
     return (
-        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff]">
+        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff] border-2 border-[#f3f4f5]">
             {/* Header with Logo */}
             <SidebarHeader className="p-3">
                 <div className="flex items-center justify-center">
@@ -159,10 +162,10 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                 </div>
             </SidebarHeader>
 
-            <SidebarContent>
+            <SidebarContent className="bg-[#ffffff]">
                 <SidebarGroup className={isCollapsed ? "" : ""}>
                     <SidebarGroupContent>
-                        <SidebarMenu className="space-y-2">
+                        <SidebarMenu className="font-inter space-y-2">
                             {data.home.map((item) => (
                                 <NavItem
                                     key={item.title}
@@ -194,8 +197,8 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
                                     <div className="absolute inset-0 bg-linear-to-br from-yellow-400/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                                 </div>
                                 <div>
-                                    <div className="text-white font-semibold text-base tracking-wide">Moni Roy</div>
-                                    <div className="text-gray-300/80 text-sm font-medium">Job Seeker</div>
+                                    <div className="text-white font-semibold text-base tracking-wide">{user?.full_name}</div>
+                                    <div className="text-gray-300/80 text-sm font-medium">{user?.user_role}</div>
                                 </div>
                             </div>
                             <button className="text-white/70 hover:text-yellow-400 transition-all duration-300 hover:scale-110">

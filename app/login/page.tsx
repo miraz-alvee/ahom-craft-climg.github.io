@@ -5,8 +5,10 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { FaApple, FaLinkedin } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
+import { useLoginMutation } from "@/redux/features/auth/authApi"
+import { useAppDispatch } from "@/redux/hooks"
+import { setUser } from "@/redux/features/auth/authSlice"
 
 const T = {
     gold: "#A68A3E",
@@ -26,8 +28,10 @@ export default function SignInPage() {
     const [rememberMe, setRememberMe] = useState(false)
 
     const router = useRouter()
+    const dispatch = useAppDispatch()
+    const [login] = useLoginMutation()
 
-    const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
+    const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
         event.preventDefault(); // Prevent the default browser form submission
 
         // Perform additional validation here if needed (e.g., password strength)
@@ -36,11 +40,29 @@ export default function SignInPage() {
             return;
         }
 
-        // Process sign-up logic (e.g., send data to an API)
-        console.log('Form submitted successfully:', { email, password });
+        try {
+            const response = await login({ email, password }).unwrap()
+            dispatch(
+                setUser({
+                    user: response.user_details,
+                    token: response.access,
+                })
+            )
 
-        // Navigate to the home page after successful sign-up
-        router.push('/'); // Redirects the user to the /home route
+            const normalizedRole = response.user_details.user_role.toLowerCase().replace(/\s+/g, '_')
+
+            const roleRoutes: Record<string, string> = {
+                trainer: '/trainer',
+                employer: '/employer',
+                career_seeker: '/career-seeker',
+                trade_person: '/trade-person',
+            }
+            alert('Login successful!')
+            router.push(roleRoutes[normalizedRole] ?? '/')
+        } catch (error) {
+            console.error('Login failed:', error)
+            alert('Login failed. Please check your credentials and try again.')
+        }
     };
 
     return (

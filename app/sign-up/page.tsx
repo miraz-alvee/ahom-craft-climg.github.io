@@ -31,7 +31,7 @@ function RoleChip({ label, icon, active, onClick }: any) {
             onMouseEnter={() => setH(true)} onMouseLeave={() => setH(false)}
             style={{
                 flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
-                gap: 6, padding: "14px 10px", borderRadius: 12,
+                gap: 4, padding: "10px 8px", borderRadius: 12,
                 background: active ? `linear-gradient(135deg, rgba(166,138,62,0.08), rgba(166,138,62,0.03))` : h ? "rgba(166,138,62,0.04)" : T.inputBg,
                 border: `1.5px solid ${active ? T.gold : h ? "rgba(166,138,62,0.2)" : "transparent"}`,
                 cursor: "pointer", transition: "all 0.2s ease",
@@ -53,6 +53,7 @@ const roles = [
 ];
 
 export default function SignUpPage() {
+    const [fullName, setFullName] = useState("");
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [showPassword, setShowPassword] = useState(false)
@@ -76,7 +77,7 @@ export default function SignUpPage() {
         }
 
         // Process sign-up logic (e.g., send data to an API)
-        console.log('Form submitted successfully:', { email, password });
+        console.log('Form submitted successfully:', { fullName, email, password });
 
         // Navigate to the home page after successful sign-up
         router.push('/career-seeker'); // Redirects the user to the /home route
@@ -208,7 +209,7 @@ export default function SignUpPage() {
                             display: "flex",
                             alignItems: "center",
                             gap: 8,
-                            marginBottom: 20,
+                            marginBottom: 12,
                         }}
                     >
                         <div
@@ -239,7 +240,7 @@ export default function SignUpPage() {
                             fontSize: 28,
                             fontWeight: 700,
                             lineHeight: 1.15,
-                            margin: "0 0 6px 0",
+                            margin: "0 0 4px 0",
                             color: T.navy,
                         }}
                     >
@@ -257,8 +258,8 @@ export default function SignUpPage() {
                     </p>
 
                     {/* Role selector */}
-                    <div style={{ marginBottom: 22, ...anim(0.18) }}>
-                        <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: T.navyMid, marginBottom: 8, letterSpacing: 0.3 }}>I am a:</label>
+                    <div style={{ marginBottom: 6, ...anim(0.18) }}>
+                        <label style={{ display: "block", fontSize: 12, fontWeight: 600, color: T.navyMid, marginBottom: 4, letterSpacing: 0.3 }}>I am a:</label>
                         <div style={{ display: "flex", gap: 10 }}>
                             {roles.map(r => (
                                 <RoleChip key={r.id} label={r.label} icon={r.icon} active={role === r.id} onClick={() => setRole(r.id)} />
@@ -266,6 +267,63 @@ export default function SignUpPage() {
                         </div>
                     </div>
                     <form onSubmit={handleSubmit}>
+                        {/* Full Name Field */}
+                        <label
+                            style={{
+                                fontSize: 12,
+                                fontWeight: 600,
+                                color: T.navySoft,
+                                marginBottom: 6,
+                                display: "block",
+                            }}
+                        >
+                            Full Name
+                        </label>
+                        <div
+                            style={{
+                                position: "relative",
+                                marginBottom: 18,
+                            }}
+                        >
+                            <span
+                                style={{
+                                    position: "absolute",
+                                    left: 14,
+                                    top: "50%",
+                                    transform: "translateY(-50%)",
+                                    color: T.muted,
+                                    display: "flex",
+                                    alignItems: "center",
+                                }}
+                            >
+                                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.8">
+                                    <circle cx="12" cy="8" r="4" />
+                                    <path d="M4 20c0-3.5 3.5-6 8-6s8 2.5 8 6" />
+                                </svg>
+                            </span>
+
+                            <input
+                                type="text"
+                                placeholder="Your full name"
+                                value={fullName}
+                                onChange={(e) => setFullName(e.target.value)}
+                                required
+                                style={{
+                                    width: "100%",
+                                    boxSizing: "border-box",
+                                    padding: "11px 14px 11px 40px",
+                                    border: "1.5px solid #E8EAF0",
+                                    borderRadius: 8,
+                                    fontSize: 14,
+                                    color: T.navy,
+                                    background: "#F8F9FB",
+                                    outline: "none",
+                                    transition: "border-color 0.2s",
+                                }}
+                                onFocus={(e) => (e.target.style.borderColor = T.gold)}
+                                onBlur={(e) => (e.target.style.borderColor = "#E8EAF0")}
+                            />
+                        </div>
                         {/* Email Field */}
                         <label
                             style={{
