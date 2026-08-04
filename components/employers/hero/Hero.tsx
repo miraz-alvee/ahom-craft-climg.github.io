@@ -1,132 +1,49 @@
 import Image from "next/image";
-import bgImage from "@/public/images/home/bg-image.png";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Link from "next/link";
+import EmployeeHeroImage from "@/public/images/home/employee-image.jpg";
 
 export default function EmployersHeroSection() {
   return (
-    <section
-      style={{
-        background:
-          "linear-gradient(135deg, #EFF6FF 25%, #FFFFFF 60.36%, #ECFEFF 95.71%)",
-        minHeight: "560px",
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        position: "relative",
-        overflow: "hidden",
-      }}
-    >
-      {/* Background image centered */}
-      <div
-        style={{
-          position: "absolute",
-          top: "50%",
-          left: "50%",
-          transform: "translate(-50%, -50%)",
-          width: "100%",
-          height: "100%",
-          zIndex: 0,
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          pointerEvents: "none",
-        }}
-      >
-        <Image
-          src={bgImage}
-          alt=""
-          style={{
-            objectFit: "contain",
-            maxWidth: "1200px",
-            width: "100%",
-            opacity: 0.9,
-          }}
-        />
-      </div>
 
-      {/* Content */}
-      <div
-        style={{
-          position: "relative",
-          zIndex: 1,
-          textAlign: "center",
-          padding: "60px 24px",
-          maxWidth: "1000px",
-          width: "100%",
-          margin: "0 auto",
-        }}
-      >
-        {/* Badge */}
-        <div className="anim-badge font-inter" style={{ marginBottom: "20px" }}>
-          <span
-            style={{
-              display: "inline-block",
-              border: "1px solid #BFDBFE",
-              borderRadius: "999px",
-              padding: "10px 24px",
-              fontSize: "13px",
-              color: "#2563EB",
-              background: "#EFF6FF",
-              backdropFilter: "blur(4px)",
-              letterSpacing: "0.01em",
-            }}
-          >
+    <section id="top" className="relative">
+      <div className="relative h-160 md:h-180 w-full overflow-hidden">
+        <Image
+          src={EmployeeHeroImage}
+          alt="Electrician in a hard hat looking up at scaffolding on a job site"
+          fill
+          priority
+          className="object-cover brightness-80 contrast-100"
+        />
+
+        {/* Content — centered over the image */}
+        <div className="absolute inset-0 z-10 flex flex-col items-center justify-center px-4 text-center sm:px-6">
+          {/* Badge */}
+          <span className="anim-badge mb-4 inline-flex w-fit items-center rounded-full border border-[#F38D27] bg-[#FDF3F0] px-4 py-1.5 text-xs font-medium text-[#F97316] backdrop-blur-sm sm:text-sm">
             For Employers
           </span>
-        </div>
 
-        {/* Heading */}
-        <h1
-          className="anim-heading w-full font-inter font-bold text-2xl md:text-[52px] leading-15"
-          style={{
-            color: "#111827",
-            margin: "0 0 18px",
-            letterSpacing: "-0.02em",
-          }}
-        >
-          Hire Smarter&nbsp;, Faster
+          {/* Heading */}
+          <h1 className="anim-heading mt-5 max-w-3xl font-display text-4xl md:text-6xl font-extrabold leading-[1.05] text-white">
+          {/* <h1 className="anim-heading max-w-3xl font-inter text-3xl font-bold leading-tight text-white sm:text-4xl md:text-5xl lg:text-[52px] lg:leading-[1.1]"> */}
+            Hire Smarter, <span className="text-[#2563EB]">Faster</span>
+          </h1>
 
-        </h1>
+          {/* Subtext */}
+          <p className="anim-sub mt-4 max-w-xl text-sm text-white/85 sm:mt-5 sm:text-base md:text-lg">
+            Access top talent, streamline your hiring process, and build your dream 
+            team with powerful recruitment tools.
+          </p>
 
-        {/* Subtext */}
-        <p
-          className="anim-sub font-inter font-normal leading-7"
-          style={{
-            fontSize: "clamp(0.95rem, 2vw, 1.05rem)",
-            color: "#4B5563",
-            margin: "0 auto 36px",
-            maxWidth: "620px",
-          }}
-        >
-          Access top talent, streamline your hiring process, and build your dream
-          team with powerful recruitment tools.
-        </p>
-
-        {/* CTA Button */}
-        <div className="anim-buttons font-inter text-sm transition-all duration-300 drop-shadow-lg hover:drop-shadow-2xl hover:scale-105 transform whitespace-nowrap">
-          <Link href="/sign-up">
-            <button
-              style={{
-                display: "inline-flex",
-                alignItems: "center",
-                gap: "20px",
-                background: "#2563EB",
-                color: "#fff",
-                border: "none",
-                borderRadius: "12px",
-                padding: "16px 28px",
-                fontWeight: 600,
-                cursor: "pointer",
-                letterSpacing: "0.01em",
-                boxShadow: "0 4px 20px rgba(37,99,235,0.28)",
-                transition: "background 0.18s, transform 0.15s, box-shadow 0.18s",
-              }}>
-              Post Your First Job Free
-              <FaArrowRightLong size={20} />
-
-            </button>
-          </Link>
+          {/* CTA Button */}
+          <div className="anim-buttons mt-6 sm:mt-8">
+            <Link href="/sign-up">
+              <button className="inline-flex items-center gap-2.5 rounded-lg bg-[#2563EB] px-6 py-3.5 text-sm font-semibold text-white shadow-lg shadow-blue-900/30 transition-all duration-300 hover:scale-105 hover:bg-blue-700 hover:shadow-2xl sm:text-base">
+                Start Your Journey
+                <FaArrowRightLong size={16} />
+              </button>
+            </Link>
+          </div>
         </div>
       </div>
 
@@ -139,14 +56,7 @@ export default function EmployersHeroSection() {
         .anim-heading { animation: fadeUp 0.5s 0.08s ease both; }
         .anim-sub     { animation: fadeUp 0.5s 0.16s ease both; }
         .anim-buttons { animation: fadeUp 0.5s 0.24s ease both; }
-
-        @media (max-width: 640px) {
-          section { min-height: 480px !important; }
-        }
-        @media (max-width: 400px) {
-          section { padding: 0 8px !important; }
-        }
       `}</style>
-    </section >
+    </section>
   );
 }

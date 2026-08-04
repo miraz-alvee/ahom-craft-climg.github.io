@@ -138,7 +138,7 @@ export function CareerAppSidebar({ ...props }: React.ComponentProps<typeof Sideb
     const isCollapsed = state === "collapsed";
 
     return (
-        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff]">
+        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff] border-2 border-[#f3f4f5]">
             {/* Header with Logo */}
             <SidebarHeader className="p-3">
                 <div className="flex items-center justify-center">
@@ -162,10 +162,10 @@ export function CareerAppSidebar({ ...props }: React.ComponentProps<typeof Sideb
                 </div>
             </SidebarHeader>
 
-            <SidebarContent>
+            <SidebarContent className="bg-[#ffffff]">
                 <SidebarGroup className={isCollapsed ? "" : ""}>
                     <SidebarGroupContent>
-                        <SidebarMenu className="space-y-2">
+                        <SidebarMenu className="font-inter space-y-2">
                             {data.home.map((item) => (
                                 <NavItem
                                     key={item.title}

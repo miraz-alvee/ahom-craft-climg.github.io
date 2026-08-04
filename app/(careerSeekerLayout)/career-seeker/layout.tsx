@@ -37,7 +37,7 @@ export default function JobSeekerLayout({ children }: { children: React.ReactNod
         <SidebarProvider>
             <CareerAppSidebar />
             <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+                <header className="flex h-18 shrink-0 items-center gap-2 px-4 sticky">
                     <SidebarTrigger className="-ml-1" />
                     <Separator
                         orientation="vertical"
@@ -57,7 +57,7 @@ export default function JobSeekerLayout({ children }: { children: React.ReactNod
                         </BreadcrumbList>
                     </Breadcrumb>
                 </header>
-                <main className="flex-1 w-full">
+                <main className="flex-1 w-full bg-[#F9FAFB]">
                     {children}
                 </main>
             </SidebarInset>

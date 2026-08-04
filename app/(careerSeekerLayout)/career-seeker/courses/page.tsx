@@ -83,7 +83,7 @@ export default function CoursePage() {
         {/* Progress Cards */}
         <div className="grid md:grid-cols-2 gap-6 mb-12">
 
-          <div className="bg-white rounded-xl p-4 shadow-sm border flex gap-4">
+          <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-[#f3f4f5] flex gap-4">
             <div className="w-24 h-24 rounded-lg bg-linear-to-r from-blue-500 to-teal-400 flex items-center justify-center">
               <PlayCircle className="text-white" size={36}/>
             </div>
@@ -106,7 +106,7 @@ export default function CoursePage() {
             </div>
           </div>
 
-          <div className="bg-white rounded-xl p-4 shadow-sm border flex gap-4">
+          <div className="bg-white rounded-xl p-4 shadow-sm border-2 border-[#f3f4f5] flex gap-4">
             <div className="w-24 h-24 rounded-lg bg-linear-to-r from-purple-500 to-pink-500 flex items-center justify-center">
               <PlayCircle className="text-white" size={36}/>
             </div>
@@ -143,7 +143,7 @@ export default function CoursePage() {
             <button
               key={f}
               onClick={() => setFilter(f)}
-              className={`font-inter px-4 py-2 text-sm rounded-full border transition
+              className={`font-inter px-4 py-2 text-sm rounded-full border border-[#e9cae7] transition
                 ${
                   filter === f
                     ? "bg-blue-600 text-white border-blue-600"
@@ -161,7 +161,7 @@ export default function CoursePage() {
           {filteredCourses.map((course, index) => (
             <div
               key={index}
-              className="bg-white rounded-xl shadow-sm border overflow-hidden hover:shadow-md transition"
+              className="bg-white rounded-xl shadow-sm border-none overflow-hidden hover:shadow-md transition"
             >
 
               <div

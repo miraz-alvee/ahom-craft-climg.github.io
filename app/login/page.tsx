@@ -5,7 +5,6 @@ import Image from "next/image"
 import Link from "next/link"
 import { useRouter } from "next/navigation"
 import { useState } from "react"
-import { FaApple, FaLinkedin } from "react-icons/fa"
 import { FcGoogle } from "react-icons/fc"
 import { useLoginMutation } from "@/redux/features/auth/authApi"
 import { useAppDispatch } from "@/redux/hooks"
@@ -49,15 +48,16 @@ export default function SignInPage() {
                     token: response.access,
                 })
             )
-            const normalizedRole = response.user_details.user_role
-                .toLowerCase()
-                .replace(/\s+/g, '_')
+
+            const normalizedRole = response.user_details.user_role.toLowerCase().replace(/\s+/g, '_')
+
             const roleRoutes: Record<string, string> = {
                 trainer: '/trainer',
                 employer: '/employer',
                 career_seeker: '/career-seeker',
                 trade_person: '/trade-person',
             }
+            alert('Login successful!')
             router.push(roleRoutes[normalizedRole] ?? '/')
         } catch (error) {
             console.error('Login failed:', error)
