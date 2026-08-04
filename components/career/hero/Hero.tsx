@@ -12,7 +12,7 @@ export default function CareerHeroSection() {
           alt="Electrician in a hard hat looking up at scaffolding on a job site"
           fill
           priority
-          className="object-cover brightness-80 contrast-100"
+          className="object-cover brightness-70 contrast-100"
         />
 
         {/* Content — centered over the image */}
