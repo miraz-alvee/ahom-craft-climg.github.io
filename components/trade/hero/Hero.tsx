@@ -13,7 +13,7 @@ export default function TradeHeroSection() {
           alt="Electrician in a hard hat looking up at scaffolding on a job site"
           fill
           priority
-          className="object-cover blur-[1px] brightness-90 contrast-100"
+          className="object-cover brightness-70 contrast-100"
         />
 
         {/* Content — centered over the image */}
