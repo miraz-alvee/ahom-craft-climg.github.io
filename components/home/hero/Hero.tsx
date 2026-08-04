@@ -35,7 +35,9 @@ export default function Hero() {
           </span>
 
           <h1 className="mt-5 max-w-2xl font-display text-4xl md:text-6xl font-extrabold leading-[1.05] text-white">
-            Find your path. Find your community.
+            Climb your path.<br/>
+            <span className="text-white/90"> Find your community.</span>
+            
           </h1>
 
           <p className="mt-5 max-w-lg text-lg text-white/85">

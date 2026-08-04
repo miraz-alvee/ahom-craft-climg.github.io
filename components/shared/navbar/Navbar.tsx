@@ -47,43 +47,47 @@ export default function Navbar() {
                         </Link>
                     </div>
 
-
                     {/* Desktop Navigation Links - Hidden on mobile/tablet */}
                     <div className="font-inter hidden lg:flex items-center space-x-10 xl:space-x-12 2xl:space-x-16">
                         {navLinks.map((item) => (
-                            // <Link
-                            //     key={link.name}
-                            //     href={link.href}
-                            //     className={`relative text-sm xl:text-lg font-medium transition-all duration-300 group py-2 whitespace-nowrap ${isActive(link.href)
-                            //         ? "text-[#191919]"
-                            //         : "text-[#191919] hover:text-[#474b52]"
-                            //         }`}
-                            // >
-                            //     {link.name}
-                            //     {/* Animated underline */}
-                            //     <span
-                            //         className={`absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-[#191919] to-[#191919] transition-all duration-300 ${isActive(link.href)
-                            //             ? "w-full"
-                            //             : "w-0 group-hover:w-full"
-                            //             }`}
-                            //     />
-                            // </Link>
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                className={`
+                                    relative
+                                    inline-flex
+                                    flex-col
+                                    items-center
+                                    text-[15px]
+                                    leading-[22.5px]
+                                    font-bold
+                                    duration-200
+                                    transition-colors 
+                                    focus-ring 
+                                    rounded-sm
+                                    pb-1.5
+                                    text-[#3b3b3e]
+                                    ${pathname === item.href ? "" : "hover:text-ink"}
+                                `}>
+                                {/* Link Text Content */}
+                                <span>{item.name}</span>
 
-                             <Link
-                            key={item.name}
-                            href={item.href}
-                            className={`${pathname === item.href ? "" : ""}
-                                text-[15px]
-                                leading-[22.5px]
-                                font-bold
-                                duration-200
-                                hover:text-ink transition-colors focus-ring rounded-sm
-                                ${pathname === item.href
-                                    ? "text-[#3b3b3e]"
-                                    : "text-[#3b3b3e] hover:text-ink"
-                                }`}>
-                            {item.name}
-                        </Link>
+                                {/* Bottom Horizontal Indicator Line */}
+                                <div
+                                    className={`
+                                    absolute 
+                                    bottom-0 
+                                    h-0.5 
+                                    w-full 
+                                    transition-all 
+                                    duration-200
+                                    ${pathname === item.href
+                                        ? "bg-[#3b3b3e] scale-x-100"
+                                        : "bg-transparent scale-x-0 hover:bg-ink"
+                                    }
+                                `}
+                                />
+                            </Link>
                         ))}
                     </div>
 
@@ -138,8 +142,8 @@ export default function Navbar() {
                             className={`block rounded-lg  text-[15px]
                                 leading-[22.5px]
                                 font-bold transition-all duration-200 ${isActive(link.href)
-                                ? "text-[#492727]"
-                                : "text-[#707784] hover:text-[#474b52]"
+                                    ? "text-[#492727]"
+                                    : "text-[#707784] hover:text-[#474b52]"
                                 }`}
                         >
                             {link.name}
