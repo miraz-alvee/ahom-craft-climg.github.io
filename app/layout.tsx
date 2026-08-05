@@ -17,7 +17,7 @@ const geistMono = Geist_Mono({
 
 const inter = Inter({
   variable: "--font-inter",
-   subsets: ["latin"],
+  subsets: ["latin"],
 
 })
 
@@ -39,7 +39,7 @@ export default function RootLayout({
         <Providers>
           <TooltipProvider>{children}</TooltipProvider>
         </Providers>
-        <Toaster />
+        <Toaster richColors position="top-center" />
       </body>
     </html>
   );

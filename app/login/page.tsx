@@ -9,6 +9,7 @@ import { FcGoogle } from "react-icons/fc"
 import { useLoginMutation } from "@/redux/features/auth/authApi"
 import { useAppDispatch } from "@/redux/hooks"
 import { setUser } from "@/redux/features/auth/authSlice"
+import { toast } from 'sonner'
 
 const T = {
     gold: "#A68A3E",
@@ -32,12 +33,11 @@ export default function SignInPage() {
     const [login] = useLoginMutation()
 
     const handleSubmit = async (event: React.FormEvent<HTMLFormElement>) => {
-        event.preventDefault(); // Prevent the default browser form submission
+        event.preventDefault()
 
-        // Perform additional validation here if needed (e.g., password strength)
         if (password.length < 6) {
-            alert('Password must be at least 6 characters long.');
-            return;
+            toast.error('Password must be at least 6 characters long.')
+            return
         }
 
         try {
@@ -57,13 +57,14 @@ export default function SignInPage() {
                 career_seeker: '/career-seeker',
                 trade_person: '/trade-person',
             }
-            alert('Login successful!')
+
             router.push(roleRoutes[normalizedRole] ?? '/')
+            toast.success('Login successful!')
         } catch (error) {
             console.error('Login failed:', error)
-            alert('Login failed. Please check your credentials and try again.')
+            toast.error('Login failed. Please check your credentials and try again.')
         }
-    };
+    }
 
     return (
         <div
