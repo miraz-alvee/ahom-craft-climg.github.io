@@ -3,11 +3,14 @@ import * as React from "react";
 import {
     ChevronDown,
     House,
+    Briefcase,
+    FileCheck2,
     MessageSquare,
     UsersRound,
     Wrench,
     SquarePlus,
     GraduationCap,
+    FileText,
     User,
     LogOut
 } from "lucide-react";
@@ -57,21 +60,25 @@ function NavItem({
                 <TooltipTrigger asChild>
                     <Link
                         href={item.url}
-                        className={`flex items-center ${isCollapsed ? "justify-center px-0 py-2 w-full" : "justify-between px-4 py-3"
-                            } rounded-lg text-sm transition-all duration-300 ease-in-out group ${isActive
-                                ? "bg-linear-to-r from-[#EFF6FF] to-[#EFF6FF]/30 backdrop-blur-xl text-white font-medium border border-gray-400/50 shadow-lg shadow-gray-400/20"
-                                : "text-gray-300 hover:bg-white/5 hover:backdrop-blur-sm hover:text-white hover:border hover:border-gray-400/30 hover:shadow-md hover:shadow-gray-400/10 border border-transparent"
+                        className={`flex items-center ${isCollapsed ? "justify-center px-0 py-3 w-full" : "gap-3 px-4 py-3"
+                            } rounded-2xl transition-colors duration-200 ${isActive
+                                ? "bg-[#EFF6FF]"
+                                : "hover:bg-gray-50"
                             }`}
                     >
-                        <div className={`flex items-center ${isCollapsed ? "gap-0" : "gap-3"}`}>
-                            <Icon
-                                className={`w-5 h-5 shrink-0 transition-all duration-300 ${isActive ? "text-[#2563EB]" : "text-gray-400 group-hover:bg-[#EFF6FF]"
+                        <Icon
+                            className={`w-5 h-5 shrink-0 ${isActive ? "text-[#2563EB]" : "text-[#191919]"
+                                }`}
+                            strokeWidth={2}
+                        />
+                        {!isCollapsed && (
+                            <span
+                                className={`font-inter font-semibold text-[15px] leading-[100%] ${isActive ? "text-[#2563EB]" : "text-[#191919]"
                                     }`}
-                            />
-                            {!isCollapsed && (
-                                <span className={isActive ? "text-[#2563EB] font-inter font-semibold text-[14px] leading-[100%]" : "text-[#191919] font-inter font-semibold text-[14px] leading-[100%]"}>{item.title}</span>
-                            )}
-                        </div>
+                            >
+                                {item.title}
+                            </span>
+                        )}
                     </Link>
                 </TooltipTrigger>
             </Tooltip>
@@ -88,29 +95,34 @@ const data = {
             icon: House,
         },
         {
+            title: "Jobs",
+            url: "/trainer/jobs",
+            icon: Briefcase,
+        },
+        {
+            title: "Applied",
+            url: "/trainer/applied",
+            icon: FileCheck2,
+        },
+        {
             title: "Messages",
             url: "/trainer/message",
             icon: MessageSquare,
         },
         {
-            title: "Forum",
-            url: "/trainer/forum",
-            icon: UsersRound,
+            title: "Courses",
+            url: "/trainer/courses",
+            icon: GraduationCap,
+        },
+        {
+            title: "Resume",
+            url: "/trainer/resume",
+            icon: FileText,
         },
         {
             title: "Tools",
             url: "/trainer/tools",
             icon: Wrench,
-        },
-        {
-            title: "New Course",
-            url: "/trainer/new-course",
-            icon: SquarePlus,
-        },
-        {
-            title: "My Courses",
-            url: "/trainer/my-courses",
-            icon: GraduationCap,
         },
         {
             title: "Profile",
@@ -180,9 +192,9 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
             </SidebarHeader>
 
             <SidebarContent>
-                <SidebarGroup className={isCollapsed ? "" : ""}>
+                <SidebarGroup>
                     <SidebarGroupContent>
-                        <SidebarMenu className="space-y-2">
+                        <SidebarMenu className="space-y-2 px-2">
                             {data.home.map((item) => (
                                 <NavItem
                                     key={item.title}
