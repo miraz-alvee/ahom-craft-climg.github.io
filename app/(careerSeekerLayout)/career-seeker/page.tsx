@@ -1,6 +1,7 @@
 "use client";
 
-import CareerSeekersDashboard from "@/components/career-seekers-dashboard/forumpost/CareerSeekersDashboard";
+
+import CareerSeekersDashboard from "@/components/shared/forumpost/CareerSeekersDashboard";
 import {
   useGetForumsQuery,
 } from "@/redux/features/forum/forumApis";
