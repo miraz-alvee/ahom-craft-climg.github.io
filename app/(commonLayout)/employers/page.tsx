@@ -1,7 +1,7 @@
-import EmployersHeroSection from "@/components/employers/hero/Hero";
-import EmployerSection from "@/components/employers/hire/Hire";
-import PricingSection from "@/components/employers/payment/Price";
-import TeamSection from "@/components/employers/team/Team";
+import EmployersHeroSection from "@/components/employer-role-sidebar/employers/hero/Hero";
+import EmployerSection from "@/components/employer-role-sidebar/employers/hire/Hire";
+import PricingSection from "@/components/employer-role-sidebar/employers/payment/Price";
+import TeamSection from "@/components/employer-role-sidebar/employers/team/Team";
 
 
 export default function EmployersPage() {

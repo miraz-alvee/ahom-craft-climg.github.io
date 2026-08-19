@@ -18,16 +18,16 @@ const categories = [
         title: "Marketing",
         bg: "bg-green-100",
     },
-    {
-        icon: <BarChart3 className="w-5 h-5 text-red-500" />,
-        title: "Finance",
-        bg: "bg-red-100",
-    },
-    {
-        icon: <ShieldCheck className="w-5 h-5 text-blue-600" />,
-        title: "Healthcare",
-        bg: "bg-blue-100",
-    },
+    // {
+    //     icon: <BarChart3 className="w-5 h-5 text-red-500" />,
+    //     title: "Finance",
+    //     bg: "bg-red-100",
+    // },
+    // {
+    //     icon: <ShieldCheck className="w-5 h-5 text-blue-600" />,
+    //     title: "Healthcare",
+    //     bg: "bg-blue-100",
+    // },
     {
         icon: <Award className="w-5 h-5 text-purple-600" />,
         title: "Education",

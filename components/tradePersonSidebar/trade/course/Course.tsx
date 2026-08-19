@@ -74,7 +74,8 @@ export default function TradeCourseSection() {
                 <div className="text-center mb-14">
 
                     <h2 className="font-inter text-3xl md:text-[34px] font-bold text-[#111827] leading-12 tracking-[-0.5px]">
-                      Everything You Need to Teach
+                      
+                      Master you craft, network others buy tools and more.
                     </h2>
 
                     <p className="font-inter text-[#6B7280] font-normal text-base leading-7 mt-3">

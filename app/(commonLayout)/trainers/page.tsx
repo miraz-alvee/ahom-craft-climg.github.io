@@ -1,9 +1,9 @@
-import TrainerSection from "@/components/trainers/course/Course";
-import TrainersHeroSection from "@/components/trainers/hero/Hero";
-import TrainerJobSeekerSection from "@/components/trainers/jobseekers/JobSeekers";
+import TrainerSection from "@/components/trainerSidebar/trainers/course/Course";
+import TrainersHeroSection from "@/components/trainerSidebar/trainers/hero/Hero";
+import TrainerJobSeekerSection from "@/components/trainerSidebar/trainers/jobseekers/JobSeekers";
 
-import TrainerStartSection from "@/components/trainers/start/Start";
-import StepSetion from "@/components/trainers/steps/Steps";
+import TrainerStartSection from "@/components/trainerSidebar/trainers/start/Start";
+import StepSetion from "@/components/trainerSidebar/trainers/steps/Steps";
 
 export default function TrainerPage() {
   return (
