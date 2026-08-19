@@ -33,14 +33,15 @@ function RoleChip({ label, icon, active, onClick }: any) {
                 flex: 1, display: "flex", flexDirection: "column", alignItems: "center", justifyContent: "center",
                 gap: 4, padding: "10px 8px", borderRadius: 12,
                 background: active ? `linear-gradient(135deg, rgba(166,138,62,0.08), rgba(166,138,62,0.03))` : h ? "rgba(166,138,62,0.04)" : T.inputBg,
-                border: `1.5px solid ${active ? T.gold : h ? "rgba(166,138,62,0.2)" : "transparent"}`,
+                border: `1.5px solid ${active ? T.muted : h ? "rgba(166,138,62,0.2)" : "transparent"}`,
                 cursor: "pointer", transition: "all 0.2s ease",
                 fontFamily: T.body,
                 transform: active ? "translateY(-1px)" : "translateY(0)",
                 boxShadow: active ? `0 3px 12px rgba(166,138,62,0.1)` : "none",
             }}>
             <div style={{ color: active ? T.gold : h ? T.goldWarm : T.subtle, transition: "color 0.2s ease" }}>{icon}</div>
-            <span style={{ fontSize: 12, fontWeight: active ? 600 : 500, color: active ? T.gold : h ? T.goldWarm : T.muted, transition: "color 0.2s ease" }}>{label}</span>
+            <span style={{ fontSize: 12, fontWeight: active ? 600 : 500, color: active ? T.goldDeep : h ? T.goldWarm : T.muted,
+                 transition: "color 0.2s ease" }}>{label}</span>
         </button>
     );
 }
@@ -571,13 +572,16 @@ export default function SignUpPage() {
                         </div>
 
                         {/* Login Button */}
+                        {/* <button className="inline-flex items-center gap-2.5 rounded-lg bg-[] px-6 py-3.5 text-sm font-semibold text-white   sm:text-base">
+                                        Start Your Journey
+                                       
+                                      </button> */}
                         <button
                             type="submit"
-                            // className="bg-[#8d8f91]"
+                            className="bg-[#2563EB] shadow-lg shadow-blue-900/30 transition-all duration-300 hover:scale-105 hover:bg-blue-700 hover:shadow-2xl"
                             style={{
                                 width: "100%",
                                 padding: "13px",
-                                background: T.navy,
                                 color: "#fff",
                                 border: "none",
                                 borderRadius: 8,

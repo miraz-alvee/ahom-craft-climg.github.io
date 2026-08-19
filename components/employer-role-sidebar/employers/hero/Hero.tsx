@@ -1,7 +1,7 @@
 import Image from "next/image";
 import { FaArrowRightLong } from "react-icons/fa6";
 import Link from "next/link";
-import EmployeeHeroImage from "@/public/images/home/employee-image.jpg";
+import EmployeeHeroImage from "@/public/images/home/employee-image.png";
 
 export default function EmployersHeroSection() {
   return (
@@ -13,7 +13,7 @@ export default function EmployersHeroSection() {
           alt="Electrician in a hard hat looking up at scaffolding on a job site"
           fill
           priority
-          className="object-cover brightness-80 contrast-100"
+          className="object-cover brightness-90 contrast-100"
         />
 
         {/* Content — centered over the image */}

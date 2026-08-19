@@ -27,7 +27,7 @@ export default function TrainerStartSection() {
                                 boxShadow: "0 4px 20px rgba(37,99,235,0.28)",
                                 transition: "background 0.18s, transform 0.15s, box-shadow 0.18s",
                             }}>
-                            Create Free Account
+                            Apply For An Account
                             <FaArrowRightLong size={20} />
                         </button>
                     </div>

@@ -36,7 +36,7 @@ const features = [
     },
     {
         icon: <Award className="w-5 h-5 text-purple-600" />,
-        title: "community Building",
+        title: "Community Building",
         desc: "Create discussion forums and communities around your courses",
         bg: "bg-purple-100",
     },
