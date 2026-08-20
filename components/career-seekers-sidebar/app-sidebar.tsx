@@ -113,11 +113,11 @@ const data = {
             url: "/career-seeker/courses",
             icon: GraduationCap,
         },
-        {
-            title: "Resume",
-            url: "/career-seeker/resume",
-            icon: FileText,
-        },
+        // {
+        //     title: "Resume",
+        //     url: "/career-seeker/resume",
+        //     icon: FileText,
+        // },
         {
             title: "Tools",
             url: "/career-seeker/tools",

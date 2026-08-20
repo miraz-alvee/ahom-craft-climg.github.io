@@ -2,16 +2,16 @@
 
 import React, { useEffect, useRef, useState } from 'react';
 import { ArrowLeft, MoreVertical, Send } from 'lucide-react';
-import { ChatMessage } from '@/redux/features/career-seeker/chatbot/types';
+import { ChatMessage, SendMessagePayload } from '@/redux/features/career-seeker/chatbot/types';
 import { useGetChatSessionMessagesQuery, useSendChatMessageMutation } from '@/redux/features/career-seeker/chatbot/chatBotApis';
 
-
 interface ChatWindowProps {
-    sessionId: number;
+    sessionId?: number;
     onBack?: () => void;
+    onSessionCreated?: (sessionId: number) => void;
 }
 
-export default function ChatWindow({ sessionId, onBack }: ChatWindowProps) {
+export default function ChatWindow({ sessionId, onBack, onSessionCreated }: ChatWindowProps) {
     const [messageInput, setMessageInput] = useState('');
     // Messages we know about locally before/ahead of the next successful
     // refetch — lets the sent message and the bot reply show up instantly
@@ -20,17 +20,27 @@ export default function ChatWindow({ sessionId, onBack }: ChatWindowProps) {
     const [localMessages, setLocalMessages] = useState<ChatMessage[]>([]);
     const [isBotTyping, setIsBotTyping] = useState(false);
     const bottomRef = useRef<HTMLDivElement | null>(null);
+    // When we create a brand-new session, we hand the real id up to the
+    // parent, which then re-renders us with that id as a prop. That's a
+    // sessionId change like any other — but we don't want the reset effect
+    // below to wipe the messages we just displayed, so we skip it once.
+    const skipNextResetRef = useRef(false);
 
     const {
         data: session,
         isLoading: isMessagesLoading,
         isError: isMessagesError,
-    } = useGetChatSessionMessagesQuery(sessionId);
+    } = useGetChatSessionMessagesQuery(sessionId as number, { skip: sessionId === undefined });
 
     const [sendChatMessage, { isLoading: isSending }] = useSendChatMessageMutation();
 
-    // Reset local overlay whenever the session changes
+    // Reset local overlay whenever the session actually changes (but not
+    // right after we just created one — see skipNextResetRef above)
     useEffect(() => {
+        if (skipNextResetRef.current) {
+            skipNextResetRef.current = false;
+            return;
+        }
         setLocalMessages([]);
         setIsBotTyping(false);
     }, [sessionId]);
@@ -54,7 +64,7 @@ export default function ChatWindow({ sessionId, onBack }: ChatWindowProps) {
         const tempId = -Date.now();
         const optimisticMessage: ChatMessage = {
             id: tempId,
-            session: sessionId,
+            session: sessionId ?? 0,
             sender: 'user',
             message: trimmed,
             created_at: new Date().toISOString(),
@@ -65,10 +75,12 @@ export default function ChatWindow({ sessionId, onBack }: ChatWindowProps) {
         setIsBotTyping(true);
 
         try {
-            const response = await sendChatMessage({
-                session_id: sessionId,
+            const payload: SendMessagePayload = {
+                session_id: sessionId ?? 0,
                 user_message: trimmed,
-            }).unwrap();
+            };
+
+            const response = await sendChatMessage(payload).unwrap();
 
             // Swap the optimistic message for the real ones, so we don't
             // depend on the background refetch to display the reply.
@@ -77,6 +89,13 @@ export default function ChatWindow({ sessionId, onBack }: ChatWindowProps) {
                 response.data.user_message,
                 response.data.bot_message,
             ]);
+
+            // Brand new session — hand the real id to the parent so it can
+            // switch routes/selection without us losing what's on screen.
+            if (sessionId === undefined && onSessionCreated) {
+                skipNextResetRef.current = true;
+                onSessionCreated(response.data.user_message.session);
+            }
         } catch {
             // Send failed — drop the optimistic bubble and restore the draft
             setLocalMessages((prev) => prev.filter((m) => m.id !== tempId));
@@ -104,19 +123,15 @@ export default function ChatWindow({ sessionId, onBack }: ChatWindowProps) {
                         </button>
                     )}
                     <div className="w-10 h-10 rounded-full bg-linear-to-br from-blue-400 to-purple-500 flex items-center justify-center text-sm font-semibold text-white">
-                        {session?.user
-                            ? session.user
-                                .split(" ")
-                                .map((word) => word[0])
-                                .join("")
-                                .toUpperCase()
-                            : "??"}
+                        AI
                     </div>
-
                     <h2 className="font-inter font-semibold text-gray-900">
-                        {session?.session_name || 'Chat'}
+                        {session?.session_name || (sessionId === undefined ? 'New chat' : 'Chat')}
                     </h2>
                 </div>
+                <button className="p-2 hover:bg-gray-100 rounded-full">
+                    <MoreVertical className="w-5 h-5 text-gray-600" />
+                </button>
             </div>
 
             {/* Messages Area */}
@@ -137,10 +152,11 @@ export default function ChatWindow({ sessionId, onBack }: ChatWindowProps) {
                         className={`mb-4 flex ${msg.sender === 'user' ? 'justify-end' : 'justify-start'}`}
                     >
                         <div
-                            className={`max-w-xl px-4 py-3 rounded-2xl ${msg.sender === 'user'
-                                ? 'font-inter bg-cyan-200 text-gray-900'
-                                : 'font-inter bg-gray-200 text-gray-900'
-                                }`}
+                            className={`max-w-xl px-4 py-3 rounded-2xl ${
+                                msg.sender === 'user'
+                                    ? 'font-inter bg-cyan-200 text-gray-900'
+                                    : 'font-inter bg-gray-200 text-gray-900'
+                            }`}
                         >
                             <p className="text-sm leading-relaxed">{msg.message}</p>
                         </div>

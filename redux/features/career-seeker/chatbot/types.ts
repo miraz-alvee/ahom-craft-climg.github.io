@@ -16,6 +16,8 @@ export interface ChatSession {
 }
 
 // POST /api/v1/service/chat/
+// session_id: 0 starts a brand new session — the backend creates one and
+// returns its real id via data.user_message.session
 export interface SendMessagePayload {
     session_id: number;
     user_message: string;
