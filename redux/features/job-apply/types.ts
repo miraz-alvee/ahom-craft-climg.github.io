@@ -1,3 +1,5 @@
+export type ApplicationStatus = 'in_progress' | 'reviewed' | 'shortlisted' | 'rejected' | 'hired';
+
 export interface ApplicationUser {
   user_id: number;
   full_name: string;
@@ -44,4 +46,3 @@ export interface PaginatedApplicationResponse {
   results: JobApplicationList;
 }
 
-export type ApplicationStatus = 'in_progress' | 'reviewed' | 'shortlisted' | 'rejected' | 'hired';

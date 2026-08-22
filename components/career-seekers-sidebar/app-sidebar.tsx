@@ -98,19 +98,19 @@ const data = {
             url: "/career-seeker/applied",
             icon: Calendar,
         },
-        {
-            title: "Forum",
-            url: "/career-seeker/forum",
-            icon: FormInputIcon,
-        },
+        // {
+        //     title: "Forum",
+        //     url: "/career-seeker/forum",
+        //     icon: FormInputIcon,
+        // },
         {
             title: "Message",
             url: "/career-seeker/message",
             icon: MessageCircle,
         },
         {
-            title: "Courses",
-            url: "/career-seeker/courses",
+            title: "Course",
+            url: "/career-seeker/course",
             icon: GraduationCap,
         },
         // {

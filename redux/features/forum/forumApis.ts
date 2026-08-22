@@ -1,7 +1,6 @@
 
 import { baseApi } from "@/redux/api/baseApi";
 
-
 export interface ForumUser {
   user_id: number;
   full_name: string;
