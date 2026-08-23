@@ -25,7 +25,7 @@ const chatBotApi = baseApi.injectEndpoints({
                 body: payload,
             }),
             invalidatesTags: (result, error, arg) => [
-                { type: 'ChatMessages', id: arg.session_id },
+                ...(arg.session_id ? [{ type: 'ChatMessages' as const, id: arg.session_id }] : []),
                 { type: 'ChatSession', id: 'LIST' },
             ],
         }),

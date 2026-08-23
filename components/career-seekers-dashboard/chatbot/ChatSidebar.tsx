@@ -1,7 +1,7 @@
 'use client';
 
 import { useEffect, useMemo, useRef, useState } from 'react';
-import { Search, MoreVertical, Pencil, Trash2 } from 'lucide-react';
+import { Search, MoreVertical, Pencil, Trash2, SquarePen } from 'lucide-react';
 import {
     useGetChatSessionsListQuery,
     usePatchChatSessionMutation,
@@ -13,6 +13,7 @@ import { ChatSession } from '@/redux/features/career-seeker/chatbot/types';
 interface ChatSidebarProps {
     selectedSessionId: number | null;
     onSelectSession: (sessionId: number | null) => void;
+    onNewChat: () => void;
 }
 
 function isToday(dateString: string) {
@@ -25,7 +26,7 @@ function isToday(dateString: string) {
     );
 }
 
-export default function ChatSidebar({ selectedSessionId, onSelectSession }: ChatSidebarProps) {
+export default function ChatSidebar({ selectedSessionId, onSelectSession, onNewChat }: ChatSidebarProps) {
     const [searchTerm, setSearchTerm] = useState('');
     const [openMenuId, setOpenMenuId] = useState<number | null>(null);
     const [editingId, setEditingId] = useState<number | null>(null);
@@ -97,8 +98,9 @@ export default function ChatSidebar({ selectedSessionId, onSelectSession }: Chat
         return (
             <div
                 key={session.id}
-                className={`relative flex items-center gap-3 px-6 py-3 cursor-pointer hover:bg-gray-50 ${selectedSessionId === session.id ? 'bg-gray-50' : ''
-                    }`}
+                className={`relative flex items-center gap-3 px-4 py-3 cursor-pointer hover:bg-gray-50 ${
+                    selectedSessionId === session.id ? 'bg-gray-50' : ''
+                }`}
                 onClick={() => !isEditing && onSelectSession(session.id)}
             >
                 <div className="w-12 h-12 rounded-full bg-linear-to-br from-blue-400 to-purple-500 flex items-center justify-center text-lg font-semibold text-white shrink-0">
@@ -131,9 +133,9 @@ export default function ChatSidebar({ selectedSessionId, onSelectSession }: Chat
                             onClick={(e) => {
                                 e.stopPropagation();
                                 setOpenMenuId(openMenuId === session.id ? null : session.id);
-                            }}>
-
-                            <MoreVertical className="cursor-pointer w-5 h-5 text-gray-600" />
+                            }}
+                        >
+                            <MoreVertical className="w-4 h-4 text-gray-400" />
                         </button>
                     </div>
                     <p className="font-inter text-sm text-gray-600 truncate">{session.user}</p>
@@ -167,8 +169,8 @@ export default function ChatSidebar({ selectedSessionId, onSelectSession }: Chat
     return (
         <div className="w-100 border-r border-gray-200 flex flex-col">
             {/* Search Bar */}
-            <div className="p-4 border-b border-gray-200">
-                <div className="relative">
+            <div className="p-4 border-b border-gray-200 flex items-center gap-2">
+                <div className="relative flex-1">
                     <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-gray-400 w-5 h-5" />
                     <input
                         type="text"
@@ -178,6 +180,13 @@ export default function ChatSidebar({ selectedSessionId, onSelectSession }: Chat
                         className="w-full pl-10 pr-4 py-2 bg-gray-50 rounded-lg text-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
                     />
                 </div>
+                <button
+                    onClick={onNewChat}
+                    title="New chat"
+                    className="p-2.5 bg-cyan-600 hover:bg-cyan-500 rounded-lg text-white transition-colors shrink-0"
+                >
+                    <SquarePen className="w-5 h-5" />
+                </button>
             </div>
 
             {/* Session List */}
@@ -217,3 +226,6 @@ export default function ChatSidebar({ selectedSessionId, onSelectSession }: Chat
         </div>
     );
 }
+
+
+
