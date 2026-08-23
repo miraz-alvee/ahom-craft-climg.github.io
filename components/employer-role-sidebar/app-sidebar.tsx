@@ -1,17 +1,16 @@
 "use client";
 import * as React from "react";
 import {
-    ChevronDown,
     LayoutDashboard,
-    Calendar,
     FormInputIcon,
     MessageCircle,
     BriefcaseBusiness,
-    GraduationCap,
     FileText,
     UserRoundPen,
     Wrench,
-    LogOut
+    LogOut,
+    Calendar,
+    GraduationCap
 } from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -86,7 +85,7 @@ function NavItem({
 const data = {
     home: [
         {
-            title: "Home",
+            title: "Dashboard",
             url: "/employer",
             icon: LayoutDashboard,
         },
@@ -95,31 +94,31 @@ const data = {
             url: "/employer/jobs",
             icon: BriefcaseBusiness,
         },
-        //  {
-        //     title: "Applied",
-        //     url: "/employer/applied",
-        //     icon: Calendar,
-        // },
-        {
-            title: "Forum",
-            url: "/employer/forum",
-            icon: FormInputIcon,
+         {
+            title: "Applied",
+            url: "/employer/applied",
+            icon: Calendar,
         },
+        // {
+        //     title: "Forum",
+        //     url: "/employer/forum",
+        //     icon: FormInputIcon,
+        // },
         {
             title: "Message",
             url: "/employer/message",
             icon: MessageCircle,
         },
-        // {
-        //     title: "Courses",
-        //     url: "/employer/courses",
-        //     icon: GraduationCap,
-        // },
         {
-            title: "Resume",
-            url: "/employer/resume",
-            icon: FileText,
+            title: "Courses",
+            url: "/employer/courses",
+            icon: GraduationCap,
         },
+        // {
+        //     title: "Resume",
+        //     url: "/employer/resume",
+        //     icon: FileText,
+        // },
         {
             title: "Tools",
             url: "/employer/tools",
@@ -142,6 +141,7 @@ export function EmployerAppSidebar({ ...props }: React.ComponentProps<typeof Sid
     const isCollapsed = state === "collapsed";
 
     const displayName = user?.full_name ?? "Guest User";
+    console.log(displayName)
     const displayEmail = user?.email ?? "-";
     const userInitial = displayName.trim().charAt(0).toUpperCase() || "G";
 
@@ -168,7 +168,7 @@ export function EmployerAppSidebar({ ...props }: React.ComponentProps<typeof Sid
     };
 
     return (
-        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff]">
+        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff] border-2 border-[#f3f4f5]">
             {/* Header with Logo */}
             <SidebarHeader className="p-3">
                 <div className="flex items-center justify-center">
@@ -222,6 +222,9 @@ export function EmployerAppSidebar({ ...props }: React.ComponentProps<typeof Sid
                             <div className="min-w-0">
                                 <div className="truncate text-[15px] font-semibold leading-tight text-[#171717]">
                                     {displayName}
+                                </div>
+                               <div className="truncate text-[12px] leading-tight text-[#232323]">
+                                    {displayEmail}
                                 </div>
                                 <div className="truncate text-[12px] leading-tight text-[#232323]">
                                     {formattedRole}

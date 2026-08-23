@@ -23,7 +23,7 @@ export default function JobSeekerLayout({ children }: { children: React.ReactNod
 
     // Format the pathname to a readable title
     const getPageTitle = () => {
-        if (pathname === "/job-seeker") return "Dashboard";
+        if (pathname === "/employer") return "Dashboard";
 
         const segments = pathname.split("/").filter(Boolean);
         const lastSegment = segments[segments.length - 1];
@@ -38,7 +38,7 @@ export default function JobSeekerLayout({ children }: { children: React.ReactNod
         <SidebarProvider>
             <EmployerAppSidebar />
             <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+                <header className="flex h-16 shrink-0 items-center gap-2 px-4">
                     <SidebarTrigger className="-ml-1" />
                     <Separator
                         orientation="vertical"
@@ -48,7 +48,7 @@ export default function JobSeekerLayout({ children }: { children: React.ReactNod
                         <BreadcrumbList>
                             <BreadcrumbItem className="hidden md:block">
                                 <BreadcrumbLink href="#" className="font-inter font-medium">
-                                    Craft Climb Workspace
+                                    Craft Climb Employer Workspace
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />

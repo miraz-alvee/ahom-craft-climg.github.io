@@ -61,7 +61,7 @@ export default function SignInPage() {
             router.push(roleRoutes[normalizedRole] ?? '/')
             toast.success('Login successful!')
         } catch (error) {
-            console.error('Login failed:', error)
+            // console.error('Login failed:', error)
             toast.error('Login failed. Please check your credentials and try again.')
         }
     }

@@ -6,35 +6,13 @@ import Image from "next/image";
 import { useRouter } from "next/navigation";
 
 import toolsImage01 from "@/public/images/tools/tool-01.jpg";
-import { useGetToolCategoriesQuery } from "@/redux/features/career-seeker/tools/toolsCategoryApis";
-import { useGetToolsQuery } from "@/redux/features/career-seeker/tools/toolsApis";
-
-
-
-
-// ======================================================
-// TYPES
-// ======================================================
+import { useGetToolCategoriesQuery } from "@/redux/features/tools/toolsCategoryApis";
+import { useGetToolsQuery } from "@/redux/features/tools/toolsApis";
 
 type FilterValue = "All" | string;
 
-
-// ======================================================
-// COMPONENT
-// ======================================================
-
 export default function ToolsPage() {
-
-  // ====================================================
-  // FILTER STATE
-  // ====================================================
-
   const [filter, setFilter,] = useState<FilterValue>("All");
-
-
-  // ====================================================
-  // GET CATEGORIES
-  // ====================================================
 
   const {
     data: categories = [],
@@ -48,10 +26,6 @@ export default function ToolsPage() {
     useGetToolCategoriesQuery();
 
 
-  // ====================================================
-  // GET TOOLS
-  // ====================================================
-
   const {
     data: toolsData,
     isLoading:
@@ -62,11 +36,6 @@ export default function ToolsPage() {
     toolsError,
   } =
     useGetToolsQuery();
-
-
-  // ====================================================
-  // TOOLS
-  // ====================================================
 
   const tools = toolsData?.results ?? [];
 
@@ -169,7 +138,6 @@ export default function ToolsPage() {
           <div className="flex flex-wrap gap-3 mb-8">
             {[1, 2, 3, 4, 5].map(
               (item) => (
-
                 <div
                   key={item}
                   className="h-9 w-20 bg-gray-200 rounded-full animate-pulse"
@@ -181,10 +149,7 @@ export default function ToolsPage() {
           <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
             {[1, 2, 3, 4, 5].map(
               (item) => (
-                <div
-                  key={item}
-                  className="bg-white rounded-xl border overflow-hidden animate-pulse"
-                >
+                <div key={item} className="bg-white rounded-xl border overflow-hidden animate-pulse">
                   <div className="h-52 bg-gray-200" />
                   <div className="p-4 space-y-3">
                     <div className="h-4 bg-gray-200 rounded w-3/4" />
@@ -209,9 +174,6 @@ export default function ToolsPage() {
   return (
     <div className="min-h-screen bg-[#f4f6fb]">
       <div className="px-8 py-6">
-        {/* ==================================================
-            HEADER
-        ================================================== */}
         <div className="mb-6">
           <h1 className="font-inter text-2xl font-bold">
             Tools
@@ -221,20 +183,15 @@ export default function ToolsPage() {
           </p>
         </div>
 
-
-        {/* ==================================================
-            FILTERS
-        ================================================== */}
-
         <div className="flex flex-wrap gap-3 mb-8">
           {/* ALL */}
           <button
             type="button"
             onClick={() => {
-              console.log(
-                "[ToolsPage] Selected category:",
-                "All"
-              );
+              // console.log(
+              //   "[ToolsPage] Selected category:",
+              //   "All"
+              // );
               setFilter(
                 "All"
               );
@@ -496,9 +453,9 @@ export default function ToolsPage() {
                         </span>
                         <span
                           className={`font-inter text-xs font-medium ${tool.stock_quantity >
-                              0
-                              ? "text-green-600"
-                              : "text-red-500"
+                            0
+                            ? "text-green-600"
+                            : "text-red-500"
                             }`}
                         >
                           {

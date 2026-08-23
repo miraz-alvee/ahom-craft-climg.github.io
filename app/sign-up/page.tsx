@@ -140,6 +140,7 @@ export default function SignUpPage() {
             return;
         }
 
+<<<<<<< HEAD
         try {
             const response = await register({
                 email,
@@ -219,6 +220,16 @@ export default function SignUpPage() {
             toast.success(response.message ?? "A new code has been sent to your email.");
         } catch (error) {
             toast.error(getErrorMessage(error, "Couldn't resend the code. Please try again."));
+=======
+        // Process sign-up logic (e.g., send data to an API)
+        console.log('Form submitted successfully:', { fullName, email, password });
+         // Navigate after successful sign-up based on selected role
+        if (role === 'employer') {
+            router.push('/employer');
+        } else {
+            // Default: career seekers and others go to career seeker pages
+            router.push('/career-seeker');
+>>>>>>> alvee
         }
     };
 
