@@ -344,7 +344,7 @@ export default function ToolDetails({
 
             console.log("[ToolDetails] Added to cart:", response);
 
-            router.push("/career-seeker/tools/cart");
+            router.push("/employer/tools/cart");
         } catch (error) {
             console.error("[ToolDetails] Add to cart failed:", error);
         }

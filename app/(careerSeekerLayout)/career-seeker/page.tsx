@@ -7,12 +7,6 @@ import {
 } from "@/redux/features/forum/forumApis";
 
 
-
-
-// ======================================================
-// PAGE
-// ======================================================
-
 export default function Page() {
 
   // ====================================================
@@ -26,26 +20,6 @@ export default function Page() {
     error,
     refetch,
   } = useGetForumsQuery();
-
-
-  // ====================================================
-  // CONSOLE
-  // ====================================================
-
-  console.log(
-    "[Page] Forums:",
-    forums
-  );
-
-  console.log(
-    "[Page] Loading:",
-    isLoading
-  );
-
-  console.log(
-    "[Page] Error:",
-    error
-  );
 
 
   // ====================================================
@@ -108,12 +82,6 @@ export default function Page() {
   // ====================================================
 
   if (isError) {
-
-    console.error(
-      "[Page] Failed to load forums:",
-      error
-    );
-
 
     return (
       <main className="min-h-screen bg-gray-100 py-10 px-4 flex justify-center">

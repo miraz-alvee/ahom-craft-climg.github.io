@@ -160,7 +160,7 @@ export default function CheckoutPage() {
       );
 
       router.push(
-        `/career-seeker/tools/orders/${response.order_id}`
+        `/employer/tools/orders/${response.order_id}`
       );
 
     } catch (error) {
@@ -195,7 +195,7 @@ export default function CheckoutPage() {
           <button
             onClick={() =>
               router.push(
-                "/career-seeker/tools/cart"
+                "/employer/tools/cart"
               )
             }
             className="mb-4 flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600"

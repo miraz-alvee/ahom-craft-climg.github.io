@@ -76,7 +76,7 @@ export default function CartPage() {
       "[CartPage] Navigating to checkout"
     );
 
-    router.push("/career-seeker/tools/checkout");
+    router.push("/employer/tools/checkout");
   };
 
   const handleIncrease = (cartItemId: number) => {
@@ -129,7 +129,7 @@ export default function CartPage() {
 
             <button
               onClick={() =>
-                router.push("/career-seeker/tools")
+                router.push("/employer/tools")
               }
               className="mt-6 rounded-lg bg-blue-600 px-6 py-3 text-sm font-medium text-white hover:bg-blue-700"
             >

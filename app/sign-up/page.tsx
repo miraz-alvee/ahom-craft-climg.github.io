@@ -79,9 +79,13 @@ export default function SignUpPage() {
 
         // Process sign-up logic (e.g., send data to an API)
         console.log('Form submitted successfully:', { fullName, email, password });
-
-        // Navigate to the home page after successful sign-up
-        router.push('/career-seeker'); // Redirects the user to the /home route
+         // Navigate after successful sign-up based on selected role
+        if (role === 'employer') {
+            router.push('/employer');
+        } else {
+            // Default: career seekers and others go to career seeker pages
+            router.push('/career-seeker');
+        }
     };
 
     return (

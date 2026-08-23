@@ -62,7 +62,7 @@ export default function OrderDetailsPage() {
         <button
           onClick={() =>
             router.push(
-              "/career-seeker/tools/orders"
+              "/employer/tools/orders"
             )
           }
           className="flex items-center gap-2 text-sm text-gray-600"
@@ -91,7 +91,7 @@ export default function OrderDetailsPage() {
         <button
           onClick={() =>
             router.push(
-              "/career-seeker/tools/orders"
+              "/employer/tools/orders"
             )
           }
           className="mb-6 flex items-center gap-2 text-sm text-gray-600 hover:text-blue-600"
