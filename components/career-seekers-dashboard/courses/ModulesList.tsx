@@ -1,6 +1,6 @@
 "use client";
 
-import { CourseDetail } from "@/redux/features/career-seeker/courses/courseTypes";
+import { CourseDetail } from "@/redux/features/courses/courseTypes";
 import Link from "next/link";
 
 

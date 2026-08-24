@@ -1,7 +1,7 @@
 "use client";
 
 
-import { useGetCourseByIdQuery } from "@/redux/features/career-seeker/courses/getAllCourseApis";
+import { useGetCourseByIdQuery } from "@/redux/features/courses/getAllCourseApis";
 import ModulesList from "./ModulesList";
 import EnrollButton from "./EnrolledButton";
 

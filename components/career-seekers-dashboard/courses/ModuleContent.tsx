@@ -1,7 +1,7 @@
 "use client";
 
-import { useGetExamResultSummaryQuery } from "@/redux/features/career-seeker/courses/exams/userExamsAPis";
-import { useGetCourseByIdQuery } from "@/redux/features/career-seeker/courses/getAllCourseApis";
+import { useGetExamResultSummaryQuery } from "@/redux/features/courses/exams/userExamsAPis";
+import { useGetCourseByIdQuery } from "@/redux/features/courses/getAllCourseApis";
 import Link from "next/link";
 
 

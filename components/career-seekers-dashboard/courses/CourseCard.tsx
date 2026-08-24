@@ -1,4 +1,4 @@
-import { CourseListItem } from "@/redux/features/career-seeker/courses/courseTypes";
+import { CourseListItem } from "@/redux/features/courses/courseTypes";
 import Image from "next/image";
 import Link from "next/link";
 

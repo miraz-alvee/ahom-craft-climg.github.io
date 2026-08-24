@@ -1,7 +1,7 @@
 "use client";
 
 import { useState } from "react";
-import { usePurchaseCourseMutation } from "@/redux/features/career-seeker/courses/getAllCourseApis";
+import { usePurchaseCourseMutation } from "@/redux/features/courses/getAllCourseApis";
 
 interface Props {
   courseId: number;

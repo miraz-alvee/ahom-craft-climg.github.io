@@ -1,6 +1,6 @@
 "use client";
 
-import { useGetCourseByIdQuery } from "@/redux/features/career-seeker/courses/getAllCourseApis";
+import { useGetCourseByIdQuery } from "@/redux/features/courses/getAllCourseApis";
 
 
 export default function LectureDetail({
