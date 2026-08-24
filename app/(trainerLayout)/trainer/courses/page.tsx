@@ -1,33 +1,16 @@
 "use client";
 
 import { useMemo, useState } from "react";
-import { Search, BookOpen, Play, Clock, CheckCircle2, XCircle } from "lucide-react";
-import { Course, useGetCourseListQuery } from "@/redux/features/trainer/courses/coursesApi";
-
-interface ContinueCourse {
-    id: string;
-    title: string;
-    instructor: string;
-    progress: number;
-    gradient: string;
-}
-
-const continueCourses: ContinueCourse[] = [
-    {
-        id: "react-dev",
-        title: "Complete React Developer Course",
-        instructor: "John Smith",
-        progress: 65,
-        gradient: "from-sky-500 to-cyan-400",
-    },
-    {
-        id: "system-design",
-        title: "System Design Interview Prep",
-        instructor: "Sarah Chen",
-        progress: 30,
-        gradient: "from-fuchsia-500 to-purple-500",
-    },
-];
+import { useRouter } from "next/navigation";
+import { Search, Play, Clock, CheckCircle2, XCircle, Plus, Pencil, Trash2 } from "lucide-react";
+import { toast } from "sonner";
+import Swal from "sweetalert2";
+import {
+    Course,
+    useGetCourseListQuery,
+    useDeleteCourseMutation,
+} from "@/redux/features/trainer/courses/coursesApi";
+import CourseFormModal from "@/components/trainer-dashboard/courses/CourseFormModal";
 
 const gradients = [
     "from-sky-500 to-cyan-400",
@@ -47,10 +30,7 @@ function formatPrice(price: string) {
     const value = Number(price);
     if (Number.isNaN(value)) return price;
     if (value <= 0) return "Free";
-    return new Intl.NumberFormat("en-US", {
-        style: "currency",
-        currency: "USD",
-    }).format(value);
+    return new Intl.NumberFormat("en-US", { style: "currency", currency: "USD" }).format(value);
 }
 
 function CourseCardSkeleton() {
@@ -67,12 +47,22 @@ function CourseCardSkeleton() {
     );
 }
 
-function CourseCard({ course }: { course: Course }) {
+interface CourseCardProps {
+    course: Course;
+    onView: (id: number) => void;
+    onEdit: (course: Course) => void;
+    onDelete: (course: Course) => void;
+}
+
+function CourseCard({ course, onView, onEdit, onDelete }: CourseCardProps) {
     const [thumbFailed, setThumbFailed] = useState(false);
     const showThumb = course.thumbnail && !thumbFailed;
 
     return (
-        <div className="flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md">
+        <div
+            onClick={() => onView(course.id)}
+            className="group flex cursor-pointer flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md"
+        >
             <div
                 className={`relative flex h-36 items-center justify-center bg-gradient-to-br ${getGradient(
                     course.id
@@ -106,15 +96,36 @@ function CourseCard({ course }: { course: Course }) {
                     )}
                     {course.is_active ? "Active" : "Inactive"}
                 </span>
+
+                <div className="absolute left-3 top-3 flex gap-1 opacity-0 transition group-hover:opacity-100">
+                    <button
+                        type="button"
+                        aria-label="Edit course"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onEdit(course);
+                        }}
+                        className="flex h-7 w-7 items-center justify-center rounded-md bg-white/90 text-gray-700 hover:bg-white"
+                    >
+                        <Pencil className="h-3.5 w-3.5" />
+                    </button>
+                    <button
+                        type="button"
+                        aria-label="Delete course"
+                        onClick={(e) => {
+                            e.stopPropagation();
+                            onDelete(course);
+                        }}
+                        className="flex h-7 w-7 items-center justify-center rounded-md bg-white/90 text-red-600 hover:bg-white"
+                    >
+                        <Trash2 className="h-3.5 w-3.5" />
+                    </button>
+                </div>
             </div>
 
             <div className="flex flex-1 flex-col p-4">
-                <h3 className="line-clamp-1 text-sm font-semibold text-gray-900">
-                    {course.title}
-                </h3>
-                <p className="mt-1 line-clamp-2 text-xs text-gray-500">
-                    {course.description}
-                </p>
+                <h3 className="line-clamp-1 text-sm font-semibold text-gray-900">{course.title}</h3>
+                <p className="mt-1 line-clamp-2 text-xs text-gray-500">{course.description}</p>
 
                 <div className="mt-3 flex items-center gap-1 text-xs text-gray-500">
                     <Clock className="h-3.5 w-3.5" />
@@ -126,21 +137,19 @@ function CourseCard({ course }: { course: Course }) {
                         {formatPrice(course.price)}
                     </span>
                 </div>
-
-                <button
-                    disabled={!course.is_active}
-                    className="mt-4 w-full rounded-lg bg-blue-600 py-2 text-sm font-medium text-white transition hover:bg-blue-700 disabled:cursor-not-allowed disabled:bg-gray-300"
-                >
-                    Enroll Now
-                </button>
             </div>
         </div>
     );
 }
 
-export default function CoursesAndLearning() {
+export default function Courses() {
+    const router = useRouter();
     const [searchTerm, setSearchTerm] = useState("");
     const { data: courses = [], isLoading, isError } = useGetCourseListQuery();
+    const [deleteCourse] = useDeleteCourseMutation();
+
+    const [editingCourse, setEditingCourse] = useState<Course | null>(null);
+    const [isFormOpen, setIsFormOpen] = useState(false);
 
     const visibleCourses = useMemo(() => {
         if (!searchTerm.trim()) return courses;
@@ -152,11 +161,49 @@ export default function CoursesAndLearning() {
         );
     }, [courses, searchTerm]);
 
+    const openCreateModal = () => {
+        setEditingCourse(null);
+        setIsFormOpen(true);
+    };
+
+    const openEditModal = (course: Course) => {
+        setEditingCourse(course);
+        setIsFormOpen(true);
+    };
+
+    const closeFormModal = () => {
+        setIsFormOpen(false);
+        setEditingCourse(null);
+    };
+
+    const handleDelete = async (course: Course) => {
+        const result = await Swal.fire({
+            title: "Delete this course?",
+            text: `"${course.title}" will be permanently removed.`,
+            icon: "warning",
+            showCancelButton: true,
+            confirmButtonText: "Delete",
+            confirmButtonColor: "#dc2626",
+        });
+
+        if (!result.isConfirmed) return;
+
+        try {
+            await deleteCourse(course.id).unwrap();
+            toast.success("Course deleted successfully");
+        } catch {
+            toast.error("Failed to delete course");
+        }
+    };
+
+    const openCourseDetails = (courseId: number) => {
+        router.push(`/trainer/courses/courseDetails?courseId=${courseId}`);
+    };
+
     return (
         <div className="min-h-screen bg-gray-50">
-            {/* Search bar */}
-            <div className="border-b border-gray-200 bg-white px-6 py-4">
-                <div className="relative w-full">
+            <div className="flex flex-col gap-3 border-b border-gray-200 bg-white px-6 py-4 sm:flex-row sm:items-center sm:justify-between">
+                <div className="relative w-full sm:max-w-sm">
                     <Search className="pointer-events-none absolute left-3 top-1/2 h-4 w-4 -translate-y-1/2 text-gray-400" />
                     <input
                         type="text"
@@ -166,79 +213,20 @@ export default function CoursesAndLearning() {
                         className="w-full rounded-lg border border-gray-200 bg-gray-50 py-2.5 pl-10 pr-4 text-sm text-gray-700 placeholder:text-gray-400 focus:border-blue-400 focus:outline-none focus:ring-2 focus:ring-blue-100"
                     />
                 </div>
+
+                <button
+                    type="button"
+                    onClick={openCreateModal}
+                    className="flex items-center justify-center gap-2 rounded-lg bg-blue-600 px-4 py-2.5 text-sm font-medium text-white hover:bg-blue-700"
+                >
+                    <Plus className="h-4 w-4" />
+                    Add Course
+                </button>
             </div>
 
             <div className="w-full px-6 py-8">
-                {/* Header */}
-                <div className="mb-8">
-                    <h1 className="text-2xl font-bold text-gray-900">
-                        Courses & Learning
-                    </h1>
-                    <p className="mt-1 text-sm text-gray-500">
-                        Enhance your skills with professional courses
-                    </p>
-                </div>
-
-                {/* My Learning */}
-                <section className="mb-10">
-                    <div className="mb-4 flex items-center gap-2">
-                        <BookOpen className="h-5 w-5 text-blue-600" />
-                        <h2 className="text-lg font-semibold text-gray-900">
-                            My Learning
-                        </h2>
-                    </div>
-
-                    <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
-                        {continueCourses.map((course) => (
-                            <div
-                                key={course.id}
-                                className="flex overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm"
-                            >
-                                <div
-                                    className={`flex w-28 shrink-0 items-center justify-center bg-gradient-to-br ${course.gradient}`}
-                                >
-                                    <button
-                                        aria-label={`Continue ${course.title}`}
-                                        className="flex h-11 w-11 items-center justify-center rounded-full border-2 border-white/80 text-white transition hover:bg-white/10"
-                                    >
-                                        <Play className="ml-0.5 h-4 w-4 fill-white" />
-                                    </button>
-                                </div>
-                                <div className="flex flex-1 flex-col justify-center px-4 py-3">
-                                    <h3 className="text-sm font-semibold text-gray-900">
-                                        {course.title}
-                                    </h3>
-                                    <p className="mt-0.5 text-xs text-gray-500">
-                                        {course.instructor}
-                                    </p>
-                                    <div className="mt-2 flex items-center gap-2">
-                                        <div className="h-1.5 flex-1 overflow-hidden rounded-full bg-gray-100">
-                                            <div
-                                                className="h-full rounded-full bg-blue-600"
-                                                style={{ width: `${course.progress}%` }}
-                                            />
-                                        </div>
-                                        <span className="text-xs font-medium text-gray-500">
-                                            {course.progress}% complete
-                                        </span>
-                                    </div>
-                                    <a
-                                        href="#"
-                                        className="mt-2 text-xs font-medium text-blue-600 hover:underline"
-                                    >
-                                        Continue Learning →
-                                    </a>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-                </section>
-
-                {/* Browse Courses */}
                 <section>
-                    <h2 className="mb-4 text-lg font-semibold text-gray-900">
-                        Browse Courses
-                    </h2>
+                    <h2 className="mb-4 text-lg font-semibold text-gray-900">Browse Courses</h2>
 
                     {isError && (
                         <div className="mb-6 rounded-lg border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-600">
@@ -248,11 +236,15 @@ export default function CoursesAndLearning() {
 
                     <div className="grid grid-cols-1 gap-5 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-5">
                         {isLoading
-                            ? Array.from({ length: 5 }).map((_, i) => (
-                                <CourseCardSkeleton key={i} />
-                            ))
+                            ? Array.from({ length: 5 }).map((_, i) => <CourseCardSkeleton key={i} />)
                             : visibleCourses.map((course) => (
-                                <CourseCard key={course.id} course={course} />
+                                <CourseCard
+                                    key={course.id}
+                                    course={course}
+                                    onView={openCourseDetails}
+                                    onEdit={openEditModal}
+                                    onDelete={handleDelete}
+                                />
                             ))}
                     </div>
 
@@ -263,6 +255,8 @@ export default function CoursesAndLearning() {
                     )}
                 </section>
             </div>
+
+            <CourseFormModal isOpen={isFormOpen} onClose={closeFormModal} course={editingCourse} />
         </div>
     );
 }
