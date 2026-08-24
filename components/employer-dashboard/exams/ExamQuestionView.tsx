@@ -23,7 +23,7 @@ export default function ExamQuestionView({
   onSelect, onToggleFlag, onNext, onExit, isSubmitting,
 }: Props) {
   return (
-    <div className="mx-auto max-w-3xl px-4 py-10">
+    <div className="mx-auto max-w-6xl px-4 py-10">
       <div className="mb-8 flex items-start justify-between">
         <div>
           <div className="flex items-center gap-3">

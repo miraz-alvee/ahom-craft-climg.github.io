@@ -1,7 +1,7 @@
 "use client";
 
 
-import CareerSeekersDashboard from "@/components/shared/forumpost/CareerSeekersDashboard";
+import Dashboard from "@/components/shared/forumpost/Dashboard";
 import {
   useGetForumsQuery,
 } from "@/redux/features/forum/forumApis";
@@ -120,7 +120,7 @@ export default function Page() {
 
   return (
     <main className="min-h-screen bg-gray-100 py-10 px-4 flex justify-center">
-       <CareerSeekersDashboard
+       <Dashboard
         forums={
           forums
         }

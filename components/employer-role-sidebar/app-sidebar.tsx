@@ -99,11 +99,6 @@ const data = {
             url: "/employer/applied",
             icon: Calendar,
         },
-        // {
-        //     title: "Forum",
-        //     url: "/employer/forum",
-        //     icon: FormInputIcon,
-        // },
         {
             title: "Message",
             url: "/employer/message",
@@ -111,14 +106,9 @@ const data = {
         },
         {
             title: "Courses",
-            url: "/employer/courses",
+            url: "/employer/course",
             icon: GraduationCap,
         },
-        // {
-        //     title: "Resume",
-        //     url: "/employer/resume",
-        //     icon: FileText,
-        // },
         {
             title: "Tools",
             url: "/employer/tools",
@@ -223,10 +213,10 @@ export function EmployerAppSidebar({ ...props }: React.ComponentProps<typeof Sid
                                 <div className="truncate text-[15px] font-semibold leading-tight text-[#171717]">
                                     {displayName}
                                 </div>
-                               <div className="truncate text-[12px] leading-tight text-[#232323]">
+                               {/* <div className="truncate text-[12px] leading-tight text-[#232323]">
                                     {displayEmail}
-                                </div>
-                                <div className="truncate text-[12px] leading-tight text-[#232323]">
+                                </div> */}
+                                <div className="truncate text-[12px] font-normal leading-tight text-[#232323]">
                                     {formattedRole}
                                 </div>
                             </div>
@@ -236,8 +226,7 @@ export function EmployerAppSidebar({ ...props }: React.ComponentProps<typeof Sid
                                 type="button"
                                 onClick={handleLogout}
                                 className="rounded-full bg-white/70 p-1.5 text-[#1f2937] shadow-sm transition-colors hover:bg-white hover:text-black cursor-pointer"
-                                title="Logout"
-                            >
+                                title="Logout">
                                 <LogOut className="h-3.5 w-3.5" />
                             </button>
                         </div>

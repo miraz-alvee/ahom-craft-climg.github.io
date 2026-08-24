@@ -25,7 +25,7 @@ export function ExamSummary({ totalQuestions, correct, wrong, unanswered, onRevi
   const { title, note } = getMessage(pct);
 
   return (
-    <div className="mx-auto max-w-3xl space-y-6 px-4 py-10">
+    <div className="mx-auto max-w-6xl space-y-6 px-4 py-10">
       <div className="rounded-2xl bg-linear-to-r from-amber-700 to-amber-500 p-8 text-center text-white shadow-lg">
         <p className="text-xs font-semibold uppercase tracking-widest text-amber-100">Final Achievement</p>
         <p className="mt-2 text-5xl font-extrabold">{pct}<span className="align-top text-2xl">%</span></p>

@@ -1,8 +1,5 @@
 import { baseApi } from "@/redux/api/baseApi";
 
-// ======================================================
-// TYPES
-// ======================================================
 
 export interface CreateForumCommentRequest {
   forum: number;
@@ -32,23 +29,46 @@ export interface CreateForumCommentResponse {
   comment: ForumComment;
 }
 
-
-// ======================================================
-// API
-// ======================================================
+export interface GetAllForumCommentsRequest {
+  forum_id: number;
+  ordering?: string;
+  search?: string;
+}
 
 const forumCommentsApi = baseApi.injectEndpoints({
   endpoints: (builder) => ({
-    createForumComment: builder.mutation<
-      CreateForumCommentResponse,
-      CreateForumCommentRequest
-    >({
-      query: (commentData) => {
-        console.log(
-          "[Forum Comments API] Request:",
-          commentData
-        );
+    getAllForumCommentByID: builder.query<ForumComment[], GetAllForumCommentsRequest>
+      ({
+        query: ({ forum_id, ordering, search }) => {
+          const params = new URLSearchParams();
 
+          if (ordering) {
+            params.append("ordering", ordering);
+          }
+
+          if (search) {
+            params.append("search", search);
+          }
+
+          const queryString = params.toString();
+
+          return {
+            url: `api/v1/forum/comments/list/${forum_id}/${queryString ? `?${queryString}` : ""
+              }`,
+            method: "GET",
+          };
+        },
+
+        providesTags: (_result, _error, { forum_id }) => [
+          {
+            type: "ForumComments",
+            id: forum_id,
+          },
+        ],
+      }),
+
+    createForumComment: builder.mutation< CreateForumCommentResponse, CreateForumCommentRequest>({
+      query: (commentData) => {
         return {
           url: "api/v1/forum/comments/",
           method: "POST",
@@ -56,38 +76,15 @@ const forumCommentsApi = baseApi.injectEndpoints({
         };
       },
 
-      async onQueryStarted(
-        commentData,
-        { queryFulfilled }
-      ) {
-        console.log(
-          "[Forum Comments API] Started:",
-          commentData
-        );
-
-        try {
-          const { data } = await queryFulfilled;
-
-          console.log(
-            "[Forum Comments API] Success:",
-            data
-          );
-        } catch (error) {
-          console.error(
-            "[Forum Comments API] Error:",
-            error
-          );
-        }
-      },
+      invalidatesTags: (_result, _error, commentData) => [
+        {
+          type: "ForumComments",
+          id: commentData.forum,
+        },
+      ],
     }),
   }),
 });
 
 
-// ======================================================
-// HOOKS
-// ======================================================
-
-export const {
-  useCreateForumCommentMutation,
-} = forumCommentsApi;
+export const { useCreateForumCommentMutation, useGetAllForumCommentByIDQuery, } = forumCommentsApi;
