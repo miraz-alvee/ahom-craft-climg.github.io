@@ -44,10 +44,6 @@ const baseQuery = fetchBaseQuery({
 export const baseApi = createApi({
     reducerPath: 'baseApi',
     baseQuery: baseQuery,
-<<<<<<< HEAD
-    tagTypes: ['Profile', "Cart", "ShippingAddress", "Orders", "ChatSession", "ChatMessages", "Job", "Category", "Application", "Course", "Exam"],
-=======
     tagTypes: ['Profile', "Cart", "ShippingAddress", "Orders", "ChatSession", "ChatMessages", "Job", "Category", "Application", "Course","Exam","ForumComments"],
->>>>>>> alvee
     endpoints: () => ({})
 })
