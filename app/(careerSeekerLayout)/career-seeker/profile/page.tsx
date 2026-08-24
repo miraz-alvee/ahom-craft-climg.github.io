@@ -1,80 +1,30 @@
 "use client";
 
 import { useEffect, useState } from "react";
-import {
-  Mail,
-  Phone,
-  MapPin,
-  Globe,
-  Calendar,
-  DollarSign,
-  Users,
-  Pencil,
-  Save,
-  X,
-  Upload,
-  FileText,
-  Loader2,
-  Briefcase,
-  ExternalLink,
-  Award,
-} from "lucide-react";
-import { useGetCareerSeekerProfileQuery, usePatchCareerSeekerProfileMutation } from "@/redux/features/career-seeker/profile-update/profileUpdateApis";
-import { useGetCareerSeekerResumeQuery, usePatchCareerSeekerResumeMutation } from "@/redux/features/career-seeker/profile-update/updateResumeApis";
-import { useGetMyApplicationsQuery } from "@/redux/features/job-apply/jobApplyApis";
-
+import { Mail, Phone, MapPin, Globe, Calendar, DollarSign, Users, Pencil, Save, X, Upload, FileText, Loader2, ExternalLink, Award,} from "lucide-react";
+import { useGetCareerSeekerProfileQuery, usePatchCareerSeekerProfileMutation } 
+from "@/redux/features/career-seeker/profile-update/profileUpdateApis";
+import { useGetCareerSeekerResumeQuery, usePatchCareerSeekerResumeMutation }
+ from "@/redux/features/career-seeker/profile-update/updateResumeApis";
+import { useGetMyApplicationsQuery }
+ from "@/redux/features/job-apply/jobApplyApis";
 
 
 export default function PersonalInfo() {
-  // ============================================================
-  // PROFILE
-  // ============================================================
 
-  const {
-    data: profile,
-    isLoading: isProfileLoading,
-    isError: isProfileError,
-    refetch: refetchProfile,
-  } = useGetCareerSeekerProfileQuery();
+  const { data: profile, isLoading: isProfileLoading, isError: isProfileError, refetch: refetchProfile } = useGetCareerSeekerProfileQuery();
 
-  const [
-    patchProfile,
-    { isLoading: isProfileUpdating },
-  ] = usePatchCareerSeekerProfileMutation();
+  const [ patchProfile, { isLoading: isProfileUpdating }] = usePatchCareerSeekerProfileMutation();
 
-  // ============================================================
-  // RESUME
-  // ============================================================
+  const { data: resume, isLoading: isResumeLoading, isError: isResumeError } = useGetCareerSeekerResumeQuery();
 
-  const {
-    data: resume,
-    isLoading: isResumeLoading,
-    isError: isResumeError,
-  } = useGetCareerSeekerResumeQuery();
+  const [ patchResume, { isLoading: isResumeUpdating }] = usePatchCareerSeekerResumeMutation();
 
-  const [
-    patchResume,
-    { isLoading: isResumeUpdating },
-  ] = usePatchCareerSeekerResumeMutation();
-
-  // ============================================================
-  // APPLICATIONS
-  // ============================================================
-
-  const {
-    data: applications,
-    isLoading: isApplicationsLoading,
-    isError: isApplicationsError,
-  } = useGetMyApplicationsQuery();
-
-  // ============================================================
-  // STATES
-  // ============================================================
+  const { data: applications, isLoading: isApplicationsLoading, isError: isApplicationsError } = useGetMyApplicationsQuery();
 
   const [isEditing, setIsEditing] = useState(false);
 
-  const [selectedResume, setSelectedResume] =
-    useState<File | null>(null);
+  const [selectedResume, setSelectedResume] = useState<File | null>(null);
 
   const [formData, setFormData] = useState({
     full_name: "",
@@ -109,9 +59,6 @@ export default function PersonalInfo() {
     });
   }, [profile]);
 
-  // ============================================================
-  // HANDLE INPUT
-  // ============================================================
 
   const handleChange = (
     e: React.ChangeEvent<
@@ -164,13 +111,9 @@ export default function PersonalInfo() {
   // RESUME SELECT
   // ============================================================
 
-  const handleResumeChange = (
-    e: React.ChangeEvent<HTMLInputElement>
-  ) => {
+  const handleResumeChange = ( e: React.ChangeEvent<HTMLInputElement>) => {
     const file = e.target.files?.[0];
-
     if (!file) return;
-
     setSelectedResume(file);
   };
 
@@ -180,16 +123,13 @@ export default function PersonalInfo() {
 
   const handleResumeUpload = async () => {
     if (!selectedResume) return;
-
     try {
       const formData = new FormData();
-
       formData.append("resume", selectedResume);
-
       await patchResume(formData).unwrap();
-
       setSelectedResume(null);
-    } catch (error) {
+    } 
+    catch (error) {
       console.error("Failed to update resume:", error);
     }
   };

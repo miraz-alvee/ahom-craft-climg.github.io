@@ -24,15 +24,10 @@ import {
 
 import {
     useCreateForumCommentMutation,
+    useGetAllForumCommentByIDQuery,
 } from "@/redux/features/forum/forumCommentsApi";
-import { Forum } from "@/redux/features/forum/forumApis";
+import { Forum } from "@/redux/features/forum/forumTypes";
 
-
-
-
-// ======================================================
-// PROPS
-// ======================================================
 
 interface ForumPostCardProps {
     forum: Forum;
@@ -135,9 +130,23 @@ function MediaItem({
 // COMPONENT
 // ======================================================
 
-export default function ForumPostCard({
-    forum,
-}: ForumPostCardProps) {
+export default function ForumPostCard({forum}: ForumPostCardProps) {
+
+    const [showAllComments, setShowAllComments] = useState(false);
+
+    const {
+        data: comments = [],
+        isLoading: isCommentsLoading,
+        isFetching: isCommentsFetching,
+        error: commentsError,
+    } = useGetAllForumCommentByIDQuery(
+        {
+            forum_id: forum.forum_id,
+        },
+        {
+            skip: !showAllComments,
+        }
+    );
 
     // ====================================================
     // LOG FORUM
@@ -355,64 +364,79 @@ export default function ForumPostCard({
         );
     };
 
-
     // ====================================================
-    // LIKE HANDLER
+    // LIKE / UNLIKE HANDLER
     // ====================================================
 
     const handleLike = async () => {
-
-        console.log(
-            "[ForumPostCard] Like clicked:",
-            {
-                forumId: forum.forum_id,
-                alreadyLiked: localLiked,
-            }
-        );
-
-
-        // ----------------------------------------------
-        // Backend currently only provides POST create
-        // like. There is no unlike endpoint provided yet.
-        // ----------------------------------------------
-
-        if (localLiked) {
-            console.log(
-                "[ForumPostCard] Already liked. Unlike endpoint not available yet."
-            );
-
+        if (isLiking) {
             return;
         }
 
+        // Save previous state in case API fails
+        const previousLiked = localLiked;
+        const previousLikeCount = localLikeCount;
+
+        // Toggle the current state
+        const newLikedState = !localLiked;
+
+        console.log("[ForumPostCard] Like button clicked:", {
+            forumId: forum.forum_id,
+            previousLiked,
+            newLikedState,
+            previousLikeCount,
+        });
+
+        // ==============================================
+        // OPTIMISTIC UI UPDATE
+        // ==============================================
+
+        setLocalLiked(newLikedState);
+
+        setLocalLikeCount((previousCount) => {
+            return newLikedState
+                ? previousCount + 1
+                : Math.max(0, previousCount - 1);
+        });
 
         try {
-
-            const response =
-                await createForumLike(
-                    forum.forum_id
-                ).unwrap();
-
+            const response = await createForumLike(
+                forum.forum_id
+            ).unwrap();
 
             console.log(
-                "[ForumPostCard] Like success:",
+                "[ForumPostCard] Like/Unlike API response:",
                 response
             );
 
+            // ==============================================
+            // Only sync from backend if `like` exists
+            // ==============================================
 
-            setLocalLiked(true);
+            if (response?.like) {
+                const backendLiked =
+                    response.like.is_liked_by_current_user;
 
-            setLocalLikeCount(
-                (previous) =>
-                    previous + 1
-            );
+                setLocalLiked(backendLiked);
 
+                console.log(
+                    "[ForumPostCard] Backend like state:",
+                    backendLiked
+                );
+            } else {
+                console.log(
+                    "[ForumPostCard] No `like` object returned. Optimistic state kept."
+                );
+            }
         } catch (error) {
-
             console.error(
-                "[ForumPostCard] Like failed:",
+                "[ForumPostCard] Like/Unlike API failed:",
                 error
             );
 
+            // Restore previous state when API fails
+            setLocalLiked(previousLiked);
+            setLocalLikeCount(previousLikeCount);
         }
     };
 
@@ -853,12 +877,8 @@ export default function ForumPostCard({
 
                         <button
                             type="button"
-                            disabled={
-                                isLiking
-                            }
-                            onClick={
-                                handleLike
-                            }
+                            onClick={handleLike}
+                            disabled={isLiking}
                             className="cursor-pointer disabled:opacity-50"
                         >
                             <Heart

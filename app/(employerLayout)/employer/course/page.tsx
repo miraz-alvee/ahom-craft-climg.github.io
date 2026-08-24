@@ -1,6 +1,6 @@
 "use client"
 
-import CourseCard from "@/components/career-seekers-dashboard/courses/CourseCard";
+import CourseCard from "@/components/employer-dashboard/courses/CourseCard";
 import { useGetCourseQuery } from "@/redux/features/courses/getAllCourseApis";
 
 
