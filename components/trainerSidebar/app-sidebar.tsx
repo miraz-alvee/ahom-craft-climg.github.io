@@ -90,7 +90,7 @@ function NavItem({
 const data = {
     home: [
         {
-            title: "Home",
+            title: "Dashboard",
             url: "/trainer",
             icon: House,
         },
@@ -113,11 +113,6 @@ const data = {
             title: "Courses",
             url: "/trainer/courses",
             icon: GraduationCap,
-        },
-        {
-            title: "Resume",
-            url: "/trainer/resume",
-            icon: FileText,
         },
         {
             title: "Tools",
@@ -167,7 +162,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     };
 
     return (
-        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff]">
+        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff] border-2 border-[#f3f4f5]">
             {/* Header with Logo */}
             <SidebarHeader className="p-3">
                 <div className="flex items-center justify-center">

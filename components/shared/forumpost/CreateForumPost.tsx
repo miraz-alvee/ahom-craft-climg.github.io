@@ -581,7 +581,7 @@ export default function CreateForumPost({
       <button
         type="button"
         onClick={openModal}
-        className="bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 rounded-lg flex items-center gap-2 shadow-sm transition"
+        className="cursor-pointer bg-blue-600 hover:bg-blue-700 text-white font-semibold px-5 py-3 rounded-lg flex items-center gap-2 shadow-sm transition"
       >
         <Plus size={18} />
 

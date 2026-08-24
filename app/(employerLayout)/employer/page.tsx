@@ -3,7 +3,7 @@
 import Dashboard from "@/components/shared/forumpost/Dashboard";
 import { useGetForumsQuery } from "@/redux/features/forum/forumApis";
 
-export default function Page() {
+export default function EmployerDasboardPage() {
   const { data: forums = [], isLoading, isError, refetch } = useGetForumsQuery();
 
   if (isLoading) {

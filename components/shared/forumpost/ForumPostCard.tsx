@@ -130,7 +130,7 @@ function MediaItem({
 // COMPONENT
 // ======================================================
 
-export default function ForumPostCard({forum}: ForumPostCardProps) {
+export default function ForumPostCard({ forum }: ForumPostCardProps) {
 
     const [showAllComments, setShowAllComments] = useState(false);
 
@@ -946,32 +946,104 @@ export default function ForumPostCard({forum}: ForumPostCardProps) {
                                     .full_name
                             }
                         </span>
-
                         {forum.content}
-
                     </p>
 
-
-                    {/* ==================================================
-    COMMENT COUNT
-================================================== */}
+                    {/* ===================== COMMENT COUNT ================= */}
 
                     {forum.total_comments > 0 && (
                         <button
                             type="button"
-                            className="text-sm text-gray-500 mt-2"
+                            onClick={() => {
+                                console.log(
+                                    "[ForumPostCard] View all comments clicked:",
+                                    {
+                                        forumId: forum.forum_id,
+                                    }
+                                );
+
+                                setShowAllComments((previous) => !previous);
+                            }}
+                            className="cursor-pointer mt-3 text-sm font-medium text-gray-500 hover:text-gray-600"
                         >
-                            View all {forum.total_comments}{" "}
-                            {forum.total_comments === 1
-                                ? "comment"
-                                : "comments"}
+                            {showAllComments
+                                ? "Hide Comments"
+                                : `View All ${forum.total_comments} Comments`}
                         </button>
                     )}
 
+                    {showAllComments && (
+                        <div className="mt-4 space-y-4">
+                            {/* Loading */}
+                            {isCommentsLoading || isCommentsFetching ? (
+                                <div className="text-sm text-gray-500">
+                                    Loading comments...
+                                </div>
+                            ) : null}
 
-                    {/* ==================================================
-    NEWLY CREATED COMMENTS
-================================================== */}
+                            {/* Error */}
+                            {commentsError ? (
+                                <div className="text-sm text-red-500">
+                                    Failed to load comments.
+                                </div>
+                            ) : null}
+
+                            {/* No comments */}
+                            {!isCommentsLoading &&
+                                !commentsError &&
+                                comments.length === 0 && (
+                                    <div className="text-sm text-gray-500">
+                                        No comments yet.
+                                    </div>
+                                )}
+
+                            {/* All comments */}
+                            {comments.map((comment) => (
+                                <div
+                                    key={comment.comment_id}
+                                    className="flex gap-3"
+                                >
+                                    {/* Profile Image */}
+                                    <div className="flex h-9 w-9 shrink-0 items-center justify-center overflow-hidden rounded-full bg-gray-200">
+                                        {comment.user.profile_image ? (
+                                            <img
+                                                src={comment.user.profile_image}
+                                                alt={comment.user.full_name}
+                                                className="h-full w-full object-cover"
+                                            />
+                                        ) : (
+                                            <span className="text-sm font-semibold text-gray-600">
+                                                {comment.user.full_name
+                                                    ?.charAt(0)
+                                                    ?.toUpperCase()}
+                                            </span>
+                                        )}
+                                    </div>
+
+                                    {/* Comment Content */}
+                                    <div className="flex-1">
+                                        <div className="rounded-xl bg-gray-100 px-3 py-2">
+                                            <p className="text-sm font-semibold text-gray-800">
+                                                {comment.user.full_name}
+                                            </p>
+
+                                            <p className="mt-1 text-sm text-gray-700">
+                                                {comment.comment_content}
+                                            </p>
+                                        </div>
+
+                                        <p className="mt-1 text-xs text-gray-400">
+                                            {new Date(
+                                                comment.created_at
+                                            ).toLocaleString()}
+                                        </p>
+                                    </div>
+                                </div>
+                            ))}
+                        </div>
+                    )}
+
+                    {/* ===============  NEWLY CREATED COMMENTS ============= */}
 
                     {createdComments.length > 0 && (
                         <div className="mt-3 space-y-3">

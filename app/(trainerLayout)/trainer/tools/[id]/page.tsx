@@ -1,7 +1,7 @@
 "use client";
 
 
-import ToolDetails from "@/components/employer-dashboard/tools/ToolDetails";
+import ToolDetails from "@/components/trainer-dashboard/tools/ToolDetails";
 import { useParams } from "next/navigation";
 
 
