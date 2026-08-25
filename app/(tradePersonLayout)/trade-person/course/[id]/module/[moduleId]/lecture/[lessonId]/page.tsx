@@ -1,7 +1,6 @@
 import LectureDetail from "@/components/trade-person-dashboard/courses/LectureDetail";
 
 
-
 export default async function LecturePage({
   params,
 }: {

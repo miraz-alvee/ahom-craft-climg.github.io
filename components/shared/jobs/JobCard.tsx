@@ -3,8 +3,11 @@
 import { Job } from "@/redux/features/jobs/types";
 import Link from "next/link";
 import { useState } from "react";
+import { useRouter } from "next/navigation";
 import ApplyJobModal from "./ApplyJobModal";
-
+import { useCreateRoomMutation } from "@/redux/features/chat/chatApis";
+import { MessageSquare, Loader2 } from "lucide-react";
+import { toast } from "sonner";
 
 const EMPLOYEE_TYPE_LABEL: Record<Job["employee_type"], string> = {
     full_time: "Full-time",
@@ -44,6 +47,39 @@ function timeAgo(dateString: string) {
 
 export default function JobCard({ job }: { job: Job }) {
     const [showApply, setShowApply] = useState(false);
+    const [createRoom, { isLoading: isCreatingRoom }] = useCreateRoomMutation();
+    const router = useRouter();
+
+    const handleChatWithEmployer = async () => {
+        // Extract employer ID safely from job payload
+        const employerId =
+            typeof job.user === "object"
+                ? job.user?.id
+                : (job as unknown as { user_id?: number }).user_id || job.user;
+
+        if (!employerId) {
+            toast.error("Employer ID not found for this job post.");
+            return;
+        }
+
+        try {
+            const room = await createRoom({ user2: Number(employerId) }).unwrap();
+            const rId = room?.room_id || (room as unknown as { id?: number })?.id;
+
+            if (rId) {
+                toast.success("Chat room opened!");
+                router.push(`/trade-person/chat?roomId=${rId}`);
+            } else {
+                toast.success("Chat room created! Redirecting to chat...");
+                router.push("/trade-person/chat");
+            }
+        } catch (err: unknown) {
+            console.error("Failed to create room with employer:", err);
+            const apiErr = err as { data?: { detail?: string; error?: string } };
+            toast.error(apiErr?.data?.detail || apiErr?.data?.error || "Could not start chat with employer.");
+        }
+    };
+
     return (
         <div className="flex flex-col justify-between rounded-xl border border-gray-200 bg-white p-5 shadow-sm transition-shadow hover:shadow-md">
             <div>
@@ -89,12 +125,31 @@ export default function JobCard({ job }: { job: Job }) {
                 >
                     {job.deadline_status}
                 </span>
-                <button
-                    onClick={() => setShowApply(true)}
-                    className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700"
-                >
-                    Apply Now
-                </button>
+
+                <div className="flex items-center gap-2">
+                    {/* Chat Button to the left of Apply Now */}
+                    <button
+                        onClick={handleChatWithEmployer}
+                        disabled={isCreatingRoom}
+                        className="flex items-center gap-1.5 rounded-lg border border-blue-600 px-3.5 py-2 text-sm font-medium text-blue-600 transition-colors hover:bg-blue-50 disabled:opacity-50 cursor-pointer"
+                        title="Chat with Employer"
+                    >
+                        {isCreatingRoom ? (
+                            <Loader2 className="h-4 w-4 animate-spin" />
+                        ) : (
+                            <MessageSquare className="h-4 w-4" />
+                        )}
+                        <span>Chat</span>
+                    </button>
+
+                    {/* Apply Now Button */}
+                    <button
+                        onClick={() => setShowApply(true)}
+                        className="rounded-lg bg-indigo-600 px-4 py-2 text-sm font-medium text-white transition-colors hover:bg-indigo-700 cursor-pointer"
+                    >
+                        Apply Now
+                    </button>
+                </div>
             </div>
 
             {showApply && (

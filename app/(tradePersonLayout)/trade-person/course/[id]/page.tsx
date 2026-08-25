@@ -1,7 +1,6 @@
 import CourseDetail from "@/components/trade-person-dashboard/courses/CourseDetail";
 
 
-
 interface Props {
   params: Promise<{ id: string }>;
 }
