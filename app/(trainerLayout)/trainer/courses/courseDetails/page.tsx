@@ -2,7 +2,7 @@
 
 import { useMemo, useState } from "react";
 import { useRouter, useSearchParams } from "next/navigation";
-import { ArrowLeft, Clock, CheckCircle2, XCircle, Loader2, Pencil, Trash2 } from "lucide-react";
+import { ArrowLeft, Clock, CheckCircle2, XCircle, Loader2, Pencil, Trash2, Plus, ChevronRight } from "lucide-react";
 import { toast } from "sonner";
 import Swal from "sweetalert2";
 import {
@@ -10,6 +10,8 @@ import {
     useGetSingleCourseQuery,
 } from "@/redux/features/trainer/courses/coursesApi";
 import CourseFormModal from "@/components/trainer-dashboard/courses/CourseFormModal";
+import ModuleFormModal from "@/components/trainer-dashboard/courses/ModuleFormModal";
+import { useGetModuleListQuery } from "@/redux/features/trainer/courses/modulesApi";
 
 function formatPrice(price: string) {
     const value = Number(price);
@@ -22,6 +24,7 @@ export default function CourseDetailsPage() {
     const router = useRouter();
     const searchParams = useSearchParams();
     const [isFormOpen, setIsFormOpen] = useState(false);
+    const [isModuleFormOpen, setIsModuleFormOpen] = useState(false);
     const [deleteCourse] = useDeleteCourseMutation();
 
     const rawCourseId = searchParams.get("courseId");
@@ -38,6 +41,12 @@ export default function CourseDetailsPage() {
     } = useGetSingleCourseQuery(courseId ?? "", {
         skip: courseId === null,
     });
+    const { data: modules = [], isLoading: areModulesLoading, isError: areModulesError } = useGetModuleListQuery();
+
+    const courseModules = useMemo(
+        () => course ? modules.filter((module) => String(module.course) === String(course.id) || String(module.course) === course.title) : [],
+        [course, modules]
+    );
 
     const handleDelete = async () => {
         if (!course) return;
@@ -157,6 +166,42 @@ export default function CourseDetailsPage() {
                             <div className="text-lg font-semibold text-gray-900">
                                 {formatPrice(course.price)}
                             </div>
+
+                            <div className="border-t border-gray-100 pt-5">
+                                <div className="flex items-center justify-between gap-3">
+                                    <h2 className="text-lg font-semibold text-gray-900">Course modules</h2>
+                                    <button
+                                        type="button"
+                                        onClick={() => setIsModuleFormOpen(true)}
+                                        className="flex items-center gap-2 rounded-lg bg-blue-600 px-3 py-2 text-sm font-medium text-white hover:bg-blue-700"
+                                    >
+                                        <Plus className="h-4 w-4" />
+                                        Add new module
+                                    </button>
+                                </div>
+
+                                {areModulesLoading && <p className="mt-4 text-sm text-gray-500">Loading modules...</p>}
+                                {areModulesError && <p className="mt-4 rounded-lg bg-red-50 p-3 text-sm text-red-600">Couldn&apos;t load modules.</p>}
+                                {!areModulesLoading && !areModulesError && courseModules.length === 0 && (
+                                    <p className="mt-4 rounded-lg border border-dashed border-gray-300 p-5 text-center text-sm text-gray-500">No modules have been added yet.</p>
+                                )}
+                                <div className="mt-4 space-y-2">
+                                    {courseModules.map((module) => (
+                                        <button
+                                            type="button"
+                                            key={module.id}
+                                            onClick={() => router.push(`/trainer/courses/courseDetails/courseModules?moduleId=${module.id}`)}
+                                            className="flex w-full items-center justify-between gap-3 rounded-lg border border-gray-200 p-3 text-left hover:border-blue-300 hover:bg-blue-50/40"
+                                        >
+                                            <span className="min-w-0">
+                                                <span className="block truncate text-sm font-medium text-gray-900">{module.title}</span>
+                                                <span className="mt-1 block text-xs text-gray-500">{module.is_free ? "Free" : "Paid"} · {module.is_exam_complete ? "Exam complete" : "Exam in progress"}</span>
+                                            </span>
+                                            <ChevronRight className="h-4 w-4 shrink-0 text-gray-400" />
+                                        </button>
+                                    ))}
+                                </div>
+                            </div>
                         </div>
                     </div>
                 )}
@@ -166,6 +211,12 @@ export default function CourseDetailsPage() {
                 isOpen={isFormOpen}
                 onClose={() => setIsFormOpen(false)}
                 course={course ?? null}
+            />
+            <ModuleFormModal
+                key={`${isModuleFormOpen ? "open" : "closed"}-${course?.id ?? "new"}`}
+                isOpen={isModuleFormOpen}
+                onClose={() => setIsModuleFormOpen(false)}
+                courseId={course?.id}
             />
         </div>
     );
