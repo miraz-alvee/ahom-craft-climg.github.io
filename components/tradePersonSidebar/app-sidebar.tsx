@@ -12,7 +12,8 @@ import {
     FileText,
     User,
     LogOut,
-    Calendar
+    Calendar,
+    Bot
 } from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -96,6 +97,11 @@ const data = {
             icon: BriefcaseBusiness,
         },
         {
+            title: "Chat",
+            url: "/trade-person/chat",
+            icon: MessageSquare,
+        },
+        {
             title: "Applied",
             url: "/trade-person/applied",
             icon: Calendar,
@@ -103,7 +109,7 @@ const data = {
         {
             title: "Messages",
             url: "/trade-person/message",
-            icon: MessageSquare,
+            icon: Bot,
         },
         {
             title: "Course",

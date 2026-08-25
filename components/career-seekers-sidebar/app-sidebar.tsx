@@ -11,6 +11,7 @@ import {
     UserRoundPen,
     Wrench,
     LogOut,
+    Bot,
 } from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -94,30 +95,25 @@ const data = {
             icon: BriefcaseBusiness,
         },
         {
+            title: "Chat",
+            url: "/career-seeker/chat",
+            icon: MessageCircle,
+        },
+        {
             title: "Applied",
             url: "/career-seeker/applied",
             icon: Calendar,
         },
-        // {
-        //     title: "Forum",
-        //     url: "/career-seeker/forum",
-        //     icon: FormInputIcon,
-        // },
         {
             title: "Message",
             url: "/career-seeker/message",
-            icon: MessageCircle,
+            icon: Bot,
         },
         {
             title: "Course",
             url: "/career-seeker/course",
             icon: GraduationCap,
         },
-        // {
-        //     title: "Resume",
-        //     url: "/career-seeker/resume",
-        //     icon: FileText,
-        // },
         {
             title: "Tools",
             url: "/career-seeker/tools",

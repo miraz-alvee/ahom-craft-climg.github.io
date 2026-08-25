@@ -12,7 +12,8 @@ import {
     GraduationCap,
     FileText,
     User,
-    LogOut
+    LogOut,
+    Bot
 } from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -100,6 +101,11 @@ const data = {
             icon: Briefcase,
         },
         {
+            title: "Chat",
+            url: "/trade-person/chat",
+            icon: MessageSquare,
+        },
+        {
             title: "Applied",
             url: "/trainer/applied",
             icon: FileCheck2,
@@ -107,7 +113,7 @@ const data = {
         {
             title: "Messages",
             url: "/trainer/message",
-            icon: MessageSquare,
+            icon: Bot,
         },
         {
             title: "Courses",

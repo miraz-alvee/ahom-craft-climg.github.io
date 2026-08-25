@@ -10,7 +10,9 @@ import {
     Wrench,
     LogOut,
     Calendar,
-    GraduationCap
+    GraduationCap,
+    MessageSquare,
+    Bot
 } from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -94,6 +96,11 @@ const data = {
             icon: BriefcaseBusiness,
         },
         {
+            title: "Chat",
+            url: "/employer/chat",
+            icon: MessageSquare,
+        },
+        {
             title: "Applied",
             url: "/employer/applied",
             icon: Calendar,
@@ -101,7 +108,7 @@ const data = {
         {
             title: "Message",
             url: "/employer/message",
-            icon: MessageCircle,
+            icon: Bot,
         },
         {
             title: "Courses",
