@@ -15,7 +15,7 @@ import {
     SidebarProvider,
     SidebarTrigger,
 } from "@/components/ui/sidebar"
-import { CareerAppSidebar } from "@/components/career-seekers/app-sidebar";
+import { CareerAppSidebar } from "@/components/career-seekers-sidebar/app-sidebar";
 
 export default function JobSeekerLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -58,6 +58,7 @@ export default function JobSeekerLayout({ children }: { children: React.ReactNod
                     </Breadcrumb>
                 </header>
                 <main className="flex-1 w-full bg-[#F9FAFB]">
+                    {/* <h1>hello i am chatbot</h1> */}
                     {children}
                 </main>
             </SidebarInset>

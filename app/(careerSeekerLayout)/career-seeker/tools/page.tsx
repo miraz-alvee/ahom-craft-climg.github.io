@@ -1,207 +1,513 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { BookOpen, Clock, PlayCircle, Star } from "lucide-react"
-import Image from "next/image"
+import { useMemo, useState } from "react";
+import { Star } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 
-import toolsImage01 from "@/public/images/tools/tool-01.jpg"
-import toolsImage02 from "@/public/images/tools/tool-02.jpg"
-import toolsImage03 from "@/public/images/tools/tool-03.jpg"
-import toolsImage04 from "@/public/images/tools/tool-04.jpg"
-import toolsImage05 from "@/public/images/tools/tool-05.jpg"
-import toolsImage06 from "@/public/images/tools/tool-06.jpg"
-import toolsImage07 from "@/public/images/tools/tool-07.jpg"
-import toolsImage08 from "@/public/images/tools/tool-08.jpg"
+import toolsImage01 from "@/public/images/tools/tool-01.jpg";
+import { useGetToolCategoriesQuery } from "@/redux/features/tools/toolsCategoryApis";
+import { useGetToolsQuery } from "@/redux/features/tools/toolsApis";
 
-type Category = "Civil" | "Electrical" | "Plumbing" | "Safety"
-
-const FILTERS = ["All", "Civil", "Electrical", "Plumbing", "Safety"]
-
-const tools = [
-  {
-    title: "12 Pcs Tools Package",
-    description: "A complete toolkit featuring 12 essential tools.",
-    rating: 4.5,
-    reviews: 95,
-    price: 28,
-    category: "Civil" as Category,
-    image: toolsImage01,
-  },
-  {
-    title: "Electric Drill Kit",
-    description: "Professional drilling machine set.",
-    rating: 4.6,
-    reviews: 120,
-    price: 45,
-    category: "Electrical" as Category,
-    image: toolsImage02,
-  },
-  {
-    title: "Pipe Wrench Set",
-    description: "Heavy-duty plumbing wrench set.",
-    rating: 4.4,
-    reviews: 78,
-    price: 32,
-    category: "Plumbing" as Category,
-    image: toolsImage03,
-  },
-  {
-    title: "12 Pcs Tools Package",
-    description: "A complete toolkit featuring 12 essential tools.",
-    rating: 4.5,
-    reviews: 95,
-    price: 28,
-    category: "Civil" as Category,
-    image: toolsImage04,
-  },
-  {
-    title: "Electric Drill Kit",
-    description: "Professional drilling machine set.",
-    rating: 4.6,
-    reviews: 120,
-    price: 45,
-    category: "Electrical" as Category,
-    image: toolsImage05,
-  },
-  {
-    title: "Pipe Wrench Set",
-    description: "Heavy-duty plumbing wrench set.",
-    rating: 4.4,
-    reviews: 78,
-    price: 32,
-    category: "Plumbing" as Category,
-    image: toolsImage06,
-  },
-  {
-    title: "12 Pcs Tools Package",
-    description: "A complete toolkit featuring 12 essential tools.",
-    rating: 4.5,
-    reviews: 95,
-    price: 28,
-    category: "Civil" as Category,
-    image: toolsImage07,
-  },
-  {
-    title: "Electric Drill Kit",
-    description: "Professional drilling machine set.",
-    rating: 4.6,
-    reviews: 120,
-    price: 45,
-    category: "Electrical" as Category,
-    image: toolsImage08,
-  },
-  {
-    title: "Pipe Wrench Set",
-    description: "Heavy-duty plumbing wrench set.",
-    rating: 4.4,
-    reviews: 78,
-    price: 32,
-    category: "Plumbing" as Category,
-    image: toolsImage06,
-  },
-]
+type FilterValue = "All" | string;
 
 export default function ToolsPage() {
-  const [filter, setFilter] = useState("All")
+  const [filter, setFilter,] = useState<FilterValue>("All");
 
- const filteredTools= tools.filter((tool) => {
-  if (filter === "All") return true
-  return tool.category === filter
-})
+  const {
+    data: categories = [],
+    isLoading:
+    isCategoriesLoading,
+    isError:
+    isCategoriesError,
+    error:
+    categoriesError,
+  } =
+    useGetToolCategoriesQuery();
+
+
+  const {
+    data: toolsData,
+    isLoading:
+    isToolsLoading,
+    isError:
+    isToolsError,
+    error:
+    toolsError,
+  } =
+    useGetToolsQuery();
+
+  const tools = toolsData?.results ?? [];
+
+
+  // ====================================================
+  // LOG CATEGORY RESPONSE
+  // ====================================================
+
+  console.log(
+    "[ToolsPage] Categories:",
+    categories
+  );
+
+
+  // ====================================================
+  // LOG TOOLS RESPONSE
+  // ====================================================
+
+  console.log(
+    "[ToolsPage] Tools:",
+    toolsData
+  );
+
+
+  // ====================================================
+  // FILTER TOOLS
+  // ====================================================
+
+  const filteredTools = useMemo(() => {
+    if (filter === "All") {
+      return tools;
+    }
+    return tools.filter((tool) => tool.category === filter);
+  }, [tools, filter,]);
+
+
+  // ====================================================
+  // LOADING
+  // ====================================================
+
+  const isLoading =
+    isCategoriesLoading ||
+    isToolsLoading;
+
+
+  // ====================================================
+  // ERROR
+  // ====================================================
+
+  if (
+    isCategoriesError ||
+    isToolsError
+  ) {
+
+    console.error(
+      "[ToolsPage] Categories error:",
+      categoriesError
+    );
+
+    console.error(
+      "[ToolsPage] Tools error:",
+      toolsError
+    );
+
+
+    return (
+      <div className="min-h-screen bg-[#f4f6fb]">
+        <div className="px-8 py-6">
+          <div className="mb-6">
+            <h1 className="font-inter text-2xl font-bold"> Tools</h1>
+            <p className="font-inter text-gray-500 text-sm"> Browse professional tools & equipment </p>
+          </div>
+          <div className="bg-white rounded-xl border p-8 text-center">
+            <p className="font-inter text-red-500">Failed to load tools.</p>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  const router = useRouter();
+
+  // ====================================================
+  // LOADING UI
+  // ====================================================
+
+  if (isLoading) {
+    return (
+      <div className="min-h-screen bg-[#f4f6fb]">
+        <div className="px-8 py-6">
+          <div className="mb-6">
+            <h1 className="font-inter text-2xl font-bold">
+              Tools
+            </h1>
+            <p className="font-inter text-gray-500 text-sm">
+              Browse professional tools & equipment
+            </p>
+          </div>
+          {/* FILTER SKELETON */}
+          <div className="flex flex-wrap gap-3 mb-8">
+            {[1, 2, 3, 4, 5].map(
+              (item) => (
+                <div
+                  key={item}
+                  className="h-9 w-20 bg-gray-200 rounded-full animate-pulse"
+                />
+              )
+            )}
+          </div>
+          {/* TOOL SKELETON */}
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {[1, 2, 3, 4, 5].map(
+              (item) => (
+                <div key={item} className="bg-white rounded-xl border overflow-hidden animate-pulse">
+                  <div className="h-52 bg-gray-200" />
+                  <div className="p-4 space-y-3">
+                    <div className="h-4 bg-gray-200 rounded w-3/4" />
+                    <div className="h-3 bg-gray-200 rounded w-full" />
+                    <div className="h-3 bg-gray-200 rounded w-1/2" />
+                    <div className="h-9 bg-gray-200 rounded" />
+                  </div>
+                </div>
+              )
+            )}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+
+  // ====================================================
+  // MAIN UI
+  // ====================================================
 
   return (
     <div className="min-h-screen bg-[#f4f6fb]">
       <div className="px-8 py-6">
-
-        {/* Header */}
         <div className="mb-6">
-          <h1 className="font-inter text-2xl font-bold">Tools</h1>
+          <h1 className="font-inter text-2xl font-bold">
+            Tools
+          </h1>
           <p className="font-inter text-gray-500 text-sm">
             Browse professional tools & equipment
           </p>
         </div>
 
-        {/* Filters */}
         <div className="flex flex-wrap gap-3 mb-8">
+          {/* ALL */}
+          <button
+            type="button"
+            onClick={() => {
+              // console.log(
+              //   "[ToolsPage] Selected category:",
+              //   "All"
+              // );
+              setFilter(
+                "All"
+              );
+            }}
+            className={`font-inter px-4 py-2 text-sm rounded-full border transition
+              ${filter === "All"
+                ? "bg-[#2563EB] text-white border-none"
+                : "bg-white hover:bg-blue-50"
+              }`}
+          >
+            All
+          </button>
 
-          {FILTERS.map((f) => (
-            <button
-              key={f}
-              onClick={() => setFilter(f)}
-              className={`font-inter px-4 py-2 text-sm rounded-full border transition
-                ${filter === f
-                  ? "bg-[#2563EB] text-white border-blue-600"
-                  : "bg-white hover:bg-blue-50"
-                }`}
-            >
-              {f}
-            </button>
-          ))}
+          {/* API CATEGORIES */}
 
-        </div>
+          {categories
+            .filter(
+              (category) =>
+                category.is_active
+            )
+            .map(
+              (category) => (
 
-        {/* Course Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6 ">
-          {filteredTools.map((tool, index) => (
-            <div
-              key={index}
-              className="bg-white rounded-xl border hover:shadow-md overflow-hidden shadow-lg transition-transform duration-200 hover:scale-102"
-            >
+                <button
+                  key={
+                    category.id
+                  }
+                  type="button"
+                  onClick={() => {
 
-              {/* Image */}
-              <div className="relative h-52 w-full">
-                <Image
-                  src={tool.image}
-                  alt={tool.title}
-                  fill
-                  className="object-cover"
-                />
+                    console.log(
+                      "[ToolsPage] Selected category:",
+                      {
+                        id:
+                          category.id,
+                        name:
+                          category.name,
+                      }
+                    );
 
-                {/* Price */}
-                <div className="font-inter absolute top-3 right-3 bg-white/60 text-gray-900 text-sm font-semibold px-3 py-1 rounded-md shadow">
-                  ${tool.price}
-                </div>
-              </div>
+                    setFilter(
+                      category.name
+                    );
 
-              {/* Content */}
-              <div className="p-4">
-
-                <h3 className="font-inter font-semibold text-sm mb-1">
-                  {tool.title}
-                </h3>
-
-                <p className="font-inter text-xs text-gray-500 mb-3">
-                  {tool.description}
-                </p>
-
-                {/* Rating */}
-                <div className="flex items-center gap-1 text-yellow-500 text-sm mb-4">
-                  {[1, 2, 3, 4, 5].map((star) => (
-                    <Star
-                      key={star}
-                      size={14}
-                      fill={star <= Math.floor(tool.rating) ? "currentColor" : "none"}
-                    />
-                  ))}
-
-                  <span className="font-inter text-gray-500 text-xs ml-2">
-                    ({tool.reviews})
-                  </span>
-                </div>
-
-                {/* Button */}
-                <button className="font-inter w-full bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 rounded-lg">
-                  Buy Now
+                  }}
+                  className={`font-inter px-4 py-2 text-sm rounded-full border transition
+                    ${filter ===
+                      category.name
+                      ? "bg-[#2563EB] text-white border-none"
+                      : "bg-white hover:bg-blue-50 border border-[#2563EB]"
+                    }`}
+                >
+                  {
+                    category.name
+                  }
                 </button>
-
-              </div>
-
-            </div>
-          ))}
-
+              )
+            )}
         </div>
 
+
+        {/* ==================================================
+            RESULT COUNT
+        ================================================== */}
+
+        <div className="mb-4">
+          <p className="font-inter text-sm text-gray-500">
+            Showing{" "}
+            <span className="font-semibold text-gray-700">
+              {
+                filteredTools.length
+              }
+            </span>{" "}
+            tools
+            {filter !==
+              "All" && (
+                <>
+                  {" "}in{" "}
+                  <span className="font-semibold text-gray-700">
+                    {filter}
+                  </span>
+                </>
+              )}
+          </p>
+        </div>
+
+
+        {/* ==================================================
+            TOOL GRID
+        ================================================== */}
+
+        {filteredTools.length ===
+          0 ? (
+          <div className="bg-white rounded-xl border p-10 text-center">
+            <p className="font-inter text-gray-500">
+              No tools found in this category.
+            </p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-6">
+            {filteredTools.map(
+              (tool) => {
+                // ========================================
+                // IMAGE
+                // ========================================
+                const toolImage =
+                  tool.images?.length >
+                    0
+                    ? (
+                      tool.images[0]
+                        ?.image ??
+                      null
+                    )
+                    : null;
+                // ========================================
+                // PRICE
+                // ========================================
+                const price =
+                  tool.discount_price ||
+                  tool.regular_price;
+                // ========================================
+                // RATING
+                // ========================================
+                const rating =
+                  tool.average_rating ??
+                  0;
+                console.log(
+                  "[ToolsPage] Rendering tool:",
+                  {
+                    id:
+                      tool.tools_id,
+                    name:
+                      tool.name,
+                    category:
+                      tool.category,
+                    price,
+                    rating,
+                  }
+                );
+
+                return (
+                  <div
+                    key={
+                      tool.tools_id
+                    }
+                    className="bg-white rounded-xl border border-none hover:shadow-md overflow-hidden shadow-lg transition-transform duration-200 hover:scale-102"
+                  >
+                    {/* ==================================
+                        IMAGE
+                    ================================== */}
+                    <div className="relative h-52 w-full">
+                      {toolImage ? (
+                        <img
+                          src={
+                            toolImage
+                          }
+                          alt={
+                            tool.name
+                          }
+                          className="w-full h-full object-cover"
+                        />
+
+                      ) : (
+
+                        <Image
+                          src={
+                            toolsImage01
+                          }
+                          alt={
+                            tool.name
+                          }
+                          fill
+                          className="object-cover"
+                        />
+
+                      )}
+
+                      {/* PRICE */}
+                      <div className="font-inter absolute top-3 right-3 bg-white/60 text-gray-900 text-sm font-semibold px-3 py-1 rounded-md shadow">
+                        ${price}
+                      </div>
+                      {/* DISCOUNT */}
+                      {tool.discount_percentage &&
+                        tool.discount_percentage !==
+                        "0%" && (
+
+                          <div className="font-inter absolute top-3 left-3 bg-red-500 text-white text-xs font-semibold px-2 py-1 rounded-md shadow">
+
+                            {
+                              tool.discount_percentage
+                            }{" "}
+                            OFF
+                          </div>
+                        )}
+                    </div>
+
+
+                    {/* ==================================
+                        CONTENT
+                    ================================== */}
+
+                    <div className="p-4">
+                      {/* NAME */}
+                      <h3 className="font-inter font-semibold text-sm mb-1">
+                        {
+                          tool.name
+                        }
+                      </h3>
+                      {/* DESCRIPTION */}
+                      <p className="font-inter text-xs text-gray-500 mb-3 line-clamp-2">
+
+                        {
+                          tool.description
+                        }
+                      </p>
+                      {/* CATEGORY */}
+
+                      <p className="font-inter text-xs text-blue-600 font-medium mb-2">
+                        {
+                          tool.category
+                        }
+                      </p>
+                      {/* ==================================
+                          RATING
+                      ================================== */}
+                      <div className="flex items-center gap-1 text-yellow-500 text-sm mb-4">
+                        {[1, 2, 3, 4, 5].map(
+                          (star) => (
+                            <Star
+                              key={
+                                star
+                              }
+                              size={
+                                14
+                              }
+                              fill={
+                                star <=
+                                  Math.floor(
+                                    rating
+                                  )
+                                  ? "currentColor"
+                                  : "none"
+                              }
+                            />
+                          )
+                        )}
+                        <span className="font-inter text-gray-500 text-xs ml-2">
+                          ({tool.total_reviews})
+                        </span>
+                      </div>
+
+                      {/* ==================================
+                          STOCK
+                      ================================== */}
+
+                      <div className="flex items-center gap-1 mb-3">
+                        <span className="font-inter text-sm font-medium text-gray-500">
+                          Stock:
+                        </span>
+                        <span
+                          className={`font-inter text-xs font-medium ${tool.stock_quantity >
+                            0
+                            ? "text-green-600"
+                            : "text-red-500"
+                            }`}
+                        >
+                          {
+                            tool.stock_quantity
+                          }
+                        </span>
+                      </div>
+
+
+                      {/* ==================================
+                          BUY BUTTON
+                      ================================== */}
+                      {/* <button
+                        type="button"
+                        className="font-inter w-full bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 rounded-lg"
+                        onClick={() => {
+
+                          console.log(
+                            "[ToolsPage] Buy Now clicked:",
+                            tool
+                          );
+                        }}
+                      >
+                        Buy Now
+                      </button> */}
+                      <button
+                        type="button"
+                        onClick={() => {
+                          console.log(
+                            "[ToolsPage] Opening tool:",
+                            {
+                              id: tool.tools_id,
+                              name: tool.name,
+                            }
+                          );
+
+                          router.push(
+                            `/career-seeker/tools/${tool.tools_id}`
+                          );
+                        }}
+                        className="cursor-pointer font-inter w-full bg-blue-600 hover:bg-blue-700 text-white text-sm py-2 rounded-lg"
+                      >
+                        Buy Now
+                      </button>
+                    </div>
+                  </div>
+                );
+              }
+            )}
+          </div>
+        )}
       </div>
     </div>
-  )
+  );
 }

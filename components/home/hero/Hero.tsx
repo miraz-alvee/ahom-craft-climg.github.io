@@ -31,11 +31,13 @@ export default function Hero() {
         {/* Content — vertically centered, left aligned */}
         <div className="relative mx-auto flex h-full max-w-7xl flex-col justify-center px-6">
           <span className="inline-flex w-fit items-center gap-2 rounded-full bg-white px-4 py-1.5 text-sm font-medium text-navy shadow-sm">
-            🚀 Built by electricians, for electricians
+            🚀 AI won’t replace skilled hands!
           </span>
 
-          <h1 className="mt-5 max-w-2xl font-display text-4xl md:text-6xl font-extrabold leading-[1.05] text-white">
-            Find your path. Find your community.
+          <h1 className="mt-5 max-w-2xl font-display text-3xl md:text-4xl lg:text-6xl font-extrabold leading-[1.05] text-white">
+            Climb a craft that<br />  will last.
+            <span className="text-white/90"> Find your community.</span>
+
           </h1>
 
           <p className="mt-5 max-w-lg text-lg text-white/85">
@@ -43,25 +45,24 @@ export default function Hero() {
             help you climb from apprentice to top of the call list.
           </p>
 
-          <div className="mt-8 flex flex-wrap items-center gap-4">
+          <div className="mt-8 grid grid-cols-1 gap-4 sm:grid-cols-3 sm:max-w-2xl">
             <Link href="#join">
-              <button className="flex h-12.5 w-44 items-center justify-center rounded-lg bg-[#2563EB] px-4 text-center font-semibold text-white transition-colors hover:bg-blue-700 focus-ring">
+              <button className="flex h-12 w-full items-center justify-center rounded-lg bg-[#2563EB] px-6 text-center font-semibold text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500">
                 Join the network
               </button>
             </Link>
-
-            <Link href="#jobs">
-              <button className="flex h-12.5 w-44 items-center justify-center rounded-lg bg-white/90 px-6 text-center font-semibold text-navy transition-colors hover:bg-white focus-ring">
+            <Link href="#jobs" >
+              <button className="flex h-12 w-full items-center justify-center rounded-lg bg-gray-100 px-6 text-center font-semibold text-slate-900 transition-colors hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400">
                 Hire Talent
               </button>
             </Link>
-
             <Link href="#learn">
-              <button className="flex h-12.5 w-52 items-center justify-center rounded-lg bg-white/90 px-6 text-center font-semibold text-navy transition-colors hover:bg-white focus-ring">
+              <button className="flex h-12 w-full items-center justify-center rounded-lg bg-gray-100 px-6 text-center font-semibold text-slate-900 transition-colors hover:bg-gray-200 focus:outline-none focus:ring-2 focus:ring-gray-400">
                 Training &amp; Certificate
               </button>
             </Link>
           </div>
+
         </div>
       </div>
 

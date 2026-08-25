@@ -1,8 +1,7 @@
-import CategoriesSection from '@/components/career/categories/Categories'
-import CareerSeekerSection from '@/components/career/feature/Feature'
-import CareerHeroSection from '@/components/career/hero/Hero'
-import StepSetion from '@/components/career/steps/Steps'
-import StartSection from '@/components/career/start/Start'
+import CareerSeekerSection from '@/components/career-seekers-sidebar/career/feature/Feature'
+import CareerHeroSection from '@/components/career-seekers-sidebar/career/hero/Hero'
+import StepSetion from '@/components/career-seekers-sidebar/career/steps/Steps'
+import StartSection from '@/components/career-seekers-sidebar/career/start/Start'
 
 
 export default function CareerSeekersPage() {
@@ -11,7 +10,7 @@ export default function CareerSeekersPage() {
             <CareerHeroSection></CareerHeroSection>
             <CareerSeekerSection></CareerSeekerSection>
             <StepSetion></StepSetion>
-            <CategoriesSection></CategoriesSection>
+            {/* <CategoriesSection></CategoriesSection> */}
             <StartSection></StartSection>
         </div>
     )

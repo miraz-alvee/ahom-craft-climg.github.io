@@ -47,43 +47,47 @@ export default function Navbar() {
                         </Link>
                     </div>
 
-
                     {/* Desktop Navigation Links - Hidden on mobile/tablet */}
                     <div className="font-inter hidden lg:flex items-center space-x-10 xl:space-x-12 2xl:space-x-16">
                         {navLinks.map((item) => (
-                            // <Link
-                            //     key={link.name}
-                            //     href={link.href}
-                            //     className={`relative text-sm xl:text-lg font-medium transition-all duration-300 group py-2 whitespace-nowrap ${isActive(link.href)
-                            //         ? "text-[#191919]"
-                            //         : "text-[#191919] hover:text-[#474b52]"
-                            //         }`}
-                            // >
-                            //     {link.name}
-                            //     {/* Animated underline */}
-                            //     <span
-                            //         className={`absolute bottom-0 left-0 h-0.5 bg-linear-to-r from-[#191919] to-[#191919] transition-all duration-300 ${isActive(link.href)
-                            //             ? "w-full"
-                            //             : "w-0 group-hover:w-full"
-                            //             }`}
-                            //     />
-                            // </Link>
+                            <Link
+                                key={item.name}
+                                href={item.href}
+                                className={`
+                                    relative
+                                    inline-flex
+                                    flex-col
+                                    items-center
+                                    text-[15px]
+                                    leading-[22.5px]
+                                    font-bold
+                                    duration-200
+                                    transition-colors 
+                                    focus-ring 
+                                    rounded-sm
+                                    pb-1.5
+                                    text-[#3b3b3e]
+                                    ${pathname === item.href ? "" : "hover:text-ink"}
+                                `}>
+                                {/* Link Text Content */}
+                                <span>{item.name}</span>
 
-                             <Link
-                            key={item.name}
-                            href={item.href}
-                            className={`${pathname === item.href ? "" : ""}
-                                text-[15px]
-                                leading-[22.5px]
-                                font-bold
-                                duration-200
-                                hover:text-ink transition-colors focus-ring rounded-sm
-                                ${pathname === item.href
-                                    ? "text-[#3b3b3e]"
-                                    : "text-[#3b3b3e] hover:text-ink"
-                                }`}>
-                            {item.name}
-                        </Link>
+                                {/* Bottom Horizontal Indicator Line */}
+                                <div
+                                    className={`
+                                    absolute 
+                                    bottom-0 
+                                    h-0.5 
+                                    w-full 
+                                    transition-all 
+                                    duration-200
+                                    ${pathname === item.href
+                                        ? "bg-[#3b3b3e] scale-x-100"
+                                        : "bg-transparent scale-x-0 hover:bg-ink"
+                                    }
+                                `}
+                                />
+                            </Link>
                         ))}
                     </div>
 
@@ -128,18 +132,18 @@ export default function Navbar() {
                 className={`md:hidden overflow-hidden transition-all duration-300 ease-in-out ${isMobileMenuOpen ? "max-h-screen opacity-100" : "max-h-0 opacity-0"
                     }`}
             >
-                <div className="px-4 pt-2 pb-4 space-y-4 bg-[#f1f2f4] border-t border-gray-300 shadow-lg">
+                <div className="px-4 pt-2 pb-4 space-y-4 bg-surface-muted border-t border-surface-border shadow-lg">
                     {/* Mobile Navigation Links */}
                     {navLinks.map((link) => (
                         <Link
                             key={link.name}
                             href={link.href}
                             onClick={closeMobileMenu}
-                            className={`block rounded-lg  text-[15px]
+                            className={`block rounded-lg text-[15px]
                                 leading-[22.5px]
                                 font-bold transition-all duration-200 ${isActive(link.href)
-                                ? "text-[#492727]"
-                                : "text-[#707784] hover:text-[#474b52]"
+                                    ? "text-ink-900"
+                                    : "text-ink-600 hover:text-ink-900"
                                 }`}
                         >
                             {link.name}
@@ -147,22 +151,21 @@ export default function Navbar() {
                     ))}
 
                     {/* Mobile Auth Buttons */}
-                    <div className="pt-2 mb:pt-4 border-t border-gray-300">
+                    <div className="pt-2 mb:pt-4 border-t border-surface-border">
                         <Link
                             href="/login"
                             onClick={closeMobileMenu}
-                            className="block w-full text-center text-lg font-bold px-4 py-3 rounded-lg text-[#707784] hover:bg-gray-200 hover:text-[#474b52] transition-all duration-200"
+                            className="block w-full text-center text-lg font-bold px-4 py-3 rounded-lg text-ink-600 hover:bg-surface-muted hover:text-ink-900 transition-all duration-200"
                         >
                             Sign In
                         </Link>
                         <Link
                             href="/sign-up"
                             onClick={closeMobileMenu}
-                            className="block w-full text-center text-base font-bold bg-[#2563EB] text-[#492727] px-2 md:px-4 py-1 md:py-3 rounded-full transition-all duration-300 shadow-lg"
+                            className="block w-full text-center text-base font-bold bg-brand hover:bg-brand-hover text-black px-2 md:px-4 py-2 md:py-3 rounded-full transition-all duration-300 shadow-lg"
                         >
                             Get Started — Free
                         </Link>
-
                     </div>
                 </div>
             </div>

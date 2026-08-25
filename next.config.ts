@@ -7,6 +7,11 @@ const nextConfig: NextConfig = {
         protocol: "https",
         hostname: "images.unsplash.com",
       },
+      {
+        protocol: "http",
+        hostname: "craft.dsrt321.online",
+        pathname: "/media/**",
+      },
     ],
   },
 };

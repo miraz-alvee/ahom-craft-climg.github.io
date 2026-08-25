@@ -120,6 +120,7 @@ export default function Forum() {
           <p style={{ margin: 0, fontSize: "13px", color: "#6b7280" }}>Connect with industry professionals</p>
         </div>
         <button
+        className="cursor-pointer"
           style={{
             display: "flex",
             alignItems: "center",
@@ -131,7 +132,6 @@ export default function Forum() {
             padding: "8px 16px",
             fontSize: "14px",
             fontWeight: 600,
-            cursor: "pointer",
           }}
         >
           <PlusIcon /> Create Post
