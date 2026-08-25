@@ -11,7 +11,8 @@ import {
     GraduationCap,
     FileText,
     User,
-    LogOut
+    LogOut,
+    Calendar
 } from "lucide-react";
 
 import { usePathname, useRouter } from "next/navigation";
@@ -33,7 +34,6 @@ import Link from "next/link";
 import Image from "next/image";
 import {
     Tooltip,
-    TooltipContent,
     TooltipTrigger,
 } from "@/components/ui/tooltip";
 
@@ -86,9 +86,19 @@ function NavItem({
 const data = {
     home: [
         {
-            title: "Home",
+            title: "Dashboard",
             url: "/trade-person",
             icon: House,
+        },
+        {
+            title: "Jobs",
+            url: "/trade-person/jobs",
+            icon: BriefcaseBusiness,
+        },
+        {
+            title: "Applied",
+            url: "/trade-person/applied",
+            icon: Calendar,
         },
         {
             title: "Messages",
@@ -96,38 +106,19 @@ const data = {
             icon: MessageSquare,
         },
         {
-            title: "Forum",
-            url: "/trade-person/forum",
-            icon: UsersRound,
+            title: "Course",
+            url: "/trade-person/course",
+            icon: SquarePlus,
         },
+      
         {
             title: "Tools",
             url: "/trade-person/tools",
             icon: Wrench,
         },
         {
-            title: "Jobs",
-            url: "/trade-person/#",
-            icon: BriefcaseBusiness,
-        },
-        {
-            title: "New Course",
-            url: "/trade-person/new-course",
-            icon: SquarePlus,
-        },
-        {
-            title: "My Courses",
-            url: "/trade-person/#",
-            icon: GraduationCap,
-        },
-        {
-            title: "Resume",
-            url: "/trade-person/#",
-            icon: FileText,
-        },
-        {
             title: "Profile",
-            url: "/trade-person/#",
+            url: "/trade-person/profile",
             icon: User,
         }
     ],
@@ -168,7 +159,7 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
     };
 
     return (
-        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff]">
+        <Sidebar collapsible="icon" {...props} className="bg-[#ffffff] border-none">
             {/* Header with Logo */}
             <SidebarHeader className="p-3">
                 <div className="flex items-center justify-center">

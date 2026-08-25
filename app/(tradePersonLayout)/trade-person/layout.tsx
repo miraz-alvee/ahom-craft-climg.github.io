@@ -37,7 +37,7 @@ export default function tradePersonLayout({ children }: { children: React.ReactN
         <SidebarProvider>
             <AppSidebar />
             <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b px-4">
+                <header className="flex h-16 shrink-0 items-center gap-2 border-b border-blue-200 px-4">
                     <SidebarTrigger className="-ml-1" />
                     <Separator
                         orientation="vertical"
@@ -47,7 +47,7 @@ export default function tradePersonLayout({ children }: { children: React.ReactN
                         <BreadcrumbList>
                             <BreadcrumbItem className="hidden md:block">
                                 <BreadcrumbLink href="#" className="font-inter font-medium">
-                                    Craft Climb Workspace
+                                    Craft Climb Trade Person Workspace
                                 </BreadcrumbLink>
                             </BreadcrumbItem>
                             <BreadcrumbSeparator className="hidden md:block" />

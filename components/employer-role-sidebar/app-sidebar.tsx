@@ -93,7 +93,7 @@ const data = {
             url: "/employer/jobs",
             icon: BriefcaseBusiness,
         },
-         {
+        {
             title: "Applied",
             url: "/employer/applied",
             icon: Calendar,
