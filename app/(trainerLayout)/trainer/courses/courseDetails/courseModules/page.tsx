@@ -12,6 +12,7 @@ import {
     useDeleteModuleMutation,
     useGetSingleModuleQuery,
 } from "@/redux/features/trainer/courses/modulesApi";
+import QuizzesSection from "@/components/trainer-dashboard/courses/QuizzesSection";
 
 export default function ModuleDetailsPage() {
     const router = useRouter();
@@ -87,7 +88,7 @@ export default function ModuleDetailsPage() {
                             {module.warning.length > 0 && <div className="space-y-2 rounded-lg border border-amber-200 bg-amber-50 p-4 text-sm text-amber-800"><p className="font-semibold">Attention</p>{module.warning.map((warning) => <p key={warning}>{warning}</p>)}</div>}
                             <LessonsSection moduleId={module.id} moduleTitle={module.title} />
                             <DocumentsSection moduleId={module.id} moduleTitle={module.title} />
-                            <section className="border-t border-gray-100 pt-5"><h2 className="text-lg font-semibold text-gray-900">Quizzes</h2><p className="mt-1 text-sm text-gray-500">Quizzes for this module will be available here.</p></section>
+                            <QuizzesSection moduleId={module.id} moduleTitle={module.title} />
                         </div>
                     </article>
                 )}

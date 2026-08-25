@@ -1,99 +1,109 @@
 import { baseApi } from "@/redux/api/baseApi";
 
-export interface Document {
-    id: number;
-    course: number | string;
-    title: string;
-    description: string;
-    thumbnail: string;
-    number_questions_every_exam: number;
-    number_exam_attempts: number;
-    is_free: boolean;
-    is_active: boolean;
-    is_exam_complete: boolean;
-    warning: string[];
+export interface Quizze {
+    quiz_id: number;
+    module: number | string;
+    question: string;
+    questions: QuizOption[];
+    explanation: string;
     created_at: string;
     updated_at: string;
 }
 
-export interface DocumentMutationResponse {
+export interface QuizOption {
+    id?: number;
+    quiz?: string;
+    option_text: string;
+    is_correct: boolean;
+    created_at?: string;
+    updated_at?: string;
+}
+
+export interface QuizzePayload {
+    module?: number | string;
+    question: string;
+    explanation: string;
+    questions: Array<Pick<QuizOption, "option_text" | "is_correct">>;
+}
+
+export interface QuizzeMutationResponse {
     message: string;
-    Document: Document;
+    quiz: Quizze;
 }
 
-export interface DeleteDocumentResponse {
+export interface DeleteQuizzeResponse {
     message: string;
 }
 
-export interface UpdateDocumentPayload {
-    formData: FormData;
-    DocumentId: number | string;
+export interface UpdateQuizzePayload {
+    body: QuizzePayload;
+    QuizzeId: number | string;
 }
 
-const DocumentsApi = baseApi.injectEndpoints({
+const QuizzesApi = baseApi.injectEndpoints({
     endpoints: (builder) => ({
-        getDocumentList: builder.query<Document[], void>({
+        getQuizzeList: builder.query<Quizze[], void>({
             query: () => ({
-                url: "api/v1/service/trainer/lessons/documents/",
+                url: "api/v1/service/trainer/lessons/quizzes/",
                 method: "GET",
             }),
             providesTags: (result) =>
                 result
                     ? [
-                        ...result.map(({ id }) => ({ type: "Document" as const, id })),
-                        { type: "Document" as const, id: "LIST" },
+                        ...result.map(({ quiz_id }) => ({ type: "Quizze" as const, id: quiz_id })),
+                        { type: "Quizze" as const, id: "LIST" },
                     ]
-                    : [{ type: "Document" as const, id: "LIST" }],
+                    : [{ type: "Quizze" as const, id: "LIST" }],
         }),
 
-        getSingleDocument: builder.query<Document, number | string>({
-            query: (DocumentId) => ({
-                url: `api/v1/service/trainer/lessons/documents/${DocumentId}/`,
+        getSingleQuizze: builder.query<Quizze, number | string>({
+            query: (QuizzeId) => ({
+                url: `api/v1/service/trainer/lessons/quizzes/${QuizzeId}/`,
                 method: "GET",
             }),
-            providesTags: (_result, _error, DocumentId) => [
-                { type: "Document" as const, id: DocumentId },
+            providesTags: (_result, _error, QuizzeId) => [
+                { type: "Quizze" as const, id: QuizzeId },
             ],
         }),
 
-        createDocument: builder.mutation<DocumentMutationResponse, FormData>({
-            query: (formData) => ({
-                url: "api/v1/service/trainer/lessons/documents/",
+        createQuizze: builder.mutation<QuizzeMutationResponse, QuizzePayload>({
+            query: (body) => ({
+                url: "api/v1/service/trainer/lessons/quizzes/",
                 method: "POST",
-                body: formData,
+                body,
             }),
-            invalidatesTags: [{ type: "Document" as const, id: "LIST" }],
+            invalidatesTags: [{ type: "Quizze" as const, id: "LIST" }],
         }),
 
-        updateDocument: builder.mutation<DocumentMutationResponse, UpdateDocumentPayload>({
-            query: ({ formData, DocumentId }) => ({
-                url: `api/v1/service/trainer/lessons/documents/${DocumentId}/`,
+        updateQuizze: builder.mutation<QuizzeMutationResponse, UpdateQuizzePayload>({
+            query: ({ body, QuizzeId }) => ({
+                url: `api/v1/service/trainer/lessons/quizzes/${QuizzeId}/`,
                 method: "PATCH",
-                body: formData,
+                body,
             }),
-            invalidatesTags: (_result, _error, { DocumentId }) => [
-                { type: "Document" as const, id: DocumentId },
-                { type: "Document" as const, id: "LIST" },
+            invalidatesTags: (_result, _error, { QuizzeId }) => [
+                { type: "Quizze" as const, id: QuizzeId },
+                { type: "Quizze" as const, id: "LIST" },
             ],
         }),
 
-        deleteDocument: builder.mutation<DeleteDocumentResponse, number | string>({
-            query: (DocumentId) => ({
-                url: `api/v1/service/trainer/lessons/documents/${DocumentId}/`,
+        deleteQuizze: builder.mutation<DeleteQuizzeResponse, number | string>({
+            query: (QuizzeId) => ({
+                url: `api/v1/service/trainer/lessons/quizzes/${QuizzeId}/`,
                 method: "DELETE",
             }),
-            invalidatesTags: (_result, _error, DocumentId) => [
-                { type: "Document" as const, id: DocumentId },
-                { type: "Document" as const, id: "LIST" },
+            invalidatesTags: (_result, _error, QuizzeId) => [
+                { type: "Quizze" as const, id: QuizzeId },
+                { type: "Quizze" as const, id: "LIST" },
             ],
         }),
     }),
 });
 
 export const {
-    useGetDocumentListQuery,
-    useGetSingleDocumentQuery,
-    useCreateDocumentMutation,
-    useUpdateDocumentMutation,
-    useDeleteDocumentMutation,
-} = DocumentsApi;
+    useGetQuizzeListQuery,
+    useGetSingleQuizzeQuery,
+    useCreateQuizzeMutation,
+    useUpdateQuizzeMutation,
+    useDeleteQuizzeMutation,
+} = QuizzesApi;
