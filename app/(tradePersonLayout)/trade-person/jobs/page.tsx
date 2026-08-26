@@ -6,7 +6,7 @@ import { EmployeeType, JobType } from "@/redux/features/jobs/types";
 import JobsGrid from "@/components/shared/jobs/JobGrid";
 import JobsFilters from "@/components/shared/jobs/JobsFilters";
 import JobsSearchBar from "@/components/shared/jobs/JobsSearchBar";
-import Link from "next/link";
+// import Link from "next/link";
 
 
 export default function DiscoverJobsPage() {
@@ -22,13 +22,13 @@ export default function DiscoverJobsPage() {
                     <h1 className="text-2xl font-bold text-gray-900">Discover Jobs</h1>
                     <p className="mt-1 text-sm text-gray-500">Find the perfect opportunity for your career</p>
                 </div>
-                <Link href="/trade-person/jobs/post"><button
+                {/* <Link href="/trade-person/jobs/post"><button
 
                     className="w-full rounded-lg bg-indigo-600 px-4 py-2.5 text-sm font-medium text-white transition-colors hover:bg-indigo-700 disabled:opacity-50"
                 >
                     Create job Post
                 </button>
-                </Link>
+                </Link> */}
             </div>
 
             <div className="mt-6">
