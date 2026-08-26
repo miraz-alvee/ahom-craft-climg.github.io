@@ -1,7 +1,6 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 import { RootState } from "../store";
-// import { ar } from "date-fns/locale";
-// import { setUser } from "../features/auth/authSlice";
+
 
 const baseQuery = fetchBaseQuery({
     baseUrl: process.env.NEXT_PUBLIC_API_BASE_URL,
@@ -14,7 +13,6 @@ const baseQuery = fetchBaseQuery({
         return headers;
     }
 });
-
 
 
 // const baseQueryWithRefreshToken = async (args: any, api: any, extraOptions: any) => {
@@ -40,15 +38,10 @@ const baseQuery = fetchBaseQuery({
 // }   
 
 
-
 export const baseApi = createApi({
     reducerPath: 'baseApi',
     baseQuery: baseQuery,
-<<<<<<< HEAD
-    tagTypes: ['Profile', "Cart", "ShippingAddress", "Orders", "ChatSession", "ChatMessages", "Job", "Category", "Application", "Course", "Module", "Exam", "ForumComments", "Lesson", "Document", "Quizze", "Chat"],
-=======
     tagTypes: ['Profile', "Cart", "ShippingAddress", "Orders", "ChatSession", "ChatMessages", "Job", "Category", "Application",
-         "Course","Exam", "ForumComments", "Chat", "Document", "Lesson", "Module"],
->>>>>>> alvee
+         "Course","Exam", "ForumComments", "Chat", "Document", "Lesson", "Module", "Quizze"],
     endpoints: () => ({})
 })
