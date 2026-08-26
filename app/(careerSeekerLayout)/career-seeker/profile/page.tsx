@@ -213,9 +213,6 @@ export default function PersonalInfo() {
 
           <div className="bg-linear-to-r from-blue-600 to-blue-500 px-6 py-8">
             <div className="flex flex-col gap-5 sm:flex-row sm:items-center">
-
-              {/* Profile Image */}
-
               <div className="flex h-20 w-20 shrink-0 items-center justify-center overflow-hidden rounded-full bg-white text-2xl font-bold text-blue-600 shadow-lg">
                 {profile?.profile_image ? (
                   <img
@@ -237,7 +234,6 @@ export default function PersonalInfo() {
                 <h2 className="text-2xl font-bold">
                   {profile?.full_name || "Your Name"}
                 </h2>
-
                 <p className="mt-1 text-sm text-blue-100">
                   {profile?.email}
                 </p>
@@ -246,25 +242,17 @@ export default function PersonalInfo() {
           </div>
 
           <div className="p-6">
-
-            {/* ==================================================
-                EDIT FORM
-            =================================================== */}
-
             {isEditing ? (
               <form
                 onSubmit={handleUpdateProfile}
-                className="space-y-6"
-              >
+                className="space-y-6">
                 <div className="grid grid-cols-1 gap-5 md:grid-cols-2">
-
                   <FormInput
                     label="Full Name"
                     name="full_name"
                     value={formData.full_name}
                     onChange={handleChange}
                   />
-
                   <FormInput
                     label="Email"
                     name="email"
@@ -272,7 +260,6 @@ export default function PersonalInfo() {
                     value={formData.email}
                     onChange={handleChange}
                   />
-
                   <FormInput
                     label="Phone Number"
                     name="phone_number"
@@ -312,7 +299,7 @@ export default function PersonalInfo() {
 
                   <textarea
                     name="professional_summary"
-                    value={formData.professional_summary}
+                    value={formData?.professional_summary}
                     onChange={handleChange}
                     rows={5}
                     placeholder="Tell employers about yourself..."
