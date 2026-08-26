@@ -102,7 +102,7 @@ const data = {
         },
         {
             title: "Chat",
-            url: "/trade-person/chat",
+            url: "/trainer/chat",
             icon: MessageSquare,
         },
         {

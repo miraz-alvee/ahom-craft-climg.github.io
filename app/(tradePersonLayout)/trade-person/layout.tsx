@@ -16,6 +16,7 @@ import {
     SidebarTrigger,
 } from "@/components/ui/sidebar"
 import { AppSidebar } from "@/components/tradePersonSidebar/app-sidebar";
+import RequireAuth from "@/components/ProtectedRoute/RequireAuth";
 
 export default function tradePersonLayout({ children }: { children: React.ReactNode }) {
     const pathname = usePathname();
@@ -34,33 +35,35 @@ export default function tradePersonLayout({ children }: { children: React.ReactN
             .join(" ");
     };
     return (
-        <SidebarProvider>
-            <AppSidebar />
-            <SidebarInset>
-                <header className="flex h-16 shrink-0 items-center gap-2 border-b border-blue-200 px-4">
-                    <SidebarTrigger className="-ml-1" />
-                    <Separator
-                        orientation="vertical"
-                        className="mr-2 data-[orientation=vertical]:h-0"
-                    />
-                    <Breadcrumb>
-                        <BreadcrumbList>
-                            <BreadcrumbItem className="hidden md:block">
-                                <BreadcrumbLink href="#" className="font-inter font-medium">
-                                    Craft Climb Trade Person Workspace
-                                </BreadcrumbLink>
-                            </BreadcrumbItem>
-                            <BreadcrumbSeparator className="hidden md:block" />
-                            <BreadcrumbItem>
-                                <BreadcrumbPage className="font-inter font-medium">{getPageTitle()}</BreadcrumbPage>
-                            </BreadcrumbItem>
-                        </BreadcrumbList>
-                    </Breadcrumb>
-                </header>
-                <main className="flex-1 w-full">
-                    {children}
-                </main>
-            </SidebarInset>
-        </SidebarProvider>
+        <RequireAuth redirectTo="/login" requiredRole="trade_person">
+            <SidebarProvider>
+                <AppSidebar />
+                <SidebarInset>
+                    <header className="flex h-16 shrink-0 items-center gap-2 border-b border-blue-200 px-4">
+                        <SidebarTrigger className="-ml-1" />
+                        <Separator
+                            orientation="vertical"
+                            className="mr-2 data-[orientation=vertical]:h-0"
+                        />
+                        <Breadcrumb>
+                            <BreadcrumbList>
+                                <BreadcrumbItem className="hidden md:block">
+                                    <BreadcrumbLink href="#" className="font-inter font-medium">
+                                        Craft Climb Trade Person Workspace
+                                    </BreadcrumbLink>
+                                </BreadcrumbItem>
+                                <BreadcrumbSeparator className="hidden md:block" />
+                                <BreadcrumbItem>
+                                    <BreadcrumbPage className="font-inter font-medium">{getPageTitle()}</BreadcrumbPage>
+                                </BreadcrumbItem>
+                            </BreadcrumbList>
+                        </Breadcrumb>
+                    </header>
+                    <main className="flex-1 w-full">
+                        {children}
+                    </main>
+                </SidebarInset>
+            </SidebarProvider>
+        </RequireAuth>
     )
 }
