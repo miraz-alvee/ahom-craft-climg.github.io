@@ -79,8 +79,14 @@ export default function ExamRunner({ courseId, moduleId }: { courseId: number; m
                 />
             )}
 
-            {exam.stage === "review" && exam.attemptId && (
-                <ExamReview moduleId={moduleId} attemptId={exam.attemptId} />
+            {exam.stage === "review" && (
+                <ExamReview
+                    moduleId={moduleId}
+                    attemptId={exam.attemptId}
+                    questions={exam.questions}
+                    answers={exam.answers}
+                    summary={exam.summary}
+                />
             )}
         </>
     );
@@ -106,7 +112,7 @@ export function ModuleTestSection({ courseId, moduleId }: { courseId: number; mo
                 return (
                     <Link
                         key={attempt.UserExamAttempt_id}
-                        href={`/career-seeker/course/${courseId}/module/${moduleId}/exam/result/${attempt.UserExamAttempt_id}`}
+                        href={`/employer/course/${courseId}/module/${moduleId}/exam/result/${attempt.UserExamAttempt_id}`}
                         className="flex items-center justify-between rounded-lg border border-gray-100 p-3 text-sm hover:bg-gray-50"
                     >
                         <span className="font-medium text-gray-800">Test {i + 1}</span>
@@ -116,7 +122,7 @@ export function ModuleTestSection({ courseId, moduleId }: { courseId: number; mo
             })}
 
             <Link
-                href={`/career-seeker/course/${courseId}/module/${moduleId}/exam`}
+                href={`/employer/course/${courseId}/module/${moduleId}/exam`}
                 className="flex items-center justify-between rounded-lg border border-gray-100 p-3 text-sm hover:bg-gray-50"
             >
                 <span className="font-medium text-gray-800">Test {attempts.length + 1}</span>
