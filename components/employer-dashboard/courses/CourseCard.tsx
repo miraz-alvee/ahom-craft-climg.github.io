@@ -9,7 +9,7 @@ interface Props {
 export default function CourseCard({ course }: Props) {
   return (
     <Link
-      href={`/trade-person/course/${course.id}`}
+      href={`/employer/course/${course.id}`}
       className="group flex flex-col overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm transition hover:shadow-md"
     >
       <div className="relative h-40 w-full overflow-hidden bg-gray-100">

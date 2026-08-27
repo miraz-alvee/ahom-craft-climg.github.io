@@ -79,8 +79,14 @@ export default function ExamRunner({ courseId, moduleId }: { courseId: number; m
                 />
             )}
 
-            {exam.stage === "review" && exam.attemptId && (
-                <ExamReview moduleId={moduleId} attemptId={exam.attemptId} />
+            {exam.stage === "review" && (
+                <ExamReview
+                    moduleId={moduleId}
+                    attemptId={exam.attemptId}
+                    questions={exam.questions}
+                    answers={exam.answers}
+                    summary={exam.summary}
+                />
             )}
         </>
     );
