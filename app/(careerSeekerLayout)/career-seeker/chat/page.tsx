@@ -4,11 +4,12 @@ import { useState, useMemo, useEffect, Suspense } from "react";
 import { useSearchParams } from "next/navigation";
 import { useSelector } from "react-redux";
 import { selectToken } from "@/redux/features/auth/authSlice";
-import ChatSidebar from "@/components/shared/chat/ChatSidebar";
+
 import ChatWindow from "@/components/shared/chat/ChatWindow";
 import { ChatRoom } from "@/redux/features/chat/types";
 import { useGetRoomsQuery } from "@/redux/features/chat/chatApis";
 import { MessageSquare, Sparkles } from "lucide-react";
+import ChatSidebar from "@/components/shared/chat/chatSideber";
 
 // Helper to decode user ID from JWT token
 function getUserIdFromToken(token: string | null): number | null {

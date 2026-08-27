@@ -159,13 +159,14 @@ export default function CartPage() {
         <div className="grid grid-cols-1 gap-6 lg:grid-cols-3">
 
           {/* Cart Items */}
-          <div className="space-y-4 lg:col-span-2">
-
+          <div className="space-y-4 lg:col-span-2 rounded-2xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-lg">
             {cartItems.map((item) => (
               <div
                 key={item.cart_item_id}
-                className="rounded-xl border border-black bg-white p-4 shadow-sm"
+                className="p-2 border-2 rounded-xl border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 hover:border-blue-300"
+                // className="rounded-xl  bg-white p-4 shadow-sm"
               >
+                
                 <div className="flex flex-col gap-4 sm:flex-row">
 
                   {/* Image */}
@@ -229,7 +230,7 @@ export default function CartPage() {
                               item.cart_item_id
                             )
                           }
-                          className="flex h-8 w-8 items-center justify-center rounded-md border border-black hover:bg-gray-50"
+                          className="flex h-8 w-8 items-center justify-center rounded-md border border-gary-400 hover:bg-gray-50"
                         >
                           <Minus size={15} />
                         </button>
@@ -271,7 +272,8 @@ export default function CartPage() {
           </div>
 
           {/* Order Summary */}
-          <div className="h-fit rounded-xl border border-black bg-white p-6 shadow-sm">
+          
+          <div className="h-fit rounded-xl border border-slate-200/80 dark:border-slate-800 bg-white dark:bg-slate-900 p-6 shadow-lg">
 
             <h2 className="font-inter text-lg font-semibold">
               Order Summary

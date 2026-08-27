@@ -68,13 +68,13 @@ export default function CartPage() {
   const cartItems = data?.cart_items ?? [];
   const totalAmount = Number(data?.total_amount ?? 0);
 
-  console.log("[CartPage] Cart items:", cartItems);
-  console.log("[CartPage] Total amount:", totalAmount);
+  // console.log("[CartPage] Cart items:", cartItems);
+  // console.log("[CartPage] Total amount:", totalAmount);
 
   const handleCheckout = () => {
-    console.log(
-      "[CartPage] Navigating to checkout"
-    );
+    // console.log(
+    //   "[CartPage] Navigating to checkout"
+    // );
 
     router.push("/employer/tools/checkout");
   };
@@ -160,17 +160,13 @@ export default function CartPage() {
 
           {/* Cart Items */}
           <div className="space-y-4 lg:col-span-2">
-
             {cartItems.map((item) => (
               <div
                 key={item.cart_item_id}
-                className="rounded-xl border border-black bg-white p-4 shadow-sm"
-              >
+                className="rounded-xl border border-black bg-white p-4 shadow-sm">
                 <div className="flex flex-col gap-4 sm:flex-row">
-
                   {/* Image */}
                   <div className="relative h-32 w-full overflow-hidden rounded-lg bg-gray-100 sm:w-32">
-
                     {item.tool.image ? (
                       <Image
                         src={item.tool.image}
@@ -186,19 +182,15 @@ export default function CartPage() {
                         />
                       </div>
                     )}
-
                   </div>
 
                   {/* Content */}
                   <div className="flex flex-1 flex-col justify-between">
-
                     <div>
                       <h2 className="font-inter text-lg font-semibold">
                         {item.tool.name}
                       </h2>
-
                       <div className="mt-2 flex items-center gap-3">
-
                         <span className="font-inter text-lg font-bold text-blue-600">
                           ${Number(
                             item.tool.discount_price
@@ -213,15 +205,12 @@ export default function CartPage() {
                             ).toFixed(2)}
                           </span>
                         )}
-
                       </div>
                     </div>
 
                     <div className="mt-4 flex items-center justify-between">
-
                       {/* Quantity */}
                       <div className="flex items-center gap-3">
-
                         <button
                           type="button"
                           onClick={() =>

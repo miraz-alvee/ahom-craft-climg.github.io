@@ -1,8 +1,10 @@
 "use client";
 
 import { Job } from "@/redux/features/jobs/types";
-import { useState } from "react";
-import { useRouter } from "next/navigation";
+import { useState, useMemo } from "react";
+import { usePathname, useRouter } from "next/navigation";
+import { useSelector } from "react-redux";
+import { selectUser, selectToken } from "@/redux/features/auth/authSlice";
 import ApplyJobModal from "./ApplyJobModal";
 import { useCreateRoomMutation } from "@/redux/features/chat/chatApis";
 import { MessageSquare, Loader2, MapPin, Clock, Briefcase, DollarSign, Sparkles } from "lucide-react";
@@ -44,10 +46,58 @@ function timeAgo(dateString: string) {
   return `${days}d ago`;
 }
 
+function getUserIdFromToken(token: string | null): number | null {
+  if (!token) return null;
+  try {
+    const base64Url = token.split(".")[1];
+    if (!base64Url) return null;
+    const base64 = base64Url.replace(/-/g, "+").replace(/_/g, "/");
+    const jsonPayload = decodeURIComponent(
+      atob(base64)
+        .split("")
+        .map((c) => "%" + ("00" + c.charCodeAt(0).toString(16)).slice(-2))
+        .join("")
+    );
+    const parsed = JSON.parse(jsonPayload);
+    return parsed.user_id ? Number(parsed.user_id) : (parsed.id ? Number(parsed.id) : null);
+  } catch {
+    return null;
+  }
+}
+
 export default function JobCard({ job }: { job: Job }) {
   const [showApply, setShowApply] = useState(false);
   const [createRoom, { isLoading: isCreatingRoom }] = useCreateRoomMutation();
   const router = useRouter();
+  const pathname = usePathname();
+  const currentUser = useSelector(selectUser);
+  const token = useSelector(selectToken);
+
+  const currentUserId = useMemo(() => {
+    const fromUserObject = (currentUser as { id?: number })?.id;
+    if (fromUserObject) return Number(fromUserObject);
+    return getUserIdFromToken(token);
+  }, [currentUser, token]);
+
+  // Dynamic chat route calculation based on current URL path or user role
+  const getChatBasePath = () => {
+    if (pathname) {
+      if (pathname.startsWith("/career-seeker")) return "/career-seeker/chat";
+      if (pathname.startsWith("/trade-person")) return "/trade-person/chat";
+      if (pathname.startsWith("/employer")) return "/employer/chat";
+      if (pathname.startsWith("/trainer")) return "/trainer/chat";
+    }
+
+    if (currentUser?.user_role) {
+      const role = currentUser.user_role.toLowerCase().replace(/_/g, "-");
+      if (role === "career-seeker") return "/career-seeker/chat";
+      if (role === "trade-person") return "/trade-person/chat";
+      if (role === "employer") return "/employer/chat";
+      if (role === "trainer") return "/trainer/chat";
+    }
+
+    return "/trade-person/chat";
+  };
 
   const handleChatWithEmployer = async () => {
     const employerId =
@@ -60,16 +110,22 @@ export default function JobCard({ job }: { job: Job }) {
       return;
     }
 
+    if (currentUserId && Number(employerId) === Number(currentUserId)) {
+      toast.info("You created this job posting, so you cannot start a chat room with yourself.");
+      return;
+    }
+
     try {
       const room = await createRoom({ user2: Number(employerId) }).unwrap();
       const rId = room?.room_id || (room as unknown as { id?: number })?.id;
+      const chatBasePath = getChatBasePath();
 
       if (rId) {
         toast.success("Opening chat room...");
-        router.push(`/trade-person/chat?roomId=${rId}`);
+        router.push(`${chatBasePath}?roomId=${rId}`);
       } else {
         toast.success("Opening chat...");
-        router.push("/trade-person/chat");
+        router.push(chatBasePath);
       }
     } catch (err: unknown) {
       console.error("Failed to create chat room:", err);
@@ -86,7 +142,7 @@ export default function JobCard({ job }: { job: Job }) {
         {/* Header Avatar & Details */}
         <div className="flex items-start gap-3.5">
           <div
-            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-gradient-to-br ${gradientClass} font-inter text-base font-bold text-white shadow-md shadow-blue-500/10 ring-2 ring-white dark:ring-slate-900 transition-transform duration-300 group-hover:scale-105`}
+            className={`flex h-12 w-12 shrink-0 items-center justify-center rounded-xl bg-linear-to-br ${gradientClass} font-inter text-base font-bold text-white shadow-md shadow-blue-500/10 ring-2 ring-white dark:ring-slate-900 transition-transform duration-300 group-hover:scale-105`}
           >
             {job.title.charAt(0).toUpperCase()}
           </div>
@@ -152,7 +208,7 @@ export default function JobCard({ job }: { job: Job }) {
         </span>
 
         <div className="flex items-center gap-2">
-          {/* Fancy Chat Button */}
+          {/* Dynamic Chat Button */}
           <button
             onClick={handleChatWithEmployer}
             disabled={isCreatingRoom}
@@ -167,10 +223,10 @@ export default function JobCard({ job }: { job: Job }) {
             <span>Chat</span>
           </button>
 
-          {/* Fancy Apply Button */}
+          {/* Apply Button */}
           <button
             onClick={() => setShowApply(true)}
-            className="rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/30 cursor-pointer"
+            className="rounded-xl bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 px-4 py-2 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all duration-200 hover:shadow-lg hover:shadow-blue-500/30 cursor-pointer"
           >
             Apply Now
           </button>

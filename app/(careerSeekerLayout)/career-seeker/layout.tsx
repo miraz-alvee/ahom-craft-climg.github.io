@@ -35,7 +35,7 @@ export default function JobSeekerLayout({ children }: { children: React.ReactNod
             .join(" ");
     };
     return (
-        <RequireAuth redirectTo="/login" requiredRole="career_seeker|job_seeker">
+        <RequireAuth redirectTo="/login" requiredRole="career_seeker">
             <SidebarProvider>
                 <CareerAppSidebar />
                 <SidebarInset>

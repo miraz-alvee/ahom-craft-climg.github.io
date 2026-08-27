@@ -247,7 +247,7 @@ export default function CheckoutPage() {
             <button
               onClick={handlePlaceOrder}
               disabled={!selectedAddressId || isCreatingOrder}
-              className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-gradient-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 py-3 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all disabled:cursor-not-allowed disabled:opacity-40"
+              className="mt-6 flex w-full items-center justify-center gap-2 rounded-xl bg-linear-to-r from-blue-600 via-indigo-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 py-3 text-xs font-bold text-white shadow-md shadow-blue-500/20 transition-all disabled:cursor-not-allowed disabled:opacity-40"
             >
               <ShieldCheck className="h-4 w-4" />
               <span>{isCreatingOrder ? "Placing Order..." : "Place Order Now"}</span>

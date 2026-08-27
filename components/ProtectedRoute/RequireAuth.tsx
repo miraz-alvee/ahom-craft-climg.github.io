@@ -33,7 +33,6 @@ export default function RequireAuth({ redirectTo, requiredRole, children }: Requ
                 trainer: "/trainer",
                 employer: "/employer",
                 career_seeker: "/career-seeker",
-                job_seeker: "/career-seeker",
                 trade_person: "/trade-person",
             };
 
